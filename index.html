@@ -322,6 +322,49 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
   section{padding:65px 5vw}
   .shop-tab{padding:12px 16px;font-size:.6rem}
 }
+
+/* ── CURRENCY BAR */
+.currency-bar{background:var(--bg3);border-bottom:1px solid var(--bdr);padding:9px 5vw;display:flex;align-items:center;gap:8px;position:sticky;top:68px;z-index:900;flex-wrap:wrap}
+.currency-lbl{font-family:'Jost',sans-serif;font-size:.52rem;letter-spacing:3px;text-transform:uppercase;color:var(--tdim);margin-right:4px;white-space:nowrap}
+.currency-btn{font-family:'Jost',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:2px;padding:5px 13px;border:1px solid var(--bdrw);background:none;cursor:pointer;color:var(--tm);transition:all .2s}
+.currency-btn.on{background:var(--bgd);color:var(--bg2);border-color:var(--bgd)}
+.currency-btn:hover:not(.on){border-color:var(--a1);color:var(--a1)}
+
+/* ── WISHLIST HEART BUTTONS */
+.wl-btn{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;background:rgba(250,246,238,.9);border:none;cursor:pointer;font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:transform .2s;z-index:3;padding:0;backdrop-filter:blur(4px)}
+.wl-btn:hover{transform:scale(1.15)}
+.wl-btn.wl-on{color:#B83A3A}
+
+/* ── WISHLIST TRIGGER (fixed) */
+.wl-trigger{position:fixed;bottom:92px;right:28px;z-index:8999;width:48px;height:48px;border-radius:50%;background:var(--bg1);border:1px solid var(--bdrw);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 14px rgba(44,31,16,.12);transition:all .25s;color:var(--th)}
+.wl-trigger:hover{border-color:var(--a1);color:var(--a1)}
+.wl-count{position:absolute;top:3px;right:3px;background:var(--a1);color:#fff;border-radius:50%;width:16px;height:16px;font-family:'Jost',sans-serif;font-size:.48rem;font-weight:500;display:none;align-items:center;justify-content:center;pointer-events:none}
+
+/* ── WISHLIST DRAWER */
+.wl-overlay{position:fixed;inset:0;background:rgba(44,31,16,.38);z-index:9001;opacity:0;pointer-events:none;transition:opacity .3s}
+.wl-overlay.wl-open{opacity:1;pointer-events:auto}
+.wl-drawer{position:fixed;top:0;right:-360px;width:320px;max-width:90vw;height:100dvh;background:var(--bg1);z-index:9002;display:flex;flex-direction:column;transition:right .34s cubic-bezier(.4,0,.2,1);box-shadow:-4px 0 36px rgba(44,31,16,.15)}
+.wl-drawer.wl-open{right:0}
+.wl-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--bdr);background:var(--bgd);flex-shrink:0}
+.wl-htitle{font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:4px;text-transform:uppercase;color:var(--asoft)}
+.wl-close{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.55);font-size:.95rem;padding:4px 8px;transition:color .2s}
+.wl-close:hover{color:var(--asoft)}
+.wl-body{flex:1;overflow-y:auto;padding:16px 18px;min-height:0}
+.wl-empty-msg{text-align:center;padding:40px 16px;font-size:.82rem;color:var(--tdim);line-height:1.9}
+.wl-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--bdr)}
+.wl-item:last-child{border-bottom:none}
+.wl-ico{font-size:1.8rem;width:46px;height:46px;display:flex;align-items:center;justify-content:center;background:var(--bg2);border:1px solid var(--bdr);flex-shrink:0}
+.wl-iinfo{flex:1;min-width:0}
+.wl-iname{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--th);line-height:1.3}
+.wl-iprice{font-size:.7rem;color:var(--a1);margin-top:2px}
+.wl-rm{background:none;border:none;cursor:pointer;color:var(--tdim);font-size:.8rem;padding:4px;flex-shrink:0;transition:color .2s}
+.wl-rm:hover{color:#9B3A3A}
+.wl-foot{padding:16px 18px;border-top:1px solid var(--bdr);flex-shrink:0}
+
+/* ── WHATSAPP FLOAT */
+.wa-float{position:fixed;bottom:28px;right:28px;z-index:9000;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,.38);text-decoration:none;transition:transform .25s,box-shadow .25s}
+.wa-float:hover{transform:scale(1.1);box-shadow:0 6px 26px rgba(37,211,102,.5)}
+.wa-float svg{width:27px;height:27px;fill:#fff}
 </style>
 </head>
 <body id="top">
@@ -454,6 +497,16 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
     </div>
   </div>
 </section>
+
+<!-- CURRENCY TOGGLE BAR -->
+<div class="currency-bar">
+  <span class="currency-lbl">Prices in</span>
+  <button class="currency-btn on" data-cur="VND" onclick="switchCurrency('VND')">VND ₫</button>
+  <button class="currency-btn" data-cur="USD" onclick="switchCurrency('USD')">USD $</button>
+  <button class="currency-btn" data-cur="EUR" onclick="switchCurrency('EUR')">EUR €</button>
+  <button class="currency-btn" data-cur="KRW" onclick="switchCurrency('KRW')">KRW ₩</button>
+  <button class="currency-btn" data-cur="JPY" onclick="switchCurrency('JPY')">JPY ¥</button>
+</div>
 
 <!-- ══ SHOP — SPLIT BY TYPE ══ -->
 <section class="shop-section" id="shop">
@@ -904,6 +957,33 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
   </div>
 </footer>
 
+<!-- WISHLIST OVERLAY + DRAWER -->
+<div class="wl-overlay" id="wl-overlay" onclick="closeWishlist()"></div>
+<aside class="wl-drawer" id="wl-drawer" aria-label="Saved pieces">
+  <div class="wl-head">
+    <span class="wl-htitle">Saved Pieces</span>
+    <button class="wl-close" onclick="closeWishlist()" aria-label="Close">✕</button>
+  </div>
+  <div class="wl-body">
+    <div class="wl-empty-msg" id="wl-empty">No saved pieces yet.<br>Tap ♡ on any item to save it here.</div>
+    <div id="wl-list"></div>
+  </div>
+  <div class="wl-foot" id="wl-foot" style="display:none">
+    <a href="#bes" class="btn-p" style="display:block;text-align:center;text-decoration:none" onclick="closeWishlist()">Order Your Saved Pieces →</a>
+    <p style="font-size:.66rem;color:var(--tdim);text-align:center;margin-top:9px;line-height:1.7">Open the bespoke form and mention your saved items</p>
+  </div>
+</aside>
+
+<!-- WISHLIST TRIGGER BUTTON -->
+<button class="wl-trigger" id="wl-trigger" onclick="openWishlist()" aria-label="Open saved wishlist" style="position:fixed">
+  ♡<span class="wl-count" id="wl-count"></span>
+</button>
+
+<!-- WHATSAPP FLOAT BUTTON -->
+<a href="https://wa.me/84935023757" class="wa-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
 <script>
 // ── NAV
 const nav=document.getElementById('mn');
@@ -1072,6 +1152,105 @@ async function submitF(){
   });
   input.addEventListener('blur',function(){setTimeout(hideList,160);});
   document.addEventListener('click',function(e){if(!(fg||input.parentElement).contains(e.target))hideList();});
+})();
+
+// ── CURRENCY TOGGLE
+(function(){
+  const RATES={VND:1,USD:1/25000,EUR:1/27000,KRW:1/18,JPY:1/163};
+  const SYMS={VND:'₫',USD:'$',EUR:'€',KRW:'₩',JPY:'¥'};
+  // Tag every price element with its raw VND amount and "From " prefix flag
+  document.querySelectorAll('.rc-price,.pc-price').forEach(function(el){
+    const m=el.textContent.match(/₫([\d,]+)/);
+    if(m){el.dataset.vnd=m[1].replace(/,/g,'');el.dataset.pfx=el.textContent.trim().startsWith('From')?'From ':'';}
+  });
+  window.switchCurrency=function(c){
+    document.querySelectorAll('.currency-btn').forEach(function(b){b.classList.toggle('on',b.dataset.cur===c);});
+    document.querySelectorAll('[data-vnd]').forEach(function(el){
+      const v=parseInt(el.dataset.vnd,10);if(isNaN(v))return;
+      const raw=v*RATES[c];
+      let out;
+      if(c==='VND')out=SYMS[c]+Math.round(raw).toLocaleString('en');
+      else if(c==='KRW')out=SYMS[c]+(Math.round(raw/100)*100).toLocaleString('en');
+      else if(c==='JPY')out=SYMS[c]+(Math.round(raw/10)*10).toLocaleString('en');
+      else out=SYMS[c]+Math.round(raw);
+      el.textContent=(el.dataset.pfx||'')+out;
+    });
+  };
+})();
+
+// ── WISHLIST
+(function(){
+  const wl=[];
+  function $id(id){return document.getElementById(id);}
+  function updateCount(){
+    const c=$id('wl-count');if(!c)return;
+    if(wl.length){c.textContent=wl.length;c.style.display='flex';}else{c.style.display='none';}
+  }
+  function render(){
+    const list=$id('wl-list'),empty=$id('wl-empty'),foot=$id('wl-foot');
+    if(!list)return;
+    if(!wl.length){
+      list.innerHTML='';
+      if(empty)empty.style.display='block';
+      if(foot)foot.style.display='none';
+      return;
+    }
+    if(empty)empty.style.display='none';
+    if(foot)foot.style.display='block';
+    list.innerHTML=wl.map(function(item,i){
+      return '<div class="wl-item">'
+        +'<div class="wl-ico">'+item.icon+'</div>'
+        +'<div class="wl-iinfo"><div class="wl-iname">'+item.name+'</div><div class="wl-iprice">'+item.price+'</div></div>'
+        +'<button class="wl-rm" onclick="window._wlRm('+i+')" aria-label="Remove">✕</button>'
+        +'</div>';
+    }).join('');
+  }
+  window.toggleWish=function(btn){
+    const card=btn.closest('.product-card,.runway-card');
+    const priceEl=card?card.querySelector('.pc-price,.rc-price'):null;
+    const name=btn.dataset.name||'';
+    const price=priceEl?priceEl.textContent.trim():(btn.dataset.price||'');
+    const icon=btn.dataset.icon||'👗';
+    const idx=wl.findIndex(function(x){return x.name===name;});
+    if(idx>=0){
+      wl.splice(idx,1);btn.classList.remove('wl-on');btn.textContent='♡';
+    }else{
+      wl.push({name:name,price:price,icon:icon});btn.classList.add('wl-on');btn.textContent='♥';
+    }
+    updateCount();render();
+  };
+  window._wlRm=function(i){
+    if(i<0||i>=wl.length)return;
+    const name=wl[i].name;
+    wl.splice(i,1);
+    document.querySelectorAll('.wl-btn').forEach(function(b){if(b.dataset.name===name){b.classList.remove('wl-on');b.textContent='♡';}});
+    updateCount();render();
+  };
+  window.openWishlist=function(){
+    var ov=$id('wl-overlay'),dr=$id('wl-drawer');
+    if(ov)ov.classList.add('wl-open');if(dr)dr.classList.add('wl-open');
+    document.body.style.overflow='hidden';
+  };
+  window.closeWishlist=function(){
+    var ov=$id('wl-overlay'),dr=$id('wl-drawer');
+    if(ov)ov.classList.remove('wl-open');if(dr)dr.classList.remove('wl-open');
+    document.body.style.overflow='';
+  };
+  // Inject ♡ button into every product and runway card image area
+  document.querySelectorAll('.product-card,.runway-card').forEach(function(card){
+    const imgDiv=card.querySelector('.pc-img,.rc-img');if(!imgDiv)return;
+    const nameEl=card.querySelector('.pc-name,.rc-name');
+    const iconEl=card.querySelector('.rc-icon,.pc-inner>span');
+    const name=nameEl?nameEl.textContent.trim():'';
+    const icon=iconEl?iconEl.textContent.trim().replace(/\s/g,'').slice(0,2):'👗';
+    const btn=document.createElement('button');
+    btn.className='wl-btn';
+    btn.dataset.name=name;btn.dataset.icon=icon;
+    btn.setAttribute('aria-label','Save to wishlist');
+    btn.textContent='♡';
+    btn.addEventListener('click',function(e){e.stopPropagation();window.toggleWish(btn);});
+    imgDiv.appendChild(btn);
+  });
 })();
 
 // ── HOURS CHECK
