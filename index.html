@@ -986,6 +986,13 @@ async function submitF(){
       body:JSON.stringify(orderData)
     });
     if(res.ok||res.status===201||res.status===409){
+      if(res.status===409)console.warn('Supabase 409 on order_ref:',ref,'— order likely already saved');
+      // Fire-and-forget — email failure must never break the success flow
+      fetch(`${SURL}/functions/v1/send-order-email`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':`Bearer ${SKEY}`},
+        body:JSON.stringify({...orderData,name,email,phone,garment,country,address})
+      }).catch(function(e){console.warn('send-order-email failed:',e);});
       document.getElementById('cform').querySelectorAll('input,select,textarea,button').forEach(el=>el.disabled=true);
       document.getElementById('orderRef').textContent='Order Reference: '+ref;
       const sb=document.getElementById('sb');
