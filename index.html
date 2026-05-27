@@ -186,6 +186,10 @@ h2 em{font-style:italic;color:var(--a1)}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 .fsec{font-family:'Jost',sans-serif;font-size:.56rem;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--a1);margin:20px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--bdr)}
+#addr-suggestions{position:absolute;top:100%;left:0;right:0;z-index:999;background:var(--bg1);border:1px solid var(--bdrw);border-top:none;list-style:none;margin:0;padding:0;display:none;max-height:220px;overflow-y:auto;box-shadow:0 4px 16px rgba(44,31,16,.1)}
+#addr-suggestions li{padding:10px 14px;font-family:'Jost',sans-serif;font-size:.78rem;color:var(--tb);cursor:pointer;border-bottom:1px solid var(--bdr);font-weight:300;line-height:1.4}
+#addr-suggestions li:last-child{border-bottom:none}
+#addr-suggestions li:hover,#addr-suggestions li.active{background:var(--bg3);color:var(--th)}
 .mnote{background:var(--bg2);border-left:2px solid var(--a1);padding:10px 14px;margin-bottom:16px;font-size:.76rem;color:var(--tm);line-height:1.8}
 .mnote a{color:var(--a1);font-weight:400;text-decoration:none;border-bottom:1px solid var(--a1)}
 
@@ -315,10 +319,6 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
   .shop-tab{padding:12px 16px;font-size:.6rem}
 }
 </style>
-<!-- Google Places Autocomplete — replace YOUR_GOOGLE_MAPS_API_KEY with your real key -->
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initGooglePlaces">
-</script>
 </head>
 <body id="top">
 
@@ -984,72 +984,104 @@ async function submitF(){
   }
 })();
 
-// ── GOOGLE PLACES AUTOCOMPLETE
-// Maps Google's country names to the values used in the <select id="f-country"> dropdown.
-const COUNTRY_MAP={
-  'Vietnam':'Vietnam','Japan':'Japan','South Korea':'South Korea',
-  'United States':'United States','Australia':'Australia','France':'France',
-  'United Kingdom':'United Kingdom','Germany':'Germany','Canada':'Canada',
-  'China':'China','Singapore':'Singapore','Thailand':'Thailand',
-  'Indonesia':'Indonesia','Malaysia':'Malaysia','Philippines':'Philippines',
-  'Taiwan':'Taiwan','Hong Kong':'Hong Kong','New Zealand':'New Zealand',
-  'Netherlands':'Netherlands','Belgium':'Belgium','Switzerland':'Switzerland',
-  'Italy':'Italy','Spain':'Spain','Sweden':'Sweden','Norway':'Norway',
-  'Denmark':'Denmark','Finland':'Finland','Poland':'Poland',
-  'Czech Republic':'Czech Republic','Austria':'Austria','Portugal':'Portugal',
-  'Greece':'Greece','Ireland':'Ireland','Brazil':'Brazil','Mexico':'Mexico',
-  'Argentina':'Argentina','India':'India','United Arab Emirates':'United Arab Emirates',
-  'Saudi Arabia':'Saudi Arabia','Israel':'Israel','South Africa':'South Africa',
-  'Egypt':'Egypt'
-};
-
-function initGooglePlaces(){
+// ── NOMINATIM ADDRESS AUTOCOMPLETE (OpenStreetMap, no API key required)
+(function(){
   const input=document.getElementById('f-address');
   if(!input)return;
-  const ac=new google.maps.places.Autocomplete(input,{
-    types:['address'],
-    fields:['address_components','formatted_address']
-  });
-  ac.addListener('place_changed',function(){
-    const place=ac.getPlace();
-    if(!place.address_components)return;
-    let streetNumber='',route='',city='',postal='',country='';
-    place.address_components.forEach(function(c){
-      const t=c.types;
-      if(t.includes('street_number'))streetNumber=c.long_name;
-      else if(t.includes('route'))route=c.long_name;
-      else if(t.includes('locality'))city=c.long_name;
-      else if(!city&&t.includes('sublocality_level_1'))city=c.long_name;
-      else if(!city&&t.includes('administrative_area_level_2'))city=c.long_name;
-      else if(t.includes('postal_code'))postal=c.long_name;
-      else if(t.includes('country'))country=c.long_name;
-    });
-    // Build street address: "123 Main St" or just the route if no number
-    const street=streetNumber?streetNumber+' '+route:route;
-    if(street)input.value=street;
+
+  // Wrap the input in a relative-positioned container for the dropdown
+  const fg=input.closest('.fg');
+  if(fg)fg.style.position='relative';
+
+  // Build suggestion list element
+  const list=document.createElement('ul');
+  list.id='addr-suggestions';
+  (fg||input.parentElement).appendChild(list);
+
+  let timer,activeIdx=-1;
+
+  function hideList(){list.style.display='none';activeIdx=-1;}
+
+  function setActive(i){
+    const items=list.querySelectorAll('li');
+    items.forEach(function(el,j){el.classList.toggle('active',j===i);});
+    activeIdx=i;
+  }
+
+  function selectItem(item){
+    const a=item.address||{};
+    const road=a.road||a.pedestrian||a.footway||a.path||a.hamlet||'';
+    const num=a.house_number||'';
+    const street=num?num+' '+road:road;
+    const city=a.city||a.town||a.village||a.suburb||a.county||a.state_district||'';
+    const postal=a.postcode||'';
+    const country=a.country||'';
+    input.value=street||item.display_name.split(',')[0].trim();
     if(city)document.getElementById('f-city').value=city;
     if(postal)document.getElementById('f-postal').value=postal;
-    if(country){
-      const sel=document.getElementById('f-country');
-      const mapped=COUNTRY_MAP[country];
-      if(mapped){
-        // Find matching <option> and select it
-        for(let i=0;i<sel.options.length;i++){
-          if(sel.options[i].value===mapped||sel.options[i].text===mapped){
-            sel.selectedIndex=i;break;
-          }
-        }
-      }else{
-        // Country not in dropdown — select "Other" and append country to address
-        for(let i=0;i<sel.options.length;i++){
-          if(sel.options[i].value==='Other'||sel.options[i].text==='Other'){sel.selectedIndex=i;break;}
-        }
-        // Append country to address field so it's not lost
-        if(input.value)input.value=input.value+', '+country;
-      }
+    if(country)matchCountry(country);
+    hideList();
+  }
+
+  function matchCountry(name){
+    const sel=document.getElementById('f-country');
+    const lower=name.toLowerCase();
+    // 1. Exact text match
+    for(let i=0;i<sel.options.length;i++){
+      if(sel.options[i].text.toLowerCase()===lower){sel.selectedIndex=i;return;}
     }
+    // 2. Partial match (handles e.g. "Republic of Korea" → "South Korea" won't match, but "United States of America" → "United States")
+    for(let i=0;i<sel.options.length;i++){
+      const opt=sel.options[i].text.toLowerCase();
+      if(lower.includes(opt)||opt.includes(lower)){sel.selectedIndex=i;return;}
+    }
+    // 3. Fall back to Other
+    for(let i=0;i<sel.options.length;i++){
+      if(sel.options[i].text==='Other'){sel.selectedIndex=i;break;}
+    }
+  }
+
+  function renderList(results){
+    list.innerHTML='';
+    if(!results.length){hideList();return;}
+    results.forEach(function(item){
+      const li=document.createElement('li');
+      li.textContent=item.display_name;
+      li.addEventListener('mousedown',function(e){e.preventDefault();selectItem(item);});
+      list.appendChild(li);
+    });
+    list.style.display='block';
+    activeIdx=-1;
+  }
+
+  input.addEventListener('input',function(){
+    clearTimeout(timer);
+    const q=input.value.trim();
+    if(q.length<3){hideList();return;}
+    timer=setTimeout(function(){
+      fetch(
+        'https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q='+encodeURIComponent(q),
+        {headers:{'Accept-Language':'en','User-Agent':'LamTuyenLinen/1.0 contact@lamtuyenlinen.com'}}
+      )
+      .then(function(r){return r.json();})
+      .then(renderList)
+      .catch(hideList);
+    },400);
   });
-}
+
+  // Keyboard navigation
+  input.addEventListener('keydown',function(e){
+    const items=list.querySelectorAll('li');
+    if(!items.length)return;
+    if(e.key==='ArrowDown'){e.preventDefault();setActive(Math.min(activeIdx+1,items.length-1));}
+    else if(e.key==='ArrowUp'){e.preventDefault();setActive(Math.max(activeIdx-1,0));}
+    else if(e.key==='Enter'&&activeIdx>=0){e.preventDefault();items[activeIdx].dispatchEvent(new MouseEvent('mousedown'));}
+    else if(e.key==='Escape'){hideList();}
+  });
+
+  input.addEventListener('blur',function(){setTimeout(hideList,160);});
+  document.addEventListener('click',function(e){if(!(fg||input.parentElement).contains(e.target))hideList();});
+})();
 </script>
 </body>
 </html>
