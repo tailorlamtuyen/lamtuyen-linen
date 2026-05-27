@@ -190,6 +190,10 @@ h2 em{font-style:italic;color:var(--a1)}
 #addr-suggestions li{padding:10px 14px;font-family:'Jost',sans-serif;font-size:.78rem;color:var(--tb);cursor:pointer;border-bottom:1px solid var(--bdr);font-weight:300;line-height:1.4}
 #addr-suggestions li:last-child{border-bottom:none}
 #addr-suggestions li:hover,#addr-suggestions li.active{background:var(--bg3);color:var(--th)}
+.phone-wrap{display:flex;align-items:stretch}
+.phone-wrap select{flex-shrink:0;background:var(--bg2);border:1px solid var(--bdr);border-right:none;padding:11px 10px;font-family:'Jost',sans-serif;font-size:.82rem;color:var(--tb);outline:none;transition:border-color .25s;border-radius:0;appearance:none;font-weight:300;cursor:pointer}
+.phone-wrap select:focus{border-color:var(--a1)}
+.phone-wrap input{flex:1;min-width:0}
 .mnote{background:var(--bg2);border-left:2px solid var(--a1);padding:10px 14px;margin-bottom:16px;font-size:.76rem;color:var(--tm);line-height:1.8}
 .mnote a{color:var(--a1);font-weight:400;text-decoration:none;border-bottom:1px solid var(--a1)}
 
@@ -580,7 +584,33 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
       <div class="fg"><label>Full Name *</label><input type="text" id="fn" name="name" placeholder="Your full name"></div>
       <div class="frow">
         <div class="fg"><label>Email *</label><input type="email" id="fe" name="email" placeholder="you@email.com"></div>
-        <div class="fg"><label>Phone / WhatsApp *</label><input type="tel" id="fp" name="phone" placeholder="+84 or international"></div>
+        <div class="fg"><label>Phone / WhatsApp *</label>
+          <div class="phone-wrap">
+            <select id="f-dialcode">
+              <option value="+84">🇻🇳 +84</option>
+              <option value="+81">🇯🇵 +81</option>
+              <option value="+82">🇰🇷 +82</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+1-CA">🇨🇦 +1</option>
+              <option value="+86">🇨🇳 +86</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+66">🇹🇭 +66</option>
+              <option value="+62">🇮🇩 +62</option>
+              <option value="+60">🇲🇾 +60</option>
+              <option value="+63">🇵🇭 +63</option>
+              <option value="+886">🇹🇼 +886</option>
+              <option value="+852">🇭🇰 +852</option>
+              <option value="+64">🇳🇿 +64</option>
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+971">🇦🇪 +971</option>
+            </select>
+            <input type="tel" id="fp" name="phone" placeholder="Phone number">
+          </div>
+        </div>
       </div>
 
       <!-- GARMENT -->
@@ -928,11 +958,14 @@ function selectColour(name,el){
 async function submitF(){
   const name=document.getElementById('fn').value.trim();
   const email=document.getElementById('fe').value.trim();
-  const phone=document.getElementById('fp').value.trim();
+  const phoneNum=document.getElementById('fp').value.trim();
+  const dialRaw=document.getElementById('f-dialcode').value;
+  const dialCode=dialRaw.replace(/-CA$/,''); // strip Canada suffix, keep +1
+  const phone=dialCode+phoneNum;
   const garment=document.getElementById('fg2').value;
   const country=document.getElementById('f-country').value;
   const address=document.getElementById('f-address').value.trim();
-  if(!name||!email||!phone||!garment){alert('Please fill in your name, email, phone, and garment type.');return;}
+  if(!name||!email||!phoneNum||!garment){alert('Please fill in your name, email, phone, and garment type.');return;}
   if(!address||!country){alert('Please fill in your shipping address and country.');return;}
   const btn=document.getElementById('submitBtn');
   const orig=btn.textContent;
@@ -940,6 +973,7 @@ async function submitF(){
   const allInputs=document.querySelectorAll('#cform input,#cform select,#cform textarea');
   const orderData={};
   allInputs.forEach(el=>{if(el.name&&el.value.trim()!=='')orderData[el.name]=el.value.trim();});
+  orderData.phone=phone; // overwrite bare number with full dial code + number
   // add order reference
   const ref='LTL-'+Date.now().toString(36).toUpperCase();
   orderData.order_ref=ref;
@@ -952,16 +986,12 @@ async function submitF(){
       body:JSON.stringify(orderData)
     });
     if(res.ok||res.status===201){
-      // Trigger rapid-task edge function to send confirmation email via Resend
-      try{
-        await fetch(`${SURL}/functions/v1/rapid-task`,{
-          method:'POST',
-          headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':`Bearer ${SKEY}`},
-          body:JSON.stringify({...orderData,name,email,phone,garment,country,address})
-        });
-      }catch(edgeErr){
-        console.warn('Edge function call failed:',edgeErr);
-      }
+      // Fire-and-forget: edge function failure must never reach the customer
+      fetch(`${SURL}/functions/v1/rapid-task`,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':`Bearer ${SKEY}`},
+        body:JSON.stringify({...orderData,name,email,phone,garment,country,address})
+      }).catch(function(e){console.warn('rapid-task edge function failed:',e);});
       document.getElementById('cform').querySelectorAll('input,select,textarea,button').forEach(el=>el.disabled=true);
       document.getElementById('orderRef').textContent='Order Reference: '+ref;
       const sb=document.getElementById('sb');
