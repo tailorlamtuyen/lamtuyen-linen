@@ -191,7 +191,7 @@ h2 em{font-style:italic;color:var(--a1)}
 #addr-suggestions li:last-child{border-bottom:none}
 #addr-suggestions li:hover,#addr-suggestions li.active{background:var(--bg3);color:var(--th)}
 .phone-wrap{display:flex;align-items:stretch}
-.phone-wrap select{flex-shrink:0;background:var(--bg2);border:1px solid var(--bdr);border-right:none;padding:11px 10px;font-family:'Jost',sans-serif;font-size:.82rem;color:var(--tb);outline:none;transition:border-color .25s;border-radius:0;appearance:none;font-weight:300;cursor:pointer}
+.phone-wrap select{flex-shrink:0;width:110px;background:var(--bg2);border:1px solid var(--bdr);border-right:none;padding:11px 10px;font-family:'Jost',sans-serif;font-size:.82rem;color:var(--tb);outline:none;transition:border-color .25s;border-radius:0;appearance:none;font-weight:300;cursor:pointer}
 .phone-wrap select:focus{border-color:var(--a1)}
 .phone-wrap input{flex:1;min-width:0}
 .mnote{background:var(--bg2);border-left:2px solid var(--a1);padding:10px 14px;margin-bottom:16px;font-size:.76rem;color:var(--tm);line-height:1.8}
@@ -955,7 +955,16 @@ function selectColour(name,el){
 })();
 
 // ── FORM SUBMIT
+let _submitGuard=false;
 async function submitF(){
+  // Double-submit guard — disabled immediately on first click
+  if(_submitGuard)return;
+  _submitGuard=true;
+  const btn=document.getElementById('submitBtn');
+  const orig=btn.textContent;
+  btn.textContent='Sending...';btn.disabled=true;
+
+  // Read + validate
   const name=document.getElementById('fn').value.trim();
   const email=document.getElementById('fe').value.trim();
   const phoneNum=document.getElementById('fp').value.trim();
@@ -965,18 +974,25 @@ async function submitF(){
   const garment=document.getElementById('fg2').value;
   const country=document.getElementById('f-country').value;
   const address=document.getElementById('f-address').value.trim();
-  if(!name||!email||!phoneNum||!garment){alert('Please fill in your name, email, phone, and garment type.');return;}
-  if(!address||!country){alert('Please fill in your shipping address and country.');return;}
-  const btn=document.getElementById('submitBtn');
-  const orig=btn.textContent;
-  btn.textContent='Sending...';btn.disabled=true;
+  function resetBtn(){btn.textContent=orig;btn.disabled=false;_submitGuard=false;}
+  if(!name||!email||!phoneNum||!garment){alert('Please fill in your name, email, phone, and garment type.');resetBtn();return;}
+  if(!address||!country){alert('Please fill in your shipping address and country.');resetBtn();return;}
+
+  // Build order payload
   const allInputs=document.querySelectorAll('#cform input,#cform select,#cform textarea');
   const orderData={};
   allInputs.forEach(el=>{if(el.name&&el.value.trim()!=='')orderData[el.name]=el.value.trim();});
-  orderData.phone=phone; // overwrite bare number with full dial code + number
-  // add order reference
-  const ref='LTL-'+Date.now().toString(36).toUpperCase();
+  orderData.phone=phone; // overwrite bare number with full dial+number
+
+  // Truly unique order ref: base36 timestamp + UUID fragment
+  const ts=Date.now().toString(36).toUpperCase();
+  const rnd=(typeof crypto.randomUUID==='function'
+    ? crypto.randomUUID().replace(/-/g,'').slice(0,8)
+    : Math.random().toString(16).slice(2,10)).toUpperCase();
+  const ref='LTL-'+ts+'-'+rnd;
   orderData.order_ref=ref;
+  orderData.submitted_at=new Date().toISOString();
+
   const SURL='https://vyldmdavizedqhihnkwg.supabase.co';
   const SKEY='sb_publishable_2Wua7AAvKSTrMHLT35xjVQ_8JuYqS2b';
   try{
@@ -985,7 +1001,8 @@ async function submitF(){
       headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':`Bearer ${SKEY}`,'Prefer':'return=minimal'},
       body:JSON.stringify(orderData)
     });
-    if(res.ok||res.status===201){
+    if(res.ok||res.status===201||res.status===409){
+      if(res.status===409)console.warn('Supabase 409 conflict on order_ref:',ref,'— order likely already saved');
       // Fire-and-forget: edge function failure must never reach the customer
       fetch(`${SURL}/functions/v1/rapid-task`,{
         method:'POST',
@@ -997,9 +1014,10 @@ async function submitF(){
       const sb=document.getElementById('sb');
       sb.style.display='block';
       sb.scrollIntoView({behavior:'smooth',block:'center'});
-    }else{throw new Error('Error '+res.status);}
+    }else{throw new Error('HTTP '+res.status);}
   }catch(err){
-    btn.textContent=orig;btn.disabled=false;
+    console.error('Order submission error:',err);
+    resetBtn();
     alert('Something went wrong.\n\nPlease call or WhatsApp us:\n📞 0935 023 757');
   }
 }
