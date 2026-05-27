@@ -460,6 +460,17 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
 .cs-ref-box{background:var(--bg2);border:1px solid var(--a1);padding:14px 20px;margin:16px auto;display:inline-block;min-width:200px}
 .cs-ref-lbl{font-family:'Jost',sans-serif;font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:var(--tdim);margin-bottom:5px}
 .cs-ref-val{font-family:'Jost',sans-serif;font-size:1.25rem;letter-spacing:4px;color:var(--a1)}
+
+/* ── HOVER DRAWER TABS */
+.dtab{position:fixed;right:0;z-index:9009;width:34px;border:none;border-radius:3px 0 0 3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:16px 0;cursor:pointer;box-shadow:-2px 0 10px rgba(44,31,16,.18);transition:width .18s ease,opacity .18s;color:var(--asoft);font-family:'Jost',sans-serif;-webkit-user-select:none;user-select:none}
+.dtab:hover{width:40px}
+.dtab .dtab-icon{font-size:.95rem;line-height:1}
+.dtab .dtab-lbl{font-size:.38rem;letter-spacing:3px;text-transform:uppercase;writing-mode:vertical-rl;transform:rotate(180deg);color:rgba(255,255,255,.35);line-height:1}
+.dtab .dtab-cnt{background:var(--a1);color:#fff;border-radius:50%;width:15px;height:15px;font-size:.42rem;font-weight:600;display:none;align-items:center;justify-content:center;line-height:1}
+#dtab-cart{top:38%;transform:translateY(-50%);background:var(--bgd)}
+#dtab-cart:hover{background:#3d2e1a}
+#dtab-quote{top:57%;transform:translateY(-50%);background:var(--a2)}
+#dtab-quote:hover{background:var(--a1)}
 </style>
 </head>
 <body id="top">
@@ -475,14 +486,6 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
     <li><a href="#find">Visit</a></li>
     <li><a href="#bes" class="ncta">Order Custom</a></li>
   </ul>
-  <div style="display:flex;align-items:center;gap:2px">
-    <button class="nav-icon-btn" id="nav-cart-btn" onclick="openCartDrawer()" aria-label="Cart" title="Cart">
-      🛒<span class="nav-badge" id="nav-cart-cnt"></span>
-    </button>
-    <button class="nav-icon-btn" id="nav-quote-btn" onclick="openQuoteDrawer()" aria-label="Quote basket" title="Quote Basket">
-      📋<span class="nav-badge" id="nav-quote-cnt"></span>
-    </button>
-  </div>
   <button class="nbur" onclick="toggleNav()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -1082,6 +1085,18 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
   ♡<span class="wl-count" id="wl-count"></span>
 </button>
 
+<!-- DRAWER TABS — always-visible hover triggers on right edge -->
+<button class="dtab" id="dtab-cart" aria-label="Open cart">
+  <span class="dtab-icon">🛒</span>
+  <span class="dtab-cnt" id="dtab-cart-cnt"></span>
+  <span class="dtab-lbl">Cart</span>
+</button>
+<button class="dtab" id="dtab-quote" aria-label="Open quote basket">
+  <span class="dtab-icon">✂️</span>
+  <span class="dtab-cnt" id="dtab-quote-cnt"></span>
+  <span class="dtab-lbl">Quote</span>
+</button>
+
 <!-- CART DRAWER -->
 <div class="dr-ovl" id="cart-ovl" onclick="closeCartDrawer()"></div>
 <aside class="side-drawer" id="cart-drawer" aria-label="Cart">
@@ -1525,11 +1540,15 @@ async function submitF(){
 
   // ── Badge updater
   function updateBadges(){
-    const totalQty=CART.reduce(function(s,i){return s+i.qty;},0);
-    const cc=document.getElementById('nav-cart-cnt');
-    const qc=document.getElementById('nav-quote-cnt');
-    if(cc){cc.textContent=totalQty;cc.style.display=totalQty?'flex':'none';}
-    if(qc){qc.textContent=QUOTE.length;qc.style.display=QUOTE.length?'flex':'none';}
+    var totalQty=CART.reduce(function(s,i){return s+i.qty;},0);
+    ['dtab-cart-cnt','nav-cart-cnt'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el){el.textContent=totalQty;el.style.display=totalQty?'flex':'none';}
+    });
+    ['dtab-quote-cnt','nav-quote-cnt'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el){el.textContent=QUOTE.length;el.style.display=QUOTE.length?'flex':'none';}
+    });
   }
   window._updateCartBadges=updateBadges;
 
@@ -1584,7 +1603,7 @@ async function submitF(){
     var qVal=document.createElement('span');qVal.className='qty-val';qVal.textContent='1';
     var qPls=document.createElement('button');qPls.className='qty-btn';qPls.textContent='+';qPls.type='button';
     qMin.addEventListener('click',function(){var v=parseInt(qVal.textContent,10);if(v>1)qVal.textContent=v-1;});
-    qPls.addEventListener('click',function(){qVal.textContent=parseInt(qVal.textContent,10)+1;});
+    qPls.addEventListener('click',function(){var v=parseInt(qVal.textContent,10);if(v<10)qVal.textContent=v+1;});
     qDiv.appendChild(qLbl);qDiv.appendChild(qMin);qDiv.appendChild(qVal);qDiv.appendChild(qPls);
     info.appendChild(qDiv);
 
@@ -1608,7 +1627,6 @@ async function submitF(){
       addBtn.classList.add('flash');
       addBtn.textContent='Added ✓';
       setTimeout(function(){addBtn.classList.remove('flash');addBtn.textContent='Add to Cart';},1400);
-      setTimeout(function(){window.openCartDrawer();},200);
     });
     info.appendChild(addBtn);
   });
@@ -1664,7 +1682,6 @@ async function submitF(){
       addBtn.classList.add('flash');
       addBtn.textContent='Added ✓';
       setTimeout(function(){addBtn.classList.remove('flash');addBtn.textContent='Add to Quote Basket';},1400);
-      setTimeout(function(){window.openQuoteDrawer();},200);
     });
     info.appendChild(addBtn);
   });
@@ -1929,6 +1946,66 @@ async function submitF(){
       alert('Something went wrong.\n\nPlease call or WhatsApp us:\n📞 0935 023 757');
     }
   };
+})();
+
+// ── HOVER / TAP DRAWER TABS
+(function(){
+  // Detect touch once — shared across both drawers
+  var isTouch=false;
+  window.addEventListener('touchstart',function(){isTouch=true;},{once:true,passive:true});
+
+  function setupTab(tabId,drawerId,ovlId){
+    var tab=document.getElementById(tabId);
+    var drawer=document.getElementById(drawerId);
+    var ovl=document.getElementById(ovlId);
+    if(!tab||!drawer)return;
+    var closeTimer=null;
+
+    function openDr(){
+      clearTimeout(closeTimer);
+      // Close the other drawer if open
+      document.querySelectorAll('.side-drawer.open').forEach(function(d){
+        if(d!==drawer)d.classList.remove('open');
+      });
+      document.querySelectorAll('.dr-ovl.open').forEach(function(o){
+        if(o!==ovl)o.classList.remove('open');
+      });
+      drawer.classList.add('open');
+      if(isTouch&&ovl)ovl.classList.add('open');
+      if(isTouch)document.body.style.overflow='hidden';
+    }
+
+    function closeDr(){
+      clearTimeout(closeTimer);
+      drawer.classList.remove('open');
+      if(ovl)ovl.classList.remove('open');
+      if(!document.querySelector('.side-drawer.open,.chk-modal.open,.wl-drawer.wl-open'))
+        document.body.style.overflow='';
+    }
+
+    function scheduleClose(){
+      clearTimeout(closeTimer);
+      closeTimer=setTimeout(closeDr,160);
+    }
+
+    // Desktop: hover in/out on tab and drawer keeps it open
+    tab.addEventListener('mouseenter',function(){if(!isTouch)openDr();});
+    tab.addEventListener('mouseleave',function(){if(!isTouch)scheduleClose();});
+    drawer.addEventListener('mouseenter',function(){if(!isTouch)clearTimeout(closeTimer);});
+    drawer.addEventListener('mouseleave',function(){if(!isTouch)scheduleClose();});
+
+    // Mobile: tap tab toggles
+    tab.addEventListener('click',function(){
+      if(drawer.classList.contains('open'))closeDr();
+      else openDr();
+    });
+
+    // Overlay click closes (mobile)
+    if(ovl)ovl.addEventListener('click',closeDr);
+  }
+
+  setupTab('dtab-cart','cart-drawer','cart-ovl');
+  setupTab('dtab-quote','quote-drawer','quote-ovl');
 })();
 
 // ── HOURS CHECK
