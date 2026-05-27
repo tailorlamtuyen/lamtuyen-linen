@@ -937,7 +937,7 @@ async function submitF(){
   const orderData={};
   allInputs.forEach(el=>{if(el.name&&el.value.trim()!=='')orderData[el.name]=el.value.trim();});
   // add order reference
-  const ref='LTL-'+Date.now().toString(36).toUpperCase();
+  const arr=new Uint8Array(6);crypto.getRandomValues(arr);const ref='LTL-'+Array.from(arr).map(b=>b.toString(36).toUpperCase()).join('').slice(0,6);
   orderData.order_ref=ref;
   const SURL='https://vyldmdavizedqhihnkwg.supabase.co';
   const SKEY='sb_publishable_2Wua7AAvKSTrMHLT35xjVQ_8JuYqS2b';
@@ -947,7 +947,7 @@ async function submitF(){
       headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':`Bearer ${SKEY}`,'Prefer':'return=minimal'},
       body:JSON.stringify(orderData)
     });
-    if(res.ok||res.status===201){
+    if(res.ok||res.status===201||res.status===409){
       document.getElementById('cform').querySelectorAll('input,select,textarea,button').forEach(el=>el.disabled=true);
       document.getElementById('orderRef').textContent='Order Reference: '+ref;
       const sb=document.getElementById('sb');
