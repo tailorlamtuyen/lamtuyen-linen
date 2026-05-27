@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Measurement Guide — Lam Tuyen Linen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#FAF6EE;--bg2:#F3EDE0;--bg3:#EDE4D0;
+  --a1:#B8935A;--a2:#8C6A38;
+  --th:#2C1F10;--tm:#7A6248;--tdim:#B4A080;
+  --bdr:rgba(184,147,90,0.2);--bdrw:rgba(184,147,90,0.38);
+  --dark:#2C1F10;
+}
+body{background:var(--bg);color:var(--tm);font-family:'Jost',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--a1);border-radius:2px}
+
+/* NAV */
+.gnav{background:var(--dark);padding:0 5vw;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.gnav-brand{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:#E8D8BC;text-decoration:none}
+.gnav-back{font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:rgba(232,216,188,.6);text-decoration:none;transition:color .2s}
+.gnav-back:hover{color:#E8D8BC}
+
+/* HERO */
+.guide-hero{background:var(--dark);padding:60px 5vw 50px;text-align:center;position:relative;overflow:hidden}
+.guide-hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(232,216,188,.015),rgba(232,216,188,.015) 1px,transparent 1px,transparent 30px)}
+.gh-label{font-family:'Jost',sans-serif;font-size:.6rem;font-weight:400;letter-spacing:7px;text-transform:uppercase;color:var(--a1);margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:14px}
+.gh-label::before,.gh-label::after{content:'';display:block;width:28px;height:1px;background:var(--a1);opacity:.6}
+.gh-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:300;color:#F5EDD8;line-height:1.05;margin-bottom:14px}
+.gh-title em{font-style:italic;color:var(--a1)}
+.gh-sub{font-size:.85rem;color:rgba(232,216,188,.55);max-width:620px;margin:0 auto 32px;line-height:2}
+.gh-tips{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.tip-chip{background:rgba(232,216,188,.08);border:1px solid rgba(232,216,188,.12);padding:10px 18px;display:flex;align-items:center;gap:8px;font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(232,216,188,.6)}
+.tip-chip span{font-size:.9rem}
+
+/* PROGRESS / JUMP NAV */
+.jump-nav{background:var(--bg2);border-bottom:1px solid var(--bdr);padding:12px 5vw;display:flex;gap:6px;flex-wrap:wrap;align-items:center;position:sticky;top:60px;z-index:99}
+.jn-label{font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:3px;text-transform:uppercase;color:var(--tdim);margin-right:6px;white-space:nowrap}
+.jn-btn{font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border:1px solid var(--bdr);background:none;color:var(--tdim);cursor:pointer;transition:all .2s;white-space:nowrap}
+.jn-btn:hover,.jn-btn.active{border-color:var(--a1);color:var(--a1)}
+
+/* SECTION HEADER */
+.m-section{padding:60px 5vw}
+.m-section:nth-child(even){background:var(--bg2)}
+.ms-head{margin-bottom:44px}
+.ms-label{font-family:'Jost',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:6px;text-transform:uppercase;color:var(--a1);margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.ms-label::after{content:'';display:block;width:20px;height:1px;background:var(--a1)}
+.ms-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;color:var(--th);line-height:1.1}
+.ms-title em{font-style:italic;color:var(--a1)}
+.ms-intro{font-size:.85rem;color:var(--tm);line-height:1.95;max-width:700px;margin-top:10px}
+
+/* MEASUREMENT CARDS GRID */
+.mcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+@media(max-width:640px){.mcards{grid-template-columns:1fr}}
+
+/* INDIVIDUAL MEASUREMENT CARD */
+.mcard{background:var(--bg);border:1px solid var(--bdr);overflow:hidden;transition:box-shadow .25s}
+.mcard:hover{box-shadow:0 8px 32px rgba(0,0,0,.06)}
+.mcard-top{display:grid;grid-template-columns:140px 1fr;gap:0}
+.mcard-svg{width:140px;min-height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;padding:12px;border-right:1px solid var(--bdr)}
+.mcard-svg svg{width:100%;height:auto;max-height:140px}
+.mcard-info{padding:18px 20px}
+.mcard-num{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;color:var(--a1);display:block;line-height:1;margin-bottom:4px}
+.mcard-name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;color:var(--th);margin-bottom:8px;display:block}
+.mcard-why{font-size:.76rem;color:var(--tdim);font-style:italic;margin-bottom:12px;line-height:1.6}
+.mcard-steps{padding:0 20px 20px}
+.steps-label{font-family:'Jost',sans-serif;font-size:.56rem;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--a1);margin-bottom:10px;border-top:1px solid var(--bdr);padding-top:14px}
+.mstep{display:flex;gap:12px;margin-bottom:8px;align-items:flex-start}
+.mstep-n{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:300;color:var(--a1);min-width:18px;line-height:1.4}
+.mstep-t{font-size:.78rem;color:var(--tm);line-height:1.7}
+.mstep-t strong{color:var(--th);font-weight:400}
+.mcard-tip{background:var(--bg3);border-left:2px solid var(--a1);padding:10px 16px;margin:0 20px 20px;font-size:.74rem;color:var(--tm);line-height:1.75;font-style:italic}
+.mcard-tip strong{font-style:normal;color:var(--th);font-weight:400}
+
+/* INPUT AREA in each card */
+.mcard-input{padding:0 20px 20px;display:flex;align-items:center;gap:10px}
+.mcard-input label{font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--tdim);white-space:nowrap}
+.mcard-input input{flex:1;background:var(--bg2);border:1px solid var(--bdr);padding:9px 12px;font-family:'Jost',sans-serif;font-size:.85rem;color:var(--th);outline:none;transition:border-color .2s;border-radius:0}
+.mcard-input input:focus{border-color:var(--a1)}
+.mcard-input .unit{font-family:'Jost',sans-serif;font-size:.7rem;color:var(--tdim)}
+
+/* SUMMARY FORM */
+.summary-section{background:var(--dark);padding:60px 5vw}
+.sum-inner{max-width:800px;margin:0 auto}
+.sum-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#F5EDD8;margin-bottom:6px}
+.sum-sub{font-family:'Jost',sans-serif;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:rgba(232,216,188,.4);margin-bottom:32px}
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(232,216,188,.1);margin-bottom:28px}
+@media(max-width:540px){.sum-grid{grid-template-columns:repeat(2,1fr)}}
+.sum-cell{background:rgba(255,255,255,.03);padding:14px 16px}
+.sum-cell-label{font-family:'Jost',sans-serif;font-size:.54rem;letter-spacing:2px;text-transform:uppercase;color:rgba(232,216,188,.35);display:block;margin-bottom:4px}
+.sum-cell-val{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#E8D8BC;font-weight:300}
+.sum-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-gold{font-family:'Jost',sans-serif;font-size:.65rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;background:var(--a1);color:#FAF6EE;padding:14px 28px;border:none;cursor:pointer;transition:background .25s}
+.btn-gold:hover{background:var(--a2)}
+.btn-outline-light{font-family:'Jost',sans-serif;font-size:.65rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;background:transparent;color:rgba(232,216,188,.7);padding:14px 28px;border:1px solid rgba(232,216,188,.2);cursor:pointer;transition:all .25s;text-decoration:none;display:inline-block}
+.btn-outline-light:hover{border-color:var(--a1);color:var(--a1)}
+
+/* GENERAL TIPS BOX */
+.tips-box{background:var(--bg2);border:1px solid var(--bdrw);padding:28px 32px;max-width:900px;margin:0 auto 48px}
+.tips-box h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--th);margin-bottom:16px}
+.tips-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:600px){.tips-list{grid-template-columns:1fr}}
+.tip-item{display:flex;gap:10px;font-size:.8rem;color:var(--tm);line-height:1.7}
+.tip-icon{font-size:.9rem;flex-shrink:0;margin-top:2px}
+
+/* BACK TO TOP */
+.btt{text-align:center;padding:32px;background:var(--bg)}
+.btt a{font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--a1);text-decoration:none;border-bottom:1px solid var(--a1);padding-bottom:2px}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.rv.vis{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="gnav">
+  <a href="linen-v3.html" class="gnav-brand">Lam Tuyen Linen</a>
+  <a href="linen-v3.html#bes" class="gnav-back">← Back to Order Form</a>
+</div>
+
+<!-- HERO -->
+<div class="guide-hero">
+  <div class="gh-label">Complete Measurement Guide</div>
+  <h1 class="gh-title">Measure Once.<br><em>Fit Perfectly.</em></h1>
+  <p class="gh-sub">Step-by-step instructions for every measurement we need to create your garment. Follow each guide carefully and your piece will fit as if it was made for you — because it was.</p>
+  <div class="gh-tips">
+    <div class="tip-chip"><span>📏</span> Use a soft tape measure</div>
+    <div class="tip-chip"><span>👕</span> Wear fitted clothing or underwear only</div>
+    <div class="tip-chip"><span>🧍</span> Stand naturally — don't flex or suck in</div>
+    <div class="tip-chip"><span>👥</span> Easier with a helper, but solo works too</div>
+    <div class="tip-chip"><span>📝</span> Record in centimetres (cm)</div>
+  </div>
+</div>
+
+<!-- JUMP NAV -->
+<div class="jump-nav">
+  <span class="jn-label">Jump to:</span>
+  <button class="jn-btn" onclick="scrollTo('upper')">Upper Body</button>
+  <button class="jn-btn" onclick="scrollTo('torso')">Torso & Waist</button>
+  <button class="jn-btn" onclick="scrollTo('lower')">Lower Body</button>
+  <button class="jn-btn" onclick="scrollTo('arms')">Arms</button>
+  <button class="jn-btn" onclick="scrollTo('legs')">Legs</button>
+  <button class="jn-btn" onclick="scrollTo('summary')">My Measurements</button>
+</div>
+
+<!-- GENERAL TIPS -->
+<section style="background:var(--bg2);padding:44px 5vw">
+  <div class="tips-box rv">
+    <h3>Before You Start — Read This First</h3>
+    <div class="tips-list">
+      <div class="tip-item"><span class="tip-icon">📏</span><div>Use a <strong>soft flexible tape measure</strong> — not a stiff metal ruler. A sewing tape is ideal and inexpensive at any market.</div></div>
+      <div class="tip-item"><span class="tip-icon">👕</span><div>Wear <strong>form-fitting clothing or just underwear</strong>. Baggy clothes will add unwanted centimetres to every measurement.</div></div>
+      <div class="tip-item"><span class="tip-icon">🧍</span><div>Stand in your <strong>natural posture</strong>. Feet together, arms relaxed at sides. Don't breathe in or push out — just be normal.</div></div>
+      <div class="tip-item"><span class="tip-icon">🔄</span><div>Measure <strong>twice, record once</strong>. If two readings differ by more than 1cm, take a third and use the middle value.</div></div>
+      <div class="tip-item"><span class="tip-icon">📐</span><div>Keep the tape <strong>parallel to the floor</strong> for all horizontal measurements (chest, waist, hips). Don't let it slope.</div></div>
+      <div class="tip-item"><span class="tip-icon">💬</span><div>When in doubt, <strong>contact us</strong>. We'd rather guide you through it than remake your garment. 0935 023 757.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     UPPER BODY
+═══════════════════════════ -->
+<section class="m-section" id="upper">
+  <div class="ms-head rv">
+    <div class="ms-label">Section 01</div>
+    <h2 class="ms-title">Upper Body<br><em>Measurements</em></h2>
+    <p class="ms-intro">These measurements shape the fit across your shoulders, chest, and upper back — the foundation of any well-made garment.</p>
+  </div>
+  <div class="mcards">
+
+    <!-- CHEST / BUST -->
+    <div class="mcard rv">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <!-- Body outline -->
+            <ellipse cx="50" cy="30" rx="18" ry="22" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <path d="M32 50 Q20 60 18 90 L82 90 Q80 60 68 50" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Chest line -->
+            <line x1="20" y1="58" x2="80" y2="58" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="50" y="54" text-anchor="middle" font-family="Jost" font-size="8" fill="#B8935A">CHEST / BUST</text>
+            <!-- Arrows -->
+            <polygon points="20,58 26,54 26,62" fill="#B8935A"/>
+            <polygon points="80,58 74,54 74,62" fill="#B8935A"/>
+            <!-- Label -->
+            <text x="50" y="110" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Fullest part of chest</text>
+            <text x="50" y="120" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">under arms</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">01</span>
+          <span class="mcard-name">Chest / Bust</span>
+          <div class="mcard-why">Used for all tops, dresses, jackets, and suits. The most important single measurement.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Wrap the tape measure <strong>horizontally around the fullest part of your chest</strong>, directly under your armpits and across your shoulder blades at the back.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">For women: measure at the <strong>fullest point of the bust</strong>. Keep the tape parallel to the floor all the way around.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">The tape should be <strong>snug but not tight</strong> — you should be able to slip one finger under it. Don't breathe in.</div></div>
+        <div class="mstep"><div class="mstep-n">4</div><div class="mstep-t">Note the measurement where the tape end meets the tape. Record in cm.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> If you're between sizes, give us both your chest and your natural waist — we'll grade the pattern to fit both zones perfectly.</div>
+      <div class="mcard-input"><label>My Chest</label><input type="number" class="mval" data-label="Chest/Bust" placeholder="e.g. 92"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- SHOULDER WIDTH -->
+    <div class="mcard rv d1">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="28" rx="16" ry="20" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <path d="M34 46 Q18 54 15 90 L85 90 Q82 54 66 46" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Shoulder line -->
+            <line x1="16" y1="56" x2="84" y2="56" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="16,56 22,52 22,60" fill="#B8935A"/>
+            <polygon points="84,56 78,52 78,60" fill="#B8935A"/>
+            <text x="50" y="52" text-anchor="middle" font-family="Jost" font-size="7" fill="#B8935A">SHOULDER WIDTH</text>
+            <!-- Dot markers at shoulder points -->
+            <circle cx="16" cy="56" r="2.5" fill="#B8935A"/>
+            <circle cx="84" cy="56" r="2.5" fill="#B8935A"/>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Point to point</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">across upper back</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">02</span>
+          <span class="mcard-name">Shoulder Width</span>
+          <div class="mcard-why">Determines where your sleeve begins. Critical for jackets, blouses, and all tops.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand with your arms relaxed at your sides.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Locate the <strong>bony tip of each shoulder</strong> (the acromion point) — this is where your arm socket meets your shoulder.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Measure <strong>from tip to tip across the back</strong> in a straight line (not following the curve of your neck).</div></div>
+        <div class="mstep"><div class="mstep-n">4</div><div class="mstep-t">A helper makes this easier. If measuring alone, use a mirror to check the tape lies flat across your upper back.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> If you're unsure of the exact shoulder point, try gently rolling your arm — the bony bump that moves is it.</div>
+      <div class="mcard-input"><label>My Shoulder</label><input type="number" class="mval" data-label="Shoulder Width" placeholder="e.g. 40"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- NECK -->
+    <div class="mcard rv d2">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="30" rx="16" ry="21" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Neck cylinder -->
+            <path d="M38 48 L38 62 Q50 66 62 62 L62 48" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <ellipse cx="50" cy="48" rx="12" ry="5" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Neck circumference line -->
+            <ellipse cx="50" cy="55" rx="12" ry="5" fill="none" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="50" y="78" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#B8935A">NECK</text>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Base of neck</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">circumference</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">03</span>
+          <span class="mcard-name">Neck Circumference</span>
+          <div class="mcard-why">Used for shirts, collars, and any garment with a close neckline.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Wrap the tape around the <strong>base of your neck</strong>, where a shirt collar would sit.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Add <strong>1–2cm ease</strong> so the collar isn't choking you. The tape should feel comfortable, like a loosely closed collar.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Record the measurement at the front where the tape ends meet.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> If between sizes, go with the larger measurement — a collar can always be taken in; a tight one cannot be let out.</div>
+      <div class="mcard-input"><label>My Neck</label><input type="number" class="mval" data-label="Neck Circumference" placeholder="e.g. 36"><span class="unit">cm</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     TORSO & WAIST
+═══════════════════════════ -->
+<section class="m-section" id="torso">
+  <div class="ms-head rv">
+    <div class="ms-label">Section 02</div>
+    <h2 class="ms-title">Torso &amp; Waist<br><em>Measurements</em></h2>
+    <p class="ms-intro">These measurements shape the middle of the body and ensure garments sit correctly at the natural waist, hips, and crotch.</p>
+  </div>
+  <div class="mcards">
+
+    <!-- WAIST -->
+    <div class="mcard rv">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="28" rx="16" ry="20" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <path d="M34 46 Q22 55 20 70 Q18 80 22 90 L78 90 Q82 80 80 70 Q78 55 66 46" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Waist line -->
+            <line x1="22" y1="70" x2="78" y2="70" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="22,70 28,66 28,74" fill="#B8935A"/>
+            <polygon points="78,70 72,66 72,74" fill="#B8935A"/>
+            <text x="50" y="66" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#B8935A">NATURAL WAIST</text>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Narrowest point</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">of the torso</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">04</span>
+          <span class="mcard-name">Natural Waist</span>
+          <div class="mcard-why">The narrowest part of your torso. Defines where all waistbands, waist seams, and dresses nip in.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand relaxed. <strong>Bend slightly to one side</strong> — the crease that forms is your natural waist.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Wrap the tape <strong>around this crease</strong>, keeping it parallel to the floor all the way around.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">The tape should be <strong>comfortably snug</strong> — you can fit one finger underneath but it's not loose.</div></div>
+        <div class="mstep"><div class="mstep-n">4</div><div class="mstep-t">Do NOT suck in your stomach. Breathe normally and measure at the end of a natural exhale.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> Your natural waist is usually 2–3cm above your belly button, not at belt level.</div>
+      <div class="mcard-input"><label>My Waist</label><input type="number" class="mval" data-label="Natural Waist" placeholder="e.g. 74"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- HIPS -->
+    <div class="mcard rv d1">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <path d="M38 20 Q20 28 18 50 Q16 68 18 90 L82 90 Q84 68 82 50 Q80 28 62 20 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Hip line -->
+            <line x1="18" y1="72" x2="82" y2="72" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="18,72 24,68 24,76" fill="#B8935A"/>
+            <polygon points="82,72 76,68 76,76" fill="#B8935A"/>
+            <text x="50" y="68" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#B8935A">HIPS</text>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Fullest part of</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">the hips &amp; seat</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">05</span>
+          <span class="mcard-name">Hip Circumference</span>
+          <div class="mcard-why">Used for all bottoms, dresses, and any garment below the waist. Essential for skirts and trousers.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand with your <strong>feet together</strong>. The hip measurement is taken at the fullest part of your hips and buttocks.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">This is typically <strong>18–23cm below your natural waist</strong>, at the widest point of your hips/seat.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Wrap the tape <strong>all the way around</strong>, keeping it parallel to the floor. Make sure it passes over the fullest part of both hips.</div></div>
+        <div class="mstep"><div class="mstep-n">4</div><div class="mstep-t">Keep it <strong>snug but not tight</strong>. Don't pull the tape — it should sit against your body without pressing in.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> Check in a mirror that the tape is level all the way around — it often dips at the back.</div>
+      <div class="mcard-input"><label>My Hips</label><input type="number" class="mval" data-label="Hip Circumference" placeholder="e.g. 96"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- CROTCH / RISE -->
+    <div class="mcard rv d2">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <!-- Body lower half -->
+            <path d="M30 10 Q20 20 18 40 Q16 55 18 70 L30 90 L50 70 L70 90 L82 70 Q84 55 82 40 Q80 20 70 10 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Waistband line -->
+            <line x1="18" y1="40" x2="82" y2="40" stroke="#C9B68A" stroke-width="1" stroke-dasharray="3,3"/>
+            <!-- Rise measurement line (vertical) -->
+            <line x1="50" y1="40" x2="50" y2="70" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="50,40 46,48 54,48" fill="#B8935A"/>
+            <polygon points="50,70 46,62 54,62" fill="#B8935A"/>
+            <text x="62" y="56" font-family="Jost" font-size="6.5" fill="#B8935A">RISE</text>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Front waistband</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">to back waistband</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">06</span>
+          <span class="mcard-name">Crotch / Rise</span>
+          <div class="mcard-why">Front waistband to back waistband passing between the legs. Critical for all trousers, shorts, and fitted skirts.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t"><strong>Method A (sitting):</strong> Sit on a hard, flat chair. Measure from your natural waist down the side of your body to the seat of the chair. This gives your total rise.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t"><strong>Method B (standing):</strong> Hold one end of the tape at your front waistband centre. Pass it down through your legs and up to the centre back waistband. Record the total.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Also record your <strong>front rise</strong> (from waist centre front to crotch seam) and <strong>back rise</strong> (from crotch seam to waist centre back) separately if you can.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> Rise affects comfort significantly. If you have a longer torso, tell us — we'll adjust the trouser rise so it never pulls or gaps.</div>
+      <div class="mcard-input"><label>My Rise</label><input type="number" class="mval" data-label="Crotch/Rise (front to back)" placeholder="e.g. 68"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- TORSO LENGTH (shoulder to waist) -->
+    <div class="mcard rv">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="25" rx="15" ry="19" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <path d="M35 42 Q22 52 20 72 Q18 80 22 90 L78 90 Q82 80 80 72 Q78 52 65 42" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Vertical torso line -->
+            <line x1="50" y1="42" x2="50" y2="72" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="50,42 46,50 54,50" fill="#B8935A"/>
+            <polygon points="50,72 46,64 54,64" fill="#B8935A"/>
+            <circle cx="50" cy="42" r="2.5" fill="#B8935A"/>
+            <circle cx="50" cy="72" r="2.5" fill="#B8935A"/>
+            <text x="58" y="58" font-family="Jost" font-size="6" fill="#B8935A">TORSO</text>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Shoulder to</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">natural waist</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">07</span>
+          <span class="mcard-name">Torso / Back Length</span>
+          <div class="mcard-why">From the top of the shoulder to the natural waist. Positions waist seams correctly on all dresses, blouses, and jackets.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand straight. Place one end of the tape at the <strong>highest point of your shoulder</strong> (at the shoulder seam point).</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Run the tape straight down your back to your <strong>natural waist line</strong> (where you bend sideways).</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Keep the tape flat against your back — don't let it swing around the side.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> This is especially important for fitted dresses. Different from your total height.</div>
+      <div class="mcard-input"><label>My Torso</label><input type="number" class="mval" data-label="Torso/Back Length" placeholder="e.g. 42"><span class="unit">cm</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     ARMS
+═══════════════════════════ -->
+<section class="m-section" id="arms">
+  <div class="ms-head rv">
+    <div class="ms-label">Section 03</div>
+    <h2 class="ms-title">Arm<br><em>Measurements</em></h2>
+    <p class="ms-intro">Sleeve length, bicep, tricep, and wrist measurements ensure your sleeves fit beautifully whether loose and flowing or fitted.</p>
+  </div>
+  <div class="mcards">
+
+    <!-- SLEEVE LENGTH -->
+    <div class="mcard rv">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <!-- Arm shape -->
+            <path d="M30 15 Q20 20 18 40 Q16 55 20 70 Q24 78 30 80 L40 80 Q44 78 46 70 Q48 55 46 40 Q44 20 38 15 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Sleeve length line -->
+            <line x1="34" y1="15" x2="34" y2="80" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="34,15 30,23 38,23" fill="#B8935A"/>
+            <polygon points="34,80 30,72 38,72" fill="#B8935A"/>
+            <text x="55" y="48" font-family="Jost" font-size="7" fill="#B8935A">SLEEVE</text>
+            <text x="55" y="57" font-family="Jost" font-size="7" fill="#B8935A">LENGTH</text>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Shoulder tip</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">to wrist</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">08</span>
+          <span class="mcard-name">Sleeve Length</span>
+          <div class="mcard-why">Determines how long your sleeves are. Give us both your full-length and preferred short-sleeve length if ordering a shirt.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t"><strong>For long sleeve:</strong> Bend your elbow slightly (about 45°). Measure from the <strong>tip of your shoulder</strong> (shoulder point), along the outside of your arm, over the elbow bend, down to your <strong>wrist bone</strong>.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t"><strong>For short sleeve:</strong> Measure from the shoulder tip to wherever you'd like the sleeve to end — mid upper arm, elbow, or forearm.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Tell us your <strong>preferred sleeve end point</strong> in your style notes.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> Linen sleeves will drape. Always measure with your arm slightly bent — a straight arm gives a sleeve that's too short when you reach forward.</div>
+      <div class="mcard-input"><label>My Sleeve</label><input type="number" class="mval" data-label="Sleeve Length" placeholder="e.g. 62"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- BICEP -->
+    <div class="mcard rv d1">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25 20 Q15 28 14 50 Q14 65 20 75 L36 75 Q42 65 42 50 Q42 28 36 20 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Bicep circumference at fullest point -->
+            <ellipse cx="28" cy="42" rx="14" ry="6" fill="none" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3" transform="rotate(-8,28,42)"/>
+            <text x="55" y="38" font-family="Jost" font-size="7.5" fill="#B8935A">BICEP</text>
+            <line x1="42" y1="42" x2="55" y2="40" stroke="#B8935A" stroke-width="1"/>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Fullest part</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">of upper arm</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">09</span>
+          <span class="mcard-name">Bicep Circumference</span>
+          <div class="mcard-why">Used to size sleeve openings. Prevents tight sleeves that restrict movement or bunch at the arm.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Let your arm hang <strong>relaxed at your side</strong>. Do not flex.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Wrap the tape around the <strong>thickest part of your upper arm</strong> — usually about one-third of the way from shoulder to elbow.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Keep the tape <strong>snug but comfortable</strong> — you shouldn't feel pressure.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> For fitted sleeves we add 3–4cm ease. If you prefer a looser sleeve, note that in your style instructions.</div>
+      <div class="mcard-input"><label>My Bicep</label><input type="number" class="mval" data-label="Bicep Circumference" placeholder="e.g. 32"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- TRICEP / UPPER ARM BACK -->
+    <div class="mcard rv d2">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25 20 Q15 28 14 50 Q14 65 20 75 L36 75 Q42 65 42 50 Q42 28 36 20 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Tricep line at elbow fold -->
+            <ellipse cx="28" cy="55" rx="14" ry="6" fill="none" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3" transform="rotate(-5,28,55)"/>
+            <text x="55" y="52" font-family="Jost" font-size="7.5" fill="#B8935A">TRICEP</text>
+            <line x1="42" y1="55" x2="55" y2="53" stroke="#B8935A" stroke-width="1"/>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Circumference</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">mid upper arm</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">10</span>
+          <span class="mcard-name">Tricep / Mid-Arm</span>
+          <div class="mcard-why">The circumference at the mid-upper arm (back of arm). Important for fitted sleeves that need to move with you.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Arm relaxed at your side.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Measure around the <strong>midpoint of your upper arm</strong> — halfway between shoulder tip and elbow point.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">This is similar to bicep but positioned slightly lower and will be a slightly different measurement for most people.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> This measurement primarily affects flutter and wide sleeves. If ordering a loose blouse, a rough estimate is fine.</div>
+      <div class="mcard-input"><label>My Tricep</label><input type="number" class="mval" data-label="Tricep/Mid-Arm" placeholder="e.g. 30"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- WRIST -->
+    <div class="mcard rv">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <!-- Forearm + wrist -->
+            <path d="M32 20 Q22 28 20 55 Q18 68 22 80 L38 80 Q42 68 40 55 Q40 28 38 20 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <ellipse cx="30" cy="72" rx="10" ry="5" fill="none" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="55" y="70" font-family="Jost" font-size="7.5" fill="#B8935A">WRIST</text>
+            <line x1="40" y1="72" x2="55" y2="71" stroke="#B8935A" stroke-width="1"/>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Wrist joint</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">circumference</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">11</span>
+          <span class="mcard-name">Wrist Circumference</span>
+          <div class="mcard-why">Used for cuffs and tight long sleeves. Ensures buttons close comfortably.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Measure around the <strong>wrist joint</strong> — where your wrist bends, just below the wrist bone.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Keep the tape <strong>snug but not tight</strong>. You should be able to move your wrist comfortably.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> For loose or button cuffs, we add 2–3cm ease automatically.</div>
+      <div class="mcard-input"><label>My Wrist</label><input type="number" class="mval" data-label="Wrist Circumference" placeholder="e.g. 16"><span class="unit">cm</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     LOWER BODY
+═══════════════════════════ -->
+<section class="m-section" id="lower">
+  <div class="ms-head rv">
+    <div class="ms-label">Section 04</div>
+    <h2 class="ms-title">Lower Body<br><em>Measurements</em></h2>
+    <p class="ms-intro">For trousers, skirts, and all garments from the waist down. These ensure the perfect fit from hip to hem.</p>
+  </div>
+  <div class="mcards">
+
+    <!-- INSEAM -->
+    <div class="mcard rv">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30 10 L26 55 L22 100 L36 100 L42 55" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <path d="M70 10 L74 55 L78 100 L64 100 L58 55" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <line x1="42" y1="55" x2="58" y2="55" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Inseam line -->
+            <line x1="36" y1="55" x2="36" y2="100" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="36,55 32,63 40,63" fill="#B8935A"/>
+            <polygon points="36,100 32,92 40,92" fill="#B8935A"/>
+            <text x="52" y="78" font-family="Jost" font-size="7" fill="#B8935A">INSEAM</text>
+            <text x="50" y="114" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Crotch seam</text>
+            <text x="50" y="123" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">to ankle</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">12</span>
+          <span class="mcard-name">Inseam Length</span>
+          <div class="mcard-why">The inside leg measurement. Determines trouser length and hem placement.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand with your feet about <strong>shoulder-width apart</strong>.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Place one end of the tape at your <strong>crotch seam</strong> (where a trouser seam would sit between your legs).</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Run the tape down the <strong>inside of your leg</strong> to your ankle bone.</div></div>
+        <div class="mstep"><div class="mstep-n">4</div><div class="mstep-t">Also tell us your <strong>preferred hem level</strong>: ankle, just above ankle, floor-length, or a specific cm from the floor.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> It's easier with a friend. If measuring alone, a well-fitting pair of trousers you already own gives a reliable inseam measurement.</div>
+      <div class="mcard-input"><label>My Inseam</label><input type="number" class="mval" data-label="Inseam Length" placeholder="e.g. 78"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- THIGH -->
+    <div class="mcard rv d1">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30 10 L22 60 L24 100 L36 100 L40 60 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Thigh circumference -->
+            <ellipse cx="31" cy="30" rx="9" ry="4.5" fill="none" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3" transform="rotate(-5,31,30)"/>
+            <text x="52" y="28" font-family="Jost" font-size="7.5" fill="#B8935A">THIGH</text>
+            <line x1="40" y1="30" x2="52" y2="29" stroke="#B8935A" stroke-width="1"/>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Fullest part</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">of upper leg</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">13</span>
+          <span class="mcard-name">Thigh Circumference</span>
+          <div class="mcard-why">The widest part of your upper leg. Critical for trousers — ensures you can sit and move without pulling.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand with your feet <strong>hip-width apart</strong>, weight evenly distributed.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Wrap the tape around the <strong>fullest part of your upper thigh</strong> — usually about 3–5cm below the crotch.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Keep the tape <strong>parallel to the floor</strong>. Snug but not compressing.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> Don't forget to measure — many people skip this and end up with trousers that fit the waist but are too tight to sit in.</div>
+      <div class="mcard-input"><label>My Thigh</label><input type="number" class="mval" data-label="Thigh Circumference" placeholder="e.g. 58"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- CALF -->
+    <div class="mcard rv d2">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 10 Q22 20 20 45 Q18 60 22 80 L30 95 L38 80 Q42 60 40 45 Q38 20 32 10 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Calf circumference -->
+            <ellipse cx="30" cy="42" rx="10" ry="5" fill="none" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3" transform="rotate(-3,30,42)"/>
+            <text x="52" y="40" font-family="Jost" font-size="7.5" fill="#B8935A">CALF</text>
+            <line x1="40" y1="42" x2="52" y2="41" stroke="#B8935A" stroke-width="1"/>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Fullest part</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">of lower leg</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">14</span>
+          <span class="mcard-name">Calf Circumference</span>
+          <div class="mcard-why">The widest part of the lower leg. Important for cropped trousers, fitted pants, and any leg that tapers below the knee.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand with weight on both feet.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Wrap the tape around the <strong>fullest part of your calf muscle</strong> — usually about midway between knee and ankle.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Keep tape parallel to the floor. <strong>Don't tense your calf</strong> — stand relaxed.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> Required only for tapered, cropped, or fitted leg styles. For wide-leg linen trousers, this is less critical.</div>
+      <div class="mcard-input"><label>My Calf</label><input type="number" class="mval" data-label="Calf Circumference" placeholder="e.g. 36"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- ANKLE -->
+    <div class="mcard rv">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 20 Q22 35 20 60 Q18 75 22 88 Q28 95 34 96 Q40 95 44 88 Q48 75 46 60 Q44 35 38 20 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Ankle circumference -->
+            <ellipse cx="33" cy="80" rx="9" ry="4.5" fill="none" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="54" y="78" font-family="Jost" font-size="7.5" fill="#B8935A">ANKLE</text>
+            <line x1="44" y1="80" x2="54" y2="79" stroke="#B8935A" stroke-width="1"/>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Narrowest part</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">above the ankle bone</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">15</span>
+          <span class="mcard-name">Ankle Circumference</span>
+          <div class="mcard-why">Used for tapered trousers and any hem that narrows toward the ankle. Ensures the hem slides on and off comfortably.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Measure around the <strong>narrowest part of your ankle</strong> — just above the ankle bone joint.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Keep the tape <strong>snug</strong>. This measurement ensures tapered hems don't need to be stepped into — they can be pulled on.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> For wide-leg or straight trousers, skip this one. Only needed for fitted, tapered, or cropped styles.</div>
+      <div class="mcard-input"><label>My Ankle</label><input type="number" class="mval" data-label="Ankle Circumference" placeholder="e.g. 22"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- KNEE -->
+    <div class="mcard rv d1">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <path d="M28 10 Q20 25 18 55 Q17 65 20 75 Q28 85 34 86 Q40 85 46 75 Q50 65 48 55 Q46 25 38 10 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Knee circumference -->
+            <ellipse cx="33" cy="56" rx="12" ry="5.5" fill="none" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="56" y="54" font-family="Jost" font-size="7.5" fill="#B8935A">KNEE</text>
+            <line x1="46" y1="56" x2="56" y2="55" stroke="#B8935A" stroke-width="1"/>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Around the</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">knee cap</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">16</span>
+          <span class="mcard-name">Knee Circumference</span>
+          <div class="mcard-why">Needed for mid-knee hems and trouser legs that fit closely around the knee — like tapered or cigarette trousers.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand with leg <strong>straight and relaxed</strong>.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Wrap the tape around the <strong>centre of the kneecap</strong>.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Keep the tape <strong>parallel to the floor</strong>. Snug but not tight.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> Only relevant for fitted trousers. For wide-leg or relaxed styles, leave this blank.</div>
+      <div class="mcard-input"><label>My Knee</label><input type="number" class="mval" data-label="Knee Circumference" placeholder="e.g. 38"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- OUTSEAM / TROUSER LENGTH -->
+    <div class="mcard rv d2">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30 10 L22 55 L20 100 L36 100 L40 55 Z" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Outseam line (outside) -->
+            <line x1="22" y1="10" x2="22" y2="100" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="22,10 18,18 26,18" fill="#B8935A"/>
+            <polygon points="22,100 18,92 26,92" fill="#B8935A"/>
+            <text x="52" y="55" font-family="Jost" font-size="7" fill="#B8935A">OUTSEAM</text>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Waist to ankle</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">outer leg</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">17</span>
+          <span class="mcard-name">Outseam / Total Leg Length</span>
+          <div class="mcard-why">From waist to desired hem along the outside of the leg. Used alongside inseam to confirm trouser length proportions.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand straight. Measure from your <strong>natural waistline</strong>, down the <strong>outside of your leg</strong>, to the point where you want the hem.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">For full-length: measure to the ankle bone or floor (specify which).</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Note in your style description whether you want the hem to just graze the floor, sit at the ankle, or at another point.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> Linen moves and breathes — floor-length linen pants are beautiful. Just specify your shoe heel height if applicable.</div>
+      <div class="mcard-input"><label>My Outseam</label><input type="number" class="mval" data-label="Outseam/Trouser Length" placeholder="e.g. 100"><span class="unit">cm</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════
+     ADDITIONAL
+═══════════════════════════ -->
+<section class="m-section" id="legs">
+  <div class="ms-head rv">
+    <div class="ms-label">Section 05</div>
+    <h2 class="ms-title">Additional<br><em>Measurements</em></h2>
+    <p class="ms-intro">Height, dress length, and overall garment length — these finish off the complete picture and ensure your garment is the exact right length for your body.</p>
+  </div>
+  <div class="mcards">
+
+    <!-- HEIGHT -->
+    <div class="mcard rv">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <!-- Full body silhouette -->
+            <ellipse cx="50" cy="20" rx="12" ry="14" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <path d="M38 33 Q28 45 26 65 Q24 78 28 90 L38 90 L42 65 L48 90 L58 90 L62 65 L66 90 L72 90 Q76 78 74 65 Q72 45 62 33" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Height arrows -->
+            <line x1="18" y1="6" x2="18" y2="90" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="18,6 14,14 22,14" fill="#B8935A"/>
+            <polygon points="18,90 14,82 22,82" fill="#B8935A"/>
+            <text x="32" y="50" font-family="Jost" font-size="7" fill="#B8935A">HEIGHT</text>
+            <text x="50" y="110" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Top of head</text>
+            <text x="50" y="120" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">to floor</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">18</span>
+          <span class="mcard-name">Total Height</span>
+          <div class="mcard-why">Gives us your overall proportions. Used to proportion the entire garment to your frame, especially for dresses and sets.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand <strong>barefoot</strong> against a wall, feet together, standing as tall as naturally possible.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Place a flat book or ruler on top of your head, mark the wall, and measure from that mark to the floor.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Or simply step on a scale with a height measure — most record in cm.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> Always give barefoot height. If you'll wear heels with the garment, tell us the heel height and we'll adjust the hem accordingly.</div>
+      <div class="mcard-input"><label>My Height</label><input type="number" class="mval" data-label="Total Height" placeholder="e.g. 165"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- DESIRED DRESS / GARMENT LENGTH -->
+    <div class="mcard rv d1">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="18" rx="12" ry="14" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <path d="M38 30 Q28 38 24 55 Q20 72 22 90 L78 90 Q80 72 76 55 Q72 38 62 30" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Shoulder to desired hem -->
+            <line x1="50" y1="30" x2="50" y2="75" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="50,30 46,38 54,38" fill="#B8935A"/>
+            <polygon points="50,75 46,67 54,67" fill="#B8935A"/>
+            <circle cx="50" cy="75" r="3" fill="none" stroke="#B8935A" stroke-width="1.5"/>
+            <text x="60" y="54" font-family="Jost" font-size="7" fill="#B8935A">DESIRED</text>
+            <text x="60" y="62" font-family="Jost" font-size="7" fill="#B8935A">LENGTH</text>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Shoulder to</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">desired hem</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">19</span>
+          <span class="mcard-name">Desired Garment Length</span>
+          <div class="mcard-why">From the highest shoulder point to where you want the hem to fall. The most direct way to specify how long a dress or top should be.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Place one end of the tape at your <strong>highest shoulder point</strong>.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Let the tape fall straight down the front of your body to the <strong>point where you want the hem</strong>.</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">Common references: mini = 50–60cm, midi = 90–105cm, maxi/floor = 130–145cm (varies by height).</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> If you have a dress you already love the length of, measure from its shoulder seam to the hem and give us that number.</div>
+      <div class="mcard-input"><label>My Length</label><input type="number" class="mval" data-label="Desired Garment Length" placeholder="e.g. 105"><span class="unit">cm</span></div>
+    </div>
+
+    <!-- BACK WIDTH -->
+    <div class="mcard rv d2">
+      <div class="mcard-top">
+        <div class="mcard-svg">
+          <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="24" rx="15" ry="18" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <path d="M35 40 Q22 50 20 70 L80 70 Q78 50 65 40" fill="none" stroke="#C9B68A" stroke-width="1.5"/>
+            <!-- Back width line -->
+            <line x1="26" y1="52" x2="74" y2="52" stroke="#B8935A" stroke-width="2" stroke-dasharray="4,3"/>
+            <polygon points="26,52 32,48 32,56" fill="#B8935A"/>
+            <polygon points="74,52 68,48 68,56" fill="#B8935A"/>
+            <text x="50" y="46" text-anchor="middle" font-family="Jost" font-size="7" fill="#B8935A">BACK WIDTH</text>
+            <text x="50" y="108" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">Armhole to armhole</text>
+            <text x="50" y="118" text-anchor="middle" font-family="Jost" font-size="7.5" fill="#9A8060">across mid back</text>
+          </svg>
+        </div>
+        <div class="mcard-info">
+          <span class="mcard-num">20</span>
+          <span class="mcard-name">Back Width</span>
+          <div class="mcard-why">From underarm seam to underarm seam across the widest part of the back. Prevents pulling across the back of jackets and blouses.</div>
+        </div>
+      </div>
+      <div class="mcard-steps">
+        <div class="steps-label">Step-by-Step Instructions</div>
+        <div class="mstep"><div class="mstep-n">1</div><div class="mstep-t">Stand naturally with arms relaxed.</div></div>
+        <div class="mstep"><div class="mstep-n">2</div><div class="mstep-t">Measure horizontally across your back <strong>from one armhole to the other</strong>, at the widest point of the upper back (below the shoulder blades).</div></div>
+        <div class="mstep"><div class="mstep-n">3</div><div class="mstep-t">This is about halfway between your shoulder and natural waist on your back.</div></div>
+      </div>
+      <div class="mcard-tip"><strong>Tip:</strong> A helper is very useful here. If measuring alone, measure a well-fitting shirt across the back and use that figure.</div>
+      <div class="mcard-input"><label>My Back Width</label><input type="number" class="mval" data-label="Back Width" placeholder="e.g. 36"><span class="unit">cm</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SUMMARY / SUBMIT -->
+<section class="summary-section" id="summary">
+  <div class="sum-inner">
+    <div class="sum-title rv">Your Complete Measurements</div>
+    <p class="sum-sub rv">Auto-filled from above — review before copying to order form</p>
+    <div class="sum-grid rv" id="sumGrid">
+      <!-- filled by JS -->
+    </div>
+    <div class="sum-actions rv">
+      <button class="btn-gold" onclick="copyMeasurements()">📋 Copy All to Clipboard</button>
+      <a href="linen-v3.html#bes" class="btn-outline-light">→ Go to Order Form</a>
+    </div>
+    <div id="copyMsg" style="display:none;margin-top:16px;font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:#B8935A">✓ Measurements copied! Paste them into the order form notes.</div>
+  </div>
+</section>
+
+<div class="btt"><a href="#top">↑ Back to Top</a></div>
+
+<script>
+// ── SCROLL REVEAL ─────────────────────────────
+const io = new IntersectionObserver(
+  es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }),
+  { threshold: 0.08 }
+);
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+  document.querySelectorAll('.jn-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function buildSummary() {
+  const grid = document.getElementById('sumGrid');
+  grid.innerHTML = '';
+  document.querySelectorAll('.mval').forEach(input => {
+    const cell = document.createElement('div');
+    cell.className = 'sum-cell';
+    const lbl = input.getAttribute('data-label') || '';
+    cell.innerHTML = '<span class="sum-cell-label">'+lbl+'</span><span class="sum-cell-val" id="sv-'+lbl.replace(/[\s\/]/g,'_')+'">'+( input.value ? input.value+' cm' : '—')+'</span>';
+    grid.appendChild(cell);
+  });
+}
+
+document.querySelectorAll('.mval').forEach(input => {
+  input.addEventListener('input', () => {
+    const id = 'sv-' + (input.getAttribute('data-label')||'').replace(/[\s\/]/g,'_');
+    const el = document.getElementById(id);
+    if (el) el.textContent = input.value ? input.value+' cm' : '—';
+  });
+});
+
+function copyMeasurements() {
+  let text = 'LAM TUYEN LINEN — MY MEASUREMENTS\n=====================================\n';
+  document.querySelectorAll('.mval').forEach(input => {
+    if (input.value) text += (input.getAttribute('data-label')||'') + ': ' + input.value + ' cm\n';
+  });
+  text += '\nPlease use these measurements for my custom order.';
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => showCopyMsg());
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); showCopyMsg();
+  }
+}
+function showCopyMsg() {
+  const m = document.getElementById('copyMsg');
+  if (m) { m.style.display='block'; setTimeout(()=>m.style.display='none', 4000); }
+}
+
+buildSummary();
+</script>
+</body>
+</html>
