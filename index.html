@@ -315,6 +315,10 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
   .shop-tab{padding:12px 16px;font-size:.6rem}
 }
 </style>
+<!-- Google Places Autocomplete — replace YOUR_GOOGLE_MAPS_API_KEY with your real key -->
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initGooglePlaces">
+</script>
 </head>
 <body id="top">
 
@@ -979,6 +983,73 @@ async function submitF(){
     if(dot&&lbl){dot.style.background='#C0392B';dot.style.animation='none';lbl.style.color='#C0392B';lbl.innerHTML='<div style="width:6px;height:6px;border-radius:50%;background:#C0392B;display:inline-block;margin-right:7px"></div>Closed · Opens 8AM';}
   }
 })();
+
+// ── GOOGLE PLACES AUTOCOMPLETE
+// Maps Google's country names to the values used in the <select id="f-country"> dropdown.
+const COUNTRY_MAP={
+  'Vietnam':'Vietnam','Japan':'Japan','South Korea':'South Korea',
+  'United States':'United States','Australia':'Australia','France':'France',
+  'United Kingdom':'United Kingdom','Germany':'Germany','Canada':'Canada',
+  'China':'China','Singapore':'Singapore','Thailand':'Thailand',
+  'Indonesia':'Indonesia','Malaysia':'Malaysia','Philippines':'Philippines',
+  'Taiwan':'Taiwan','Hong Kong':'Hong Kong','New Zealand':'New Zealand',
+  'Netherlands':'Netherlands','Belgium':'Belgium','Switzerland':'Switzerland',
+  'Italy':'Italy','Spain':'Spain','Sweden':'Sweden','Norway':'Norway',
+  'Denmark':'Denmark','Finland':'Finland','Poland':'Poland',
+  'Czech Republic':'Czech Republic','Austria':'Austria','Portugal':'Portugal',
+  'Greece':'Greece','Ireland':'Ireland','Brazil':'Brazil','Mexico':'Mexico',
+  'Argentina':'Argentina','India':'India','United Arab Emirates':'United Arab Emirates',
+  'Saudi Arabia':'Saudi Arabia','Israel':'Israel','South Africa':'South Africa',
+  'Egypt':'Egypt'
+};
+
+function initGooglePlaces(){
+  const input=document.getElementById('f-address');
+  if(!input)return;
+  const ac=new google.maps.places.Autocomplete(input,{
+    types:['address'],
+    fields:['address_components','formatted_address']
+  });
+  ac.addListener('place_changed',function(){
+    const place=ac.getPlace();
+    if(!place.address_components)return;
+    let streetNumber='',route='',city='',postal='',country='';
+    place.address_components.forEach(function(c){
+      const t=c.types;
+      if(t.includes('street_number'))streetNumber=c.long_name;
+      else if(t.includes('route'))route=c.long_name;
+      else if(t.includes('locality'))city=c.long_name;
+      else if(!city&&t.includes('sublocality_level_1'))city=c.long_name;
+      else if(!city&&t.includes('administrative_area_level_2'))city=c.long_name;
+      else if(t.includes('postal_code'))postal=c.long_name;
+      else if(t.includes('country'))country=c.long_name;
+    });
+    // Build street address: "123 Main St" or just the route if no number
+    const street=streetNumber?streetNumber+' '+route:route;
+    if(street)input.value=street;
+    if(city)document.getElementById('f-city').value=city;
+    if(postal)document.getElementById('f-postal').value=postal;
+    if(country){
+      const sel=document.getElementById('f-country');
+      const mapped=COUNTRY_MAP[country];
+      if(mapped){
+        // Find matching <option> and select it
+        for(let i=0;i<sel.options.length;i++){
+          if(sel.options[i].value===mapped||sel.options[i].text===mapped){
+            sel.selectedIndex=i;break;
+          }
+        }
+      }else{
+        // Country not in dropdown — select "Other" and append country to address
+        for(let i=0;i<sel.options.length;i++){
+          if(sel.options[i].value==='Other'||sel.options[i].text==='Other'){sel.selectedIndex=i;break;}
+        }
+        // Append country to address field so it's not lost
+        if(input.value)input.value=input.value+', '+country;
+      }
+    }
+  });
+}
 </script>
 </body>
 </html>
