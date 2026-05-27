@@ -948,6 +948,16 @@ async function submitF(){
       body:JSON.stringify(orderData)
     });
     if(res.ok||res.status===201){
+      // Trigger rapid-task edge function to send confirmation email via Resend
+      try{
+        await fetch(`${SURL}/functions/v1/rapid-task`,{
+          method:'POST',
+          headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':`Bearer ${SKEY}`},
+          body:JSON.stringify({...orderData,name,email,phone,garment,country,address})
+        });
+      }catch(edgeErr){
+        console.warn('Edge function call failed:',edgeErr);
+      }
       document.getElementById('cform').querySelectorAll('input,select,textarea,button').forEach(el=>el.disabled=true);
       document.getElementById('orderRef').textContent='Order Reference: '+ref;
       const sb=document.getElementById('sb');
