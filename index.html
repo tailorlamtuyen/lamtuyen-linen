@@ -365,6 +365,101 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
 .wa-float{position:fixed;bottom:28px;right:28px;z-index:9000;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,.38);text-decoration:none;transition:transform .25s,box-shadow .25s}
 .wa-float:hover{transform:scale(1.1);box-shadow:0 6px 26px rgba(37,211,102,.5)}
 .wa-float svg{width:27px;height:27px;fill:#fff}
+
+/* ── CART / QUOTE — PRODUCT CARD UI */
+.card-colours{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0 8px}
+.cc-dot{width:18px;height:18px;border-radius:50%;cursor:pointer;transition:transform .18s,box-shadow .18s;flex-shrink:0;box-shadow:0 0 0 1.5px rgba(0,0,0,.1)}
+.cc-dot:hover{transform:scale(1.2)}
+.cc-dot.on{box-shadow:0 0 0 2px var(--bg1),0 0 0 4px var(--a1)}
+.card-sizes{display:flex;gap:4px;flex-wrap:wrap;margin:0 0 8px}
+.csz{font-family:'Jost',sans-serif;font-size:.52rem;letter-spacing:1px;padding:4px 8px;border:1px solid var(--bdrw);color:var(--tm);cursor:pointer;transition:all .2s;background:none;font-weight:300}
+.csz:hover,.csz.on{border-color:var(--a1);color:var(--th);background:rgba(184,147,90,.08)}
+.card-qty{display:flex;align-items:center;gap:8px;margin:0 0 8px}
+.qty-lbl{font-family:'Jost',sans-serif;font-size:.52rem;letter-spacing:2px;text-transform:uppercase;color:var(--tdim)}
+.qty-btn{width:26px;height:26px;border:1px solid var(--bdrw);background:none;cursor:pointer;font-size:.88rem;color:var(--tm);display:inline-flex;align-items:center;justify-content:center;transition:all .2s;line-height:1}
+.qty-btn:hover{border-color:var(--a1);color:var(--a1)}
+.qty-val{font-family:'Jost',sans-serif;font-size:.82rem;color:var(--th);min-width:18px;text-align:center;font-weight:400}
+.add-cart-btn{display:block;width:100%;margin-top:4px;padding:10px;text-align:center;font-family:'Jost',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--bg1);border:none;background:var(--bgd);cursor:pointer;transition:background .25s}
+.add-cart-btn:hover{background:var(--a2)}
+.add-cart-btn.flash{background:var(--a1)}
+.add-quote-btn{display:block;width:100%;margin-top:4px;padding:10px;text-align:center;font-family:'Jost',sans-serif;font-size:.58rem;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:var(--a2);border:1px solid var(--bdrw);background:none;cursor:pointer;transition:all .25s}
+.add-quote-btn:hover{background:var(--asoft);border-color:var(--a1)}
+.add-quote-btn.flash{background:var(--a1);color:var(--bg1);border-color:var(--a1)}
+.card-notes{width:100%;background:var(--bg2);border:1px solid var(--bdr);padding:8px 10px;font-family:'Jost',sans-serif;font-size:.76rem;color:var(--tb);outline:none;resize:vertical;min-height:52px;font-weight:300;margin:8px 0 0;transition:border-color .25s;border-radius:0}
+.card-notes:focus{border-color:var(--a1)}
+
+/* ── NAV CART / QUOTE ICONS */
+.nav-icon-btn{position:relative;background:none;border:none;cursor:pointer;padding:5px 7px;color:var(--tm);font-size:1rem;display:inline-flex;align-items:center;transition:color .2s}
+.nav-icon-btn:hover{color:var(--a1)}
+.nav-badge{position:absolute;top:-1px;right:-1px;background:var(--a1);color:#fff;border-radius:50%;width:15px;height:15px;font-family:'Jost',sans-serif;font-size:.42rem;font-weight:500;display:none;align-items:center;justify-content:center;pointer-events:none;line-height:1}
+
+/* ── SHARED DRAWER STYLES */
+.dr-ovl{position:fixed;inset:0;background:rgba(44,31,16,.38);z-index:9010;opacity:0;pointer-events:none;transition:opacity .3s}
+.dr-ovl.open{opacity:1;pointer-events:auto}
+.side-drawer{position:fixed;top:0;right:-400px;width:360px;max-width:92vw;height:100dvh;background:var(--bg1);z-index:9011;display:flex;flex-direction:column;transition:right .34s cubic-bezier(.4,0,.2,1);box-shadow:-4px 0 36px rgba(44,31,16,.15)}
+.side-drawer.open{right:0}
+.dr-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--bdr);background:var(--bgd);flex-shrink:0}
+.dr-title{font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:4px;text-transform:uppercase;color:var(--asoft)}
+.dr-close{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5);font-size:.95rem;padding:4px 8px;transition:color .2s}
+.dr-close:hover{color:var(--asoft)}
+.dr-body{flex:1;overflow-y:auto;padding:16px 18px;min-height:0}
+.dr-empty{text-align:center;padding:36px 16px;font-size:.82rem;color:var(--tdim);line-height:2}
+.dr-foot{padding:14px 18px;border-top:1px solid var(--bdr);flex-shrink:0}
+.dr-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.dr-total-lbl{font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:2px;text-transform:uppercase;color:var(--tm)}
+.dr-total-val{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--th)}
+.dr-cta{display:block;width:100%;padding:13px;text-align:center;font-family:'Jost',sans-serif;font-size:.62rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:var(--bg1);background:var(--bgd);border:none;cursor:pointer;transition:background .3s;margin-bottom:7px}
+.dr-cta:hover{background:var(--a2)}
+.dr-cta.quote-cta{background:var(--a2)}
+.dr-cta.quote-cta:hover{background:var(--a1)}
+/* Cart items */
+.ci{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--bdr)}
+.ci:last-child{border-bottom:none}
+.ci-sw{width:28px;height:28px;border-radius:2px;border:1px solid rgba(0,0,0,.08);flex-shrink:0;margin-top:3px}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-family:'Cormorant Garamond',serif;font-size:.92rem;color:var(--th)}
+.ci-meta{font-size:.64rem;color:var(--tm);margin-top:2px;line-height:1.5}
+.ci-price{font-size:.7rem;color:var(--a1);margin-top:2px}
+.ci-rm{background:none;border:none;cursor:pointer;color:var(--tdim);font-size:.78rem;padding:4px;flex-shrink:0;transition:color .2s}
+.ci-rm:hover{color:#9B3A3A}
+/* Quote items */
+.qi{padding:10px 12px;border:1px solid var(--bdr);margin-bottom:8px;background:var(--bg2)}
+.qi-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.qi-name{font-family:'Cormorant Garamond',serif;font-size:.92rem;color:var(--th)}
+.qi-meta{font-size:.64rem;color:var(--tm);margin-top:2px;display:flex;align-items:center;gap:5px}
+.qi-price{font-size:.7rem;color:var(--a1);margin-top:2px}
+.qi-notes{font-size:.7rem;color:var(--tb);border-left:2px solid var(--bdrw);padding-left:8px;margin-top:6px;font-style:italic;line-height:1.6}
+.qi-rm{background:none;border:none;cursor:pointer;color:var(--tdim);font-size:.76rem;padding:2px 5px;transition:color .2s;flex-shrink:0}
+.qi-rm:hover{color:#9B3A3A}
+
+/* ── CHECKOUT MODAL */
+.chk-ovl{position:fixed;inset:0;background:rgba(44,31,16,.5);z-index:9020;opacity:0;pointer-events:none;transition:opacity .3s}
+.chk-ovl.open{opacity:1;pointer-events:auto}
+.chk-modal{position:fixed;top:0;right:-620px;width:560px;max-width:96vw;height:100dvh;background:var(--bg1);z-index:9021;display:flex;flex-direction:column;transition:right .38s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 48px rgba(44,31,16,.2)}
+.chk-modal.open{right:0}
+.chk-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--bdr);background:var(--bgd);flex-shrink:0}
+.chk-title{font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:4px;text-transform:uppercase;color:var(--asoft)}
+.chk-close-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5);font-size:.95rem;padding:4px 8px;transition:color .2s}
+.chk-close-btn:hover{color:var(--asoft)}
+.chk-body{flex:1;overflow-y:auto;padding:24px;min-height:0}
+.chk-sec{font-family:'Jost',sans-serif;font-size:.54rem;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--a1);margin:20px 0 12px;padding-bottom:5px;border-bottom:1px solid var(--bdr)}
+.chk-sec:first-child{margin-top:0}
+.chk-item-row{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg2);border:1px solid var(--bdr);margin-bottom:6px}
+.chk-sw{width:22px;height:22px;border-radius:2px;border:1px solid rgba(0,0,0,.08);flex-shrink:0}
+.chk-item-name{font-family:'Jost',sans-serif;font-size:.76rem;color:var(--th);flex:1;min-width:0}
+.chk-item-sub{font-size:.65rem;color:var(--tm)}
+.chk-item-price{font-size:.7rem;color:var(--a1);flex-shrink:0;white-space:nowrap}
+.chk-subtn{width:100%;background:var(--bgd);color:var(--bg1);border:none;padding:14px;font-family:'Jost',sans-serif;font-size:.62rem;font-weight:400;letter-spacing:4px;text-transform:uppercase;cursor:pointer;transition:background .3s;margin-top:8px}
+.chk-subtn:hover{background:var(--a2)}
+.chk-subtn:disabled{opacity:.6;cursor:not-allowed}
+.chk-fnote{font-size:.7rem;color:var(--tdim);text-align:center;margin-top:8px;line-height:1.7}
+.chk-success{display:none;text-align:center;padding:48px 16px}
+.chk-success .cs-check{font-size:2.5rem;margin-bottom:16px;display:block}
+.chk-success h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--th);margin-bottom:12px}
+.chk-success p{font-size:.83rem;color:var(--tm);line-height:1.9;margin-bottom:0}
+.cs-ref-box{background:var(--bg2);border:1px solid var(--a1);padding:14px 20px;margin:16px auto;display:inline-block;min-width:200px}
+.cs-ref-lbl{font-family:'Jost',sans-serif;font-size:.5rem;letter-spacing:3px;text-transform:uppercase;color:var(--tdim);margin-bottom:5px}
+.cs-ref-val{font-family:'Jost',sans-serif;font-size:1.25rem;letter-spacing:4px;color:var(--a1)}
 </style>
 </head>
 <body id="top">
@@ -380,6 +475,14 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
     <li><a href="#find">Visit</a></li>
     <li><a href="#bes" class="ncta">Order Custom</a></li>
   </ul>
+  <div style="display:flex;align-items:center;gap:2px">
+    <button class="nav-icon-btn" id="nav-cart-btn" onclick="openCartDrawer()" aria-label="Cart" title="Cart">
+      🛒<span class="nav-badge" id="nav-cart-cnt"></span>
+    </button>
+    <button class="nav-icon-btn" id="nav-quote-btn" onclick="openQuoteDrawer()" aria-label="Quote basket" title="Quote Basket">
+      📋<span class="nav-badge" id="nav-quote-cnt"></span>
+    </button>
+  </div>
   <button class="nbur" onclick="toggleNav()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -533,36 +636,36 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
         <p>These pieces are available in standard sizes S / M / L / XL. Select your size, place your order, and we ship within 2–3 business days. Vietnam domestic delivery 2–5 days. International delivery 7–21 days depending on location.</p>
       </div>
     </div>
-    <div class="pgrid">
-      <div class="product-card rv">
+    <div class="pgrid" id="pgrid-ready">
+      <div class="product-card rv" data-price="890000" data-sizes="S,M,L,XL" data-icon="👗">
         <div class="pc-type-strip strip-ready">✅ Ready to Ship — Standard Sizes</div>
         <div class="pc-img"><div class="pc-inner" style="background:repeating-linear-gradient(120deg,var(--fab-a),var(--fab-a) 8px,var(--asofter) 8px,var(--asofter) 9px)"><span style="font-size:4rem;opacity:.15">👗</span></div><div class="pc-badge bg-sell">Bestseller</div></div>
-        <div class="pc-info"><div class="pc-name">Flowing Midi Dress</div><div class="pc-desc">Relaxed silhouette, side pockets, V-neck. 4 colour options.</div><div class="pc-bot"><div class="pc-price">From ₫890,000</div><div class="pcsz"><span class="psz">S</span><span class="psz">M</span><span class="psz">L</span><span class="psz">XL</span></div></div></div>
+        <div class="pc-info"><div class="pc-name">Flowing Midi Dress</div><div class="pc-desc">Relaxed silhouette, side pockets, V-neck.</div><div class="pc-bot"><div class="pc-price" data-vnd="890000" data-pfx="From ">From ₫890,000</div></div></div>
       </div>
-      <div class="product-card rv d1">
+      <div class="product-card rv d1" data-price="620000" data-sizes="XS,S,M,L" data-icon="👚">
         <div class="pc-type-strip strip-ready">✅ Ready to Ship — Standard Sizes</div>
         <div class="pc-img"><div class="pc-inner" style="background:linear-gradient(135deg,var(--bg3),var(--asofter))"><span style="font-size:4rem;opacity:.15">👚</span></div><div class="pc-badge bg-new">New</div></div>
-        <div class="pc-info"><div class="pc-name">Wide-Sleeve Blouse</div><div class="pc-desc">Generous sleeves, natural drape, mother-of-pearl buttons.</div><div class="pc-bot"><div class="pc-price">From ₫620,000</div><div class="pcsz"><span class="psz">XS</span><span class="psz">S</span><span class="psz">M</span><span class="psz">L</span></div></div></div>
+        <div class="pc-info"><div class="pc-name">Wide-Sleeve Blouse</div><div class="pc-desc">Generous sleeves, natural drape, mother-of-pearl buttons.</div><div class="pc-bot"><div class="pc-price" data-vnd="620000" data-pfx="From ">From ₫620,000</div></div></div>
       </div>
-      <div class="product-card rv d2">
+      <div class="product-card rv d2" data-price="750000" data-sizes="S,M,L,XL" data-icon="👔">
         <div class="pc-type-strip strip-ready">✅ Ready to Ship — Standard Sizes</div>
         <div class="pc-img"><div class="pc-inner" style="background:linear-gradient(135deg,var(--asoft),var(--bg2))"><span style="font-size:4rem;opacity:.15">👔</span></div><div class="pc-badge bg-sell">Bestseller</div></div>
-        <div class="pc-info"><div class="pc-name">Classic Linen Shirt</div><div class="pc-desc">Long or short sleeve. The cornerstone of any linen wardrobe.</div><div class="pc-bot"><div class="pc-price">From ₫750,000</div><div class="pcsz"><span class="psz">S</span><span class="psz">M</span><span class="psz">L</span><span class="psz">XL</span></div></div></div>
+        <div class="pc-info"><div class="pc-name">Classic Linen Shirt</div><div class="pc-desc">Long or short sleeve. The cornerstone of any linen wardrobe.</div><div class="pc-bot"><div class="pc-price" data-vnd="750000" data-pfx="From ">From ₫750,000</div></div></div>
       </div>
-      <div class="product-card rv d3">
+      <div class="product-card rv d3" data-price="820000" data-sizes="S,M,L,XL" data-icon="👖">
         <div class="pc-type-strip strip-ready">✅ Ready to Ship — Standard Sizes</div>
         <div class="pc-img"><div class="pc-inner" style="background:repeating-linear-gradient(90deg,var(--bg2),var(--bg2) 6px,var(--asoft) 6px,var(--asoft) 7px)"><span style="font-size:4rem;opacity:.15">👖</span></div><div class="pc-badge bg-new">New</div></div>
-        <div class="pc-info"><div class="pc-name">Tapered Linen Trousers</div><div class="pc-desc">Elastic waist, tapered leg. Natural, ecru, or stone.</div><div class="pc-bot"><div class="pc-price">From ₫820,000</div><div class="pcsz"><span class="psz">S</span><span class="psz">M</span><span class="psz">L</span><span class="psz">XL</span></div></div></div>
+        <div class="pc-info"><div class="pc-name">Tapered Linen Trousers</div><div class="pc-desc">Elastic waist, tapered leg. Natural, ecru, or stone.</div><div class="pc-bot"><div class="pc-price" data-vnd="820000" data-pfx="From ">From ₫820,000</div></div></div>
       </div>
-      <div class="product-card rv">
+      <div class="product-card rv" data-price="1490000" data-sizes="S,M,L" data-icon="🧥">
         <div class="pc-type-strip strip-ready">✅ Ready to Ship — Standard Sizes</div>
         <div class="pc-img"><div class="pc-inner" style="background:linear-gradient(160deg,var(--asofter),var(--fab-b))"><span style="font-size:4rem;opacity:.15">🧥</span></div><div class="pc-badge bg-fav">Fan Favourite</div></div>
-        <div class="pc-info"><div class="pc-name">Linen Two-Piece Set</div><div class="pc-desc">Matching top and wide-leg trousers. The effortless uniform.</div><div class="pc-bot"><div class="pc-price">From ₫1,490,000</div><div class="pcsz"><span class="psz">S</span><span class="psz">M</span><span class="psz">L</span></div></div></div>
+        <div class="pc-info"><div class="pc-name">Linen Two-Piece Set</div><div class="pc-desc">Matching top and wide-leg trousers. The effortless uniform.</div><div class="pc-bot"><div class="pc-price" data-vnd="1490000" data-pfx="From ">From ₫1,490,000</div></div></div>
       </div>
-      <div class="product-card rv d1">
+      <div class="product-card rv d1" data-price="1100000" data-sizes="S,M,L" data-icon="👘">
         <div class="pc-type-strip strip-ready">✅ Ready to Ship — Standard Sizes</div>
         <div class="pc-img"><div class="pc-inner" style="background:repeating-linear-gradient(0deg,var(--asofter),var(--asofter) 4px,var(--fab-a) 4px,var(--fab-a) 5px)"><span style="font-size:4rem;opacity:.15">👘</span></div><div class="pc-badge bg-new">New</div></div>
-        <div class="pc-info"><div class="pc-name">Linen Maxi Wrap Dress</div><div class="pc-desc">Floor-length with adjustable tie.</div><div class="pc-bot"><div class="pc-price">From ₫1,100,000</div><div class="pcsz"><span class="psz">S</span><span class="psz">M</span><span class="psz">L</span></div></div></div>
+        <div class="pc-info"><div class="pc-name">Linen Maxi Wrap Dress</div><div class="pc-desc">Floor-length with adjustable tie.</div><div class="pc-bot"><div class="pc-price" data-vnd="1100000" data-pfx="From ">From ₫1,100,000</div></div></div>
       </div>
     </div>
     <div style="text-align:center;margin-top:40px" class="rv">
@@ -580,26 +683,26 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
         <p>Every piece below is made specifically for you. Submit your measurements using our guided tool, we contact you with the price within 24 hours, you confirm and pay, we create and ship. Production time: 7–14 days.</p>
       </div>
     </div>
-    <div class="pgrid">
-      <div class="product-card rv">
+    <div class="pgrid" id="pgrid-custom">
+      <div class="product-card rv" data-price="1800000" data-icon="🌸" data-custom="true">
         <div class="pc-type-strip strip-custom">✂️ Custom Only — Made to Your Measurements</div>
         <div class="pc-img"><div class="pc-inner" style="background:repeating-linear-gradient(135deg,var(--asofter),var(--asofter) 10px,var(--fab-a) 10px,var(--fab-a) 11px)"><span style="font-size:4rem;opacity:.15">🌸</span></div><div class="pc-badge bg-cust">Custom Only</div></div>
-        <div class="pc-info"><div class="pc-name">Linen Áo Dài</div><div class="pc-desc">Vietnam's national dress reimagined in pure linen. Custom-fitted only for perfect drape.</div><div class="pc-bot"><div class="pc-price">From ₫1,800,000</div><a href="#bes" style="font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:2px;text-transform:uppercase;color:var(--a1);text-decoration:none;border-bottom:1px solid var(--a1);padding-bottom:1px">Order →</a></div></div>
+        <div class="pc-info"><div class="pc-name">Linen Áo Dài</div><div class="pc-desc">Vietnam's national dress reimagined in pure linen. Custom-fitted only for perfect drape.</div><div class="pc-bot"><div class="pc-price" data-vnd="1800000" data-pfx="From ">From ₫1,800,000</div></div></div>
       </div>
-      <div class="product-card rv d1">
+      <div class="product-card rv d1" data-price="0" data-icon="🤵" data-custom="true">
         <div class="pc-type-strip strip-custom">✂️ Custom Only — Made to Your Measurements</div>
         <div class="pc-img"><div class="pc-inner" style="background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font-family:'Cormorant Garamond',serif;font-size:.9rem;font-style:italic;color:var(--a1);text-align:center;padding:20px;letter-spacing:2px">Your Measurements,<br>Our Craft</span></div><div class="pc-badge bg-cust">Custom Only</div></div>
-        <div class="pc-info"><div class="pc-name">Bespoke Linen Suit</div><div class="pc-desc">Jacket + trousers cut to your exact measurements. Men's or women's.</div><div class="pc-bot"><div class="pc-price">Price on request</div><a href="#bes" style="font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:2px;text-transform:uppercase;color:var(--a1);text-decoration:none;border-bottom:1px solid var(--a1);padding-bottom:1px">Order →</a></div></div>
+        <div class="pc-info"><div class="pc-name">Bespoke Linen Suit</div><div class="pc-desc">Jacket + trousers cut to your exact measurements. Men's or women's.</div><div class="pc-bot"><div class="pc-price">Price on request</div></div></div>
       </div>
-      <div class="product-card rv d2">
+      <div class="product-card rv d2" data-price="1200000" data-icon="🎽" data-custom="true">
         <div class="pc-type-strip strip-custom">✂️ Custom Only — Made to Your Measurements</div>
         <div class="pc-img"><div class="pc-inner" style="background:linear-gradient(160deg,var(--asofter),var(--fab-b))"><span style="font-size:4rem;opacity:.15">🎽</span></div><div class="pc-badge bg-cust">Custom Only</div></div>
-        <div class="pc-info"><div class="pc-name">Custom Linen Dress</div><div class="pc-desc">Any length, any neckline, any sleeve. Tell us your vision — we build it.</div><div class="pc-bot"><div class="pc-price">From ₫1,200,000</div><a href="#bes" style="font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:2px;text-transform:uppercase;color:var(--a1);text-decoration:none;border-bottom:1px solid var(--a1);padding-bottom:1px">Order →</a></div></div>
+        <div class="pc-info"><div class="pc-name">Custom Linen Dress</div><div class="pc-desc">Any length, any neckline, any sleeve. Tell us your vision — we build it.</div><div class="pc-bot"><div class="pc-price" data-vnd="1200000" data-pfx="From ">From ₫1,200,000</div></div></div>
       </div>
-      <div class="product-card rv d3">
+      <div class="product-card rv d3" data-price="1600000" data-icon="👗" data-custom="true">
         <div class="pc-type-strip strip-custom">✂️ Custom Only — Made to Your Measurements</div>
         <div class="pc-img"><div class="pc-inner" style="background:repeating-linear-gradient(45deg,var(--fab-a),var(--fab-a) 5px,var(--bg3) 5px,var(--bg3) 11px)"><span style="font-size:4rem;opacity:.15">👗</span></div><div class="pc-badge bg-cust">Custom Only</div></div>
-        <div class="pc-info"><div class="pc-name">Custom Linen Set</div><div class="pc-desc">Matching top + trousers or skirt, cut to your exact proportions.</div><div class="pc-bot"><div class="pc-price">From ₫1,600,000</div><a href="#bes" style="font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:2px;text-transform:uppercase;color:var(--a1);text-decoration:none;border-bottom:1px solid var(--a1);padding-bottom:1px">Order →</a></div></div>
+        <div class="pc-info"><div class="pc-name">Custom Linen Set</div><div class="pc-desc">Matching top + trousers or skirt, cut to your exact proportions.</div><div class="pc-bot"><div class="pc-price" data-vnd="1600000" data-pfx="From ">From ₫1,600,000</div></div></div>
       </div>
     </div>
     <div style="text-align:center;margin-top:40px" class="rv">
@@ -979,6 +1082,158 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
   ♡<span class="wl-count" id="wl-count"></span>
 </button>
 
+<!-- CART DRAWER -->
+<div class="dr-ovl" id="cart-ovl" onclick="closeCartDrawer()"></div>
+<aside class="side-drawer" id="cart-drawer" aria-label="Cart">
+  <div class="dr-head">
+    <span class="dr-title">🛒 Your Cart</span>
+    <button class="dr-close" onclick="closeCartDrawer()">✕</button>
+  </div>
+  <div class="dr-body">
+    <div class="dr-empty" id="cart-empty">Your cart is empty.<br>Add items from the Ready to Wear section.</div>
+    <div id="cart-list"></div>
+  </div>
+  <div class="dr-foot" id="cart-foot" style="display:none">
+    <div class="dr-total">
+      <span class="dr-total-lbl">Estimated Total</span>
+      <span class="dr-total-val" id="cart-total">₫0</span>
+    </div>
+    <button class="dr-cta" onclick="openCheckout('cart')">Proceed to Order →</button>
+    <p style="font-size:.64rem;color:var(--tdim);text-align:center;line-height:1.7">Exact price confirmed within 24h · No payment now</p>
+  </div>
+</aside>
+
+<!-- QUOTE BASKET DRAWER -->
+<div class="dr-ovl" id="quote-ovl" onclick="closeQuoteDrawer()"></div>
+<aside class="side-drawer" id="quote-drawer" aria-label="Quote basket">
+  <div class="dr-head" style="background:linear-gradient(120deg,var(--bgd) 60%,var(--a2))">
+    <span class="dr-title">✂️ Quote Basket</span>
+    <button class="dr-close" onclick="closeQuoteDrawer()">✕</button>
+  </div>
+  <div class="dr-body">
+    <div class="dr-empty" id="quote-empty">Your quote basket is empty.<br>Add custom pieces from the Bespoke tab.</div>
+    <div id="quote-list"></div>
+  </div>
+  <div class="dr-foot" id="quote-foot" style="display:none">
+    <button class="dr-cta quote-cta" onclick="openCheckout('quote')">Submit for Quote →</button>
+    <p style="font-size:.64rem;color:var(--tdim);text-align:center;line-height:1.7">We contact you within 24h with your price</p>
+  </div>
+</aside>
+
+<!-- CHECKOUT MODAL -->
+<div class="chk-ovl" id="chk-ovl" onclick="closeCheckout()"></div>
+<aside class="chk-modal" id="chk-modal" aria-label="Checkout">
+  <div class="chk-head">
+    <span class="chk-title" id="chk-modal-title">Complete Your Order</span>
+    <button class="chk-close-btn" onclick="closeCheckout()">✕</button>
+  </div>
+  <div class="chk-body">
+    <!-- FORM (hidden on success) -->
+    <div id="chk-form-wrap">
+      <div class="chk-sec" style="margin-top:0">Contact Information</div>
+      <div class="fg"><label>Full Name *</label><input type="text" id="chk-name" placeholder="Your full name"></div>
+      <div class="frow">
+        <div class="fg"><label>Email *</label><input type="email" id="chk-email" placeholder="you@email.com"></div>
+        <div class="fg"><label>Phone / WhatsApp *</label>
+          <div class="phone-wrap">
+            <select id="chk-dialcode">
+              <option value="+84">🇻🇳 +84</option><option value="+81">🇯🇵 +81</option>
+              <option value="+82">🇰🇷 +82</option><option value="+1">🇺🇸 +1</option>
+              <option value="+61">🇦🇺 +61</option><option value="+33">🇫🇷 +33</option>
+              <option value="+44">🇬🇧 +44</option><option value="+49">🇩🇪 +49</option>
+              <option value="+1-CA">🇨🇦 +1</option><option value="+86">🇨🇳 +86</option>
+              <option value="+65">🇸🇬 +65</option><option value="+66">🇹🇭 +66</option>
+              <option value="+62">🇮🇩 +62</option><option value="+60">🇲🇾 +60</option>
+              <option value="+63">🇵🇭 +63</option><option value="+886">🇹🇼 +886</option>
+              <option value="+852">🇭🇰 +852</option><option value="+64">🇳🇿 +64</option>
+              <option value="+91">🇮🇳 +91</option><option value="+971">🇦🇪 +971</option>
+            </select>
+            <input type="tel" id="chk-phone" placeholder="Phone number">
+          </div>
+        </div>
+      </div>
+
+      <div class="chk-sec">Your Order</div>
+      <div id="chk-items-list"></div>
+
+      <div class="chk-sec">Shipping Address</div>
+      <div class="fg" style="position:relative">
+        <label>Full Shipping Address *</label>
+        <input type="text" id="chk-address" placeholder="Street address, apartment/unit number" autocomplete="off">
+      </div>
+      <div class="frow">
+        <div class="fg"><label>City</label><input type="text" id="chk-city" placeholder="City or province"></div>
+        <div class="fg"><label>Postal Code</label><input type="text" id="chk-postal" placeholder="Postal / ZIP"></div>
+      </div>
+      <div class="fg"><label>Country *</label>
+        <select id="chk-country" style="background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238A7058'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 14px center">
+          <option value="">— Select country —</option>
+          <option>Vietnam</option><option>Japan</option><option>South Korea</option>
+          <option>United States</option><option>Australia</option><option>France</option>
+          <option>United Kingdom</option><option>Germany</option><option>Canada</option>
+          <option>China</option><option>Singapore</option><option>Thailand</option>
+          <option>Indonesia</option><option>Malaysia</option><option>Philippines</option>
+          <option>Taiwan</option><option>Hong Kong</option><option>New Zealand</option>
+          <option>Netherlands</option><option>Belgium</option><option>Switzerland</option>
+          <option>Italy</option><option>Spain</option><option>Sweden</option>
+          <option>Norway</option><option>Denmark</option><option>Finland</option>
+          <option>Poland</option><option>Czech Republic</option><option>Austria</option>
+          <option>Portugal</option><option>Greece</option><option>Ireland</option>
+          <option>Brazil</option><option>Mexico</option><option>Argentina</option>
+          <option>India</option><option>United Arab Emirates</option><option>Saudi Arabia</option>
+          <option>Israel</option><option>South Africa</option><option>Egypt</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- Measurements — shown only for quote (custom) items -->
+      <div id="chk-meas-section" style="display:none">
+        <div class="chk-sec">Your Measurements (cm) — for custom pieces</div>
+        <div class="mnote" style="margin-bottom:14px">Need help? <a href="measurement-guide.html" target="_blank" style="color:var(--a1)">Open Measurement Guide →</a></div>
+        <div class="frow">
+          <div class="fg"><label>Chest / Bust</label><input type="number" id="chk-chest" placeholder="e.g. 88"></div>
+          <div class="fg"><label>Natural Waist</label><input type="number" id="chk-waist" placeholder="e.g. 72"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Hips</label><input type="number" id="chk-hips" placeholder="e.g. 96"></div>
+          <div class="fg"><label>Shoulder Width</label><input type="number" id="chk-shoulder" placeholder="e.g. 40"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Sleeve Length</label><input type="number" id="chk-sleeve" placeholder="e.g. 62"></div>
+          <div class="fg"><label>Back Width</label><input type="number" id="chk-back_width" placeholder="e.g. 36"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Torso / Back Length</label><input type="number" id="chk-torso" placeholder="e.g. 42"></div>
+          <div class="fg"><label>Height (total)</label><input type="number" id="chk-height" placeholder="e.g. 165"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Inseam</label><input type="number" id="chk-inseam" placeholder="e.g. 76"></div>
+          <div class="fg"><label>Desired Garment Length</label><input type="number" id="chk-length" placeholder="e.g. 105"></div>
+        </div>
+      </div>
+
+      <div class="chk-sec">Notes &amp; Style Preferences</div>
+      <div class="fg"><textarea id="chk-notes" style="min-height:72px" placeholder="Style preferences, special requests, questions for the tailor..."></textarea></div>
+
+      <button class="chk-subtn" id="chk-submit-btn" onclick="submitCheckout()">Submit Order Request</button>
+      <p class="chk-fnote">We contact you within 24 hours with your price.<br>No payment until you approve the quote.</p>
+    </div><!-- /chk-form-wrap -->
+
+    <!-- SUCCESS STATE -->
+    <div class="chk-success" id="chk-success">
+      <span class="cs-check">✓</span>
+      <h3>Order Request Received</h3>
+      <p>Thank you. We will contact you within 24 hours at the email and phone number you provided.</p>
+      <div class="cs-ref-box">
+        <div class="cs-ref-lbl">Your Order Reference</div>
+        <div class="cs-ref-val" id="chk-ref-val"></div>
+      </div>
+      <p>For immediate help:<br>📞 <strong>0935 023 757</strong><br>📍 Han Market, Da Nang</p>
+      <button onclick="closeCheckout()" style="margin-top:22px;font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--a1);border:1px solid var(--a1);padding:10px 24px;background:none;cursor:pointer;transition:all .2s">Close ✕</button>
+    </div>
+  </div><!-- /chk-body -->
+</aside>
+
 <!-- WHATSAPP FLOAT BUTTON -->
 <a href="https://wa.me/84935023757" class="wa-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -1251,6 +1506,429 @@ async function submitF(){
     btn.addEventListener('click',function(e){e.stopPropagation();window.toggleWish(btn);});
     imgDiv.appendChild(btn);
   });
+})();
+
+// ── CART / QUOTE SYSTEM
+(function(){
+  // ── Colour palette
+  const COLOURS=[
+    {name:'Natural Linen',hex:'#D4C5A9'},{name:'Ecru',hex:'#EDE0C8'},
+    {name:'Oatmeal',hex:'#C8B99A'},{name:'Stone',hex:'#A89880'},
+    {name:'Sand',hex:'#BEA882'},{name:'Ivory White',hex:'#F5F0E8'},
+    {name:'Sage Green',hex:'#8FA88A'},{name:'Dusty Blue',hex:'#7A9AAF'},
+    {name:'Terracotta',hex:'#C27A5A'},{name:'Charcoal',hex:'#5A5248'},
+  ];
+
+  // ── State
+  const CART=window.CART=[];
+  const QUOTE=window.QUOTE=[];
+
+  // ── Badge updater
+  function updateBadges(){
+    const totalQty=CART.reduce(function(s,i){return s+i.qty;},0);
+    const cc=document.getElementById('nav-cart-cnt');
+    const qc=document.getElementById('nav-quote-cnt');
+    if(cc){cc.textContent=totalQty;cc.style.display=totalQty?'flex':'none';}
+    if(qc){qc.textContent=QUOTE.length;qc.style.display=QUOTE.length?'flex':'none';}
+  }
+  window._updateCartBadges=updateBadges;
+
+  // ── Inject UI into ready-to-wear cards
+  document.querySelectorAll('#pgrid-ready .product-card').forEach(function(card){
+    var info=card.querySelector('.pc-info');
+    if(!info||info.querySelector('.card-colours'))return;
+    var priceVnd=parseInt(card.dataset.price||'0',10);
+    var sizes=(card.dataset.sizes||'S,M,L,XL').split(',');
+    var icon=card.dataset.icon||'👗';
+    var name=(card.querySelector('.pc-name')||{}).textContent||'Item';
+    name=name.trim();
+
+    // Colour dots
+    var colDiv=document.createElement('div');
+    colDiv.className='card-colours';
+    COLOURS.forEach(function(c,idx){
+      var dot=document.createElement('span');
+      dot.className='cc-dot'+(idx===0?' on':'');
+      dot.style.background=c.hex;
+      dot.dataset.colour=c.name;
+      dot.dataset.hex=c.hex;
+      dot.title=c.name;
+      dot.addEventListener('click',function(){
+        colDiv.querySelectorAll('.cc-dot').forEach(function(d){d.classList.remove('on');});
+        dot.classList.add('on');
+      });
+      colDiv.appendChild(dot);
+    });
+    info.appendChild(colDiv);
+
+    // Size buttons
+    var szDiv=document.createElement('div');
+    szDiv.className='card-sizes';
+    sizes.forEach(function(sz,i){
+      var btn=document.createElement('button');
+      btn.className='csz'+(i===0?' on':'');
+      btn.textContent=sz.trim();
+      btn.addEventListener('click',function(){
+        szDiv.querySelectorAll('.csz').forEach(function(b){b.classList.remove('on');});
+        btn.classList.add('on');
+      });
+      szDiv.appendChild(btn);
+    });
+    info.appendChild(szDiv);
+
+    // Qty picker
+    var qDiv=document.createElement('div');
+    qDiv.className='card-qty';
+    var qLbl=document.createElement('span');qLbl.className='qty-lbl';qLbl.textContent='Qty';
+    var qMin=document.createElement('button');qMin.className='qty-btn';qMin.textContent='−';qMin.type='button';
+    var qVal=document.createElement('span');qVal.className='qty-val';qVal.textContent='1';
+    var qPls=document.createElement('button');qPls.className='qty-btn';qPls.textContent='+';qPls.type='button';
+    qMin.addEventListener('click',function(){var v=parseInt(qVal.textContent,10);if(v>1)qVal.textContent=v-1;});
+    qPls.addEventListener('click',function(){qVal.textContent=parseInt(qVal.textContent,10)+1;});
+    qDiv.appendChild(qLbl);qDiv.appendChild(qMin);qDiv.appendChild(qVal);qDiv.appendChild(qPls);
+    info.appendChild(qDiv);
+
+    // Add to Cart button
+    var addBtn=document.createElement('button');
+    addBtn.className='add-cart-btn';
+    addBtn.type='button';
+    addBtn.textContent='Add to Cart';
+    addBtn.addEventListener('click',function(){
+      var selDot=colDiv.querySelector('.cc-dot.on');
+      var selSz=szDiv.querySelector('.csz.on');
+      var qty=parseInt(qVal.textContent,10)||1;
+      var colour=selDot?selDot.dataset.colour:'Natural Linen';
+      var colourHex=selDot?selDot.dataset.hex:'#D4C5A9';
+      var size=selSz?selSz.textContent:'M';
+      var existing=CART.find(function(x){return x.name===name&&x.colour===colour&&x.size===size;});
+      if(existing){existing.qty+=qty;}
+      else{CART.push({name:name,colour:colour,colourHex:colourHex,size:size,qty:qty,priceVnd:priceVnd,icon:icon});}
+      updateBadges();
+      renderCartDrawer();
+      addBtn.classList.add('flash');
+      addBtn.textContent='Added ✓';
+      setTimeout(function(){addBtn.classList.remove('flash');addBtn.textContent='Add to Cart';},1400);
+      setTimeout(function(){window.openCartDrawer();},200);
+    });
+    info.appendChild(addBtn);
+  });
+
+  // ── Inject UI into custom cards
+  document.querySelectorAll('#pgrid-custom .product-card').forEach(function(card){
+    var info=card.querySelector('.pc-info');
+    if(!info||info.querySelector('.card-colours'))return;
+    var priceVnd=parseInt(card.dataset.price||'0',10);
+    var icon=card.dataset.icon||'✂️';
+    var name=(card.querySelector('.pc-name')||{}).textContent||'Custom Item';
+    name=name.trim();
+
+    // Colour dots
+    var colDiv=document.createElement('div');
+    colDiv.className='card-colours';
+    COLOURS.forEach(function(c,idx){
+      var dot=document.createElement('span');
+      dot.className='cc-dot'+(idx===0?' on':'');
+      dot.style.background=c.hex;
+      dot.dataset.colour=c.name;
+      dot.dataset.hex=c.hex;
+      dot.title=c.name;
+      dot.addEventListener('click',function(){
+        colDiv.querySelectorAll('.cc-dot').forEach(function(d){d.classList.remove('on');});
+        dot.classList.add('on');
+      });
+      colDiv.appendChild(dot);
+    });
+    info.appendChild(colDiv);
+
+    // Notes textarea
+    var notesEl=document.createElement('textarea');
+    notesEl.className='card-notes';
+    notesEl.placeholder='Style notes: neckline, sleeve length, any details...';
+    info.appendChild(notesEl);
+
+    // Add to Quote button
+    var addBtn=document.createElement('button');
+    addBtn.className='add-quote-btn';
+    addBtn.type='button';
+    addBtn.textContent='Add to Quote Basket';
+    addBtn.addEventListener('click',function(){
+      var selDot=colDiv.querySelector('.cc-dot.on');
+      var colour=selDot?selDot.dataset.colour:'Natural Linen';
+      var colourHex=selDot?selDot.dataset.hex:'#D4C5A9';
+      var notes=notesEl.value.trim();
+      var idx=QUOTE.findIndex(function(x){return x.name===name;});
+      var item={name:name,colour:colour,colourHex:colourHex,notes:notes,priceVnd:priceVnd,icon:icon};
+      if(idx>=0){QUOTE[idx]=item;}else{QUOTE.push(item);}
+      updateBadges();
+      renderQuoteDrawer();
+      addBtn.classList.add('flash');
+      addBtn.textContent='Added ✓';
+      setTimeout(function(){addBtn.classList.remove('flash');addBtn.textContent='Add to Quote Basket';},1400);
+      setTimeout(function(){window.openQuoteDrawer();},200);
+    });
+    info.appendChild(addBtn);
+  });
+
+  // ── Cart drawer rendering
+  function renderCartDrawer(){
+    var list=document.getElementById('cart-list');
+    var empty=document.getElementById('cart-empty');
+    var foot=document.getElementById('cart-foot');
+    var totEl=document.getElementById('cart-total');
+    if(!list)return;
+    if(!CART.length){list.innerHTML='';if(empty)empty.style.display='block';if(foot)foot.style.display='none';return;}
+    if(empty)empty.style.display='none';
+    if(foot)foot.style.display='block';
+    var total=CART.reduce(function(s,i){return s+i.priceVnd*i.qty;},0);
+    if(totEl)totEl.textContent='₫'+total.toLocaleString('en');
+    list.innerHTML=CART.map(function(item,i){
+      return '<div class="ci">'
+        +'<div class="ci-sw" style="background:'+item.colourHex+'"></div>'
+        +'<div class="ci-info">'
+          +'<div class="ci-name">'+item.icon+' '+item.name+'</div>'
+          +'<div class="ci-meta">'+item.colour+' · Size '+item.size+' · Qty '+item.qty+'</div>'
+          +'<div class="ci-price">'+(item.priceVnd?'₫'+(item.priceVnd*item.qty).toLocaleString('en'):'Quoted')+'</div>'
+        +'</div>'
+        +'<button class="ci-rm" type="button" onclick="window._cartRm('+i+')" aria-label="Remove">✕</button>'
+      +'</div>';
+    }).join('');
+  }
+  window._cartRm=function(i){CART.splice(i,1);updateBadges();renderCartDrawer();};
+  window.renderCartDrawer=renderCartDrawer;
+
+  // ── Quote drawer rendering
+  function renderQuoteDrawer(){
+    var list=document.getElementById('quote-list');
+    var empty=document.getElementById('quote-empty');
+    var foot=document.getElementById('quote-foot');
+    if(!list)return;
+    if(!QUOTE.length){list.innerHTML='';if(empty)empty.style.display='block';if(foot)foot.style.display='none';return;}
+    if(empty)empty.style.display='none';
+    if(foot)foot.style.display='block';
+    list.innerHTML=QUOTE.map(function(item,i){
+      var priceStr=item.priceVnd?'From ₫'+item.priceVnd.toLocaleString('en'):'Price on request';
+      return '<div class="qi">'
+        +'<div class="qi-top">'
+          +'<div style="flex:1;min-width:0">'
+            +'<div class="qi-name">'+item.icon+' '+item.name+'</div>'
+            +'<div class="qi-meta"><span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:'+item.colourHex+';border:1px solid rgba(0,0,0,.1);flex-shrink:0"></span>'+item.colour+'</div>'
+            +'<div class="qi-price">'+priceStr+'</div>'
+          +'</div>'
+          +'<button class="qi-rm" type="button" onclick="window._quoteRm('+i+')" aria-label="Remove">✕</button>'
+        +'</div>'
+        +(item.notes?'<div class="qi-notes">'+item.notes+'</div>':'')
+      +'</div>';
+    }).join('');
+  }
+  window._quoteRm=function(i){QUOTE.splice(i,1);updateBadges();renderQuoteDrawer();};
+  window.renderQuoteDrawer=renderQuoteDrawer;
+
+  // ── Drawer open / close
+  window.openCartDrawer=function(){
+    document.getElementById('cart-ovl').classList.add('open');
+    document.getElementById('cart-drawer').classList.add('open');
+    document.body.style.overflow='hidden';
+  };
+  window.closeCartDrawer=function(){
+    document.getElementById('cart-ovl').classList.remove('open');
+    document.getElementById('cart-drawer').classList.remove('open');
+    if(!document.querySelector('.side-drawer.open,.chk-modal.open,.wl-drawer.wl-open'))
+      document.body.style.overflow='';
+  };
+  window.openQuoteDrawer=function(){
+    document.getElementById('quote-ovl').classList.add('open');
+    document.getElementById('quote-drawer').classList.add('open');
+    document.body.style.overflow='hidden';
+  };
+  window.closeQuoteDrawer=function(){
+    document.getElementById('quote-ovl').classList.remove('open');
+    document.getElementById('quote-drawer').classList.remove('open');
+    if(!document.querySelector('.side-drawer.open,.chk-modal.open,.wl-drawer.wl-open'))
+      document.body.style.overflow='';
+  };
+
+  // ── Checkout open/close
+  var _chkMode='cart';
+  window.openCheckout=function(mode){
+    _chkMode=mode||'cart';
+    if(mode==='cart')window.closeCartDrawer();
+    else window.closeQuoteDrawer();
+    // Reset form
+    var fw=document.getElementById('chk-form-wrap');
+    var suc=document.getElementById('chk-success');
+    var btn=document.getElementById('chk-submit-btn');
+    if(fw)fw.style.display='block';
+    if(suc)suc.style.display='none';
+    if(btn){btn.textContent='Submit Order Request';btn.disabled=false;}
+    // Set title
+    var titleEl=document.getElementById('chk-modal-title');
+    if(titleEl)titleEl.textContent=mode==='cart'?'Complete Your Order':'Request a Custom Quote';
+    // Render items
+    var itemsEl=document.getElementById('chk-items-list');
+    var measEl=document.getElementById('chk-meas-section');
+    var items=mode==='cart'?CART:QUOTE;
+    if(itemsEl){
+      if(!items.length){
+        itemsEl.innerHTML='<p style="font-size:.78rem;color:var(--tdim)">No items in your '+(mode==='cart'?'cart':'quote basket')+'.</p>';
+      }else{
+        itemsEl.innerHTML=items.map(function(item){
+          var meta=item.size?(item.colour+' · Size '+item.size+' · Qty '+item.qty):(item.colour+(item.notes?' · "'+item.notes+'"':''));
+          var priceStr=item.priceVnd?(item.qty?'₫'+(item.priceVnd*item.qty).toLocaleString('en'):'From ₫'+item.priceVnd.toLocaleString('en')):'Price on request';
+          return '<div class="chk-item-row">'
+            +'<div class="chk-sw" style="background:'+item.colourHex+'"></div>'
+            +'<div style="flex:1;min-width:0">'
+              +'<div class="chk-item-name">'+item.icon+' '+item.name+'</div>'
+              +'<div class="chk-item-sub">'+meta+'</div>'
+            +'</div>'
+            +'<div class="chk-item-price">'+priceStr+'</div>'
+          +'</div>';
+        }).join('');
+      }
+    }
+    if(measEl)measEl.style.display=(mode==='quote')?'block':'none';
+    // Open
+    document.getElementById('chk-ovl').classList.add('open');
+    document.getElementById('chk-modal').classList.add('open');
+    document.body.style.overflow='hidden';
+    // Init Nominatim on address field (once)
+    setTimeout(function(){initChkNominatim();},100);
+  };
+  window.closeCheckout=function(){
+    document.getElementById('chk-ovl').classList.remove('open');
+    document.getElementById('chk-modal').classList.remove('open');
+    if(!document.querySelector('.side-drawer.open,.wl-drawer.wl-open'))
+      document.body.style.overflow='';
+  };
+
+  // ── Nominatim for checkout address
+  function initChkNominatim(){
+    var input=document.getElementById('chk-address');
+    if(!input||input.dataset.nomInit)return;
+    input.dataset.nomInit='1';
+    var wrap=input.closest('.fg');
+    if(wrap)wrap.style.position='relative';
+    var ul=document.createElement('ul');
+    ul.style.cssText='position:absolute;top:100%;left:0;right:0;z-index:9999;background:var(--bg1);border:1px solid var(--bdrw);border-top:none;list-style:none;margin:0;padding:0;display:none;max-height:200px;overflow-y:auto;box-shadow:0 4px 16px rgba(44,31,16,.1)';
+    (wrap||input.parentElement).appendChild(ul);
+    var timer;
+    function hide(){ul.style.display='none';}
+    function matchCountry(cname){
+      var sel=document.getElementById('chk-country');if(!sel)return;
+      var low=cname.toLowerCase();
+      for(var i=0;i<sel.options.length;i++){if(sel.options[i].text.toLowerCase()===low){sel.selectedIndex=i;return;}}
+      for(var i=0;i<sel.options.length;i++){var o=sel.options[i].text.toLowerCase();if(low.includes(o)||o.includes(low)){sel.selectedIndex=i;return;}}
+    }
+    function pick(item){
+      var a=item.address||{};
+      var road=a.road||a.pedestrian||a.footway||a.hamlet||'';
+      var num=a.house_number||'';
+      var street=num?num+' '+road:road;
+      var city=a.city||a.town||a.village||a.suburb||a.county||a.state_district||'';
+      input.value=street||item.display_name.split(',')[0].trim();
+      var cityEl=document.getElementById('chk-city');if(city&&cityEl)cityEl.value=city;
+      var postalEl=document.getElementById('chk-postal');if(a.postcode&&postalEl)postalEl.value=a.postcode;
+      if(a.country)matchCountry(a.country);
+      hide();
+    }
+    function render(results){
+      ul.innerHTML='';
+      if(!results.length){hide();return;}
+      results.forEach(function(item){
+        var li=document.createElement('li');
+        li.style.cssText='padding:9px 12px;font-family:Jost,sans-serif;font-size:.76rem;color:var(--tb);cursor:pointer;border-bottom:1px solid var(--bdr);font-weight:300;line-height:1.4';
+        li.textContent=item.display_name;
+        li.addEventListener('mousedown',function(e){e.preventDefault();pick(item);});
+        li.addEventListener('mouseover',function(){this.style.background='var(--bg3)';});
+        li.addEventListener('mouseout',function(){this.style.background='';});
+        ul.appendChild(li);
+      });
+      ul.style.display='block';
+    }
+    input.addEventListener('input',function(){
+      clearTimeout(timer);
+      var q=input.value.trim();
+      if(q.length<3){hide();return;}
+      timer=setTimeout(function(){
+        fetch('https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q='+encodeURIComponent(q),
+          {headers:{'Accept-Language':'en','User-Agent':'LamTuyenLinen/1.0 contact@lamtuyenlinen.com'}})
+        .then(function(r){return r.json();}).then(render).catch(hide);
+      },400);
+    });
+    input.addEventListener('blur',function(){setTimeout(hide,160);});
+    document.addEventListener('click',function(e){if(wrap&&!wrap.contains(e.target))hide();});
+  }
+
+  // ── Checkout submit
+  window.submitCheckout=async function(){
+    var name=document.getElementById('chk-name').value.trim();
+    var email=document.getElementById('chk-email').value.trim();
+    var phoneNum=document.getElementById('chk-phone').value.trim();
+    var dialRaw=document.getElementById('chk-dialcode').value;
+    var dialCode=dialRaw.replace(/-CA$/,'');
+    var phone=dialCode+phoneNum;
+    var address=document.getElementById('chk-address').value.trim();
+    var city=document.getElementById('chk-city').value.trim();
+    var postal=document.getElementById('chk-postal').value.trim();
+    var country=document.getElementById('chk-country').value;
+    var notes=document.getElementById('chk-notes').value.trim();
+    if(!name||!email||!phoneNum){alert('Please fill in your name, email and phone number.');return;}
+    if(!address||!country){alert('Please fill in your shipping address and country.');return;}
+    var items=_chkMode==='cart'?CART:QUOTE;
+    if(!items.length){alert('No items in your '+(_chkMode==='cart'?'cart':'quote basket')+'.');return;}
+    var btn=document.getElementById('chk-submit-btn');
+    btn.textContent='Sending…';btn.disabled=true;
+    // Order ref
+    var arr=new Uint8Array(6);crypto.getRandomValues(arr);
+    var ref='LTL-'+Array.from(arr).map(function(b){return b.toString(36).toUpperCase();}).join('').slice(0,6);
+    // Garment summary
+    var garmentSummary=items.map(function(i){
+      return i.size?i.name+' ('+i.colour+', Size '+i.size+', Qty '+i.qty+')':i.name+' ('+i.colour+(i.notes?', '+i.notes:'')+')';
+    }).join(' | ');
+    // Colour summary
+    var colourSummary=[...new Set(items.map(function(i){return i.colour;}))].join(', ');
+    // Measurements (for quote mode)
+    var mData={};
+    if(_chkMode==='quote'){
+      ['chest','waist','hips','shoulder','sleeve','back_width','torso','height','inseam','length'].forEach(function(f){
+        var el=document.getElementById('chk-'+f);
+        if(el&&el.value.trim())mData[f]=el.value.trim();
+      });
+    }
+    var notesPrefix=_chkMode==='cart'?'[CART ORDER] ':'[QUOTE REQUEST] ';
+    var orderData=Object.assign({
+      order_ref:ref,name:name,email:email,phone:phone,
+      garment:garmentSummary,colour:colourSummary,
+      address:address,city:city,postal:postal,country:country,
+      notes:notesPrefix+(notes||''),
+    },mData);
+    var SURL='https://vyldmdavizedqhihnkwg.supabase.co';
+    var SKEY='sb_publishable_2Wua7AAvKSTrMHLT35xjVQ_8JuYqS2b';
+    try{
+      var res=await fetch(SURL+'/rest/v1/orders',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':'Bearer '+SKEY,'Prefer':'return=minimal'},
+        body:JSON.stringify(orderData)
+      });
+      if(res.ok||res.status===201||res.status===409){
+        fetch(SURL+'/functions/v1/send-order-email',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':'Bearer '+SKEY},
+          body:JSON.stringify(Object.assign({},orderData,{name:name,email:email,phone:phone,garment:garmentSummary,colour:colourSummary,country:country,address:address}))
+        }).catch(function(e){console.warn('email:',e);});
+        // Show success
+        document.getElementById('chk-form-wrap').style.display='none';
+        document.getElementById('chk-ref-val').textContent=ref;
+        document.getElementById('chk-success').style.display='block';
+        // Clear basket
+        if(_chkMode==='cart'){CART.length=0;renderCartDrawer();}
+        else{QUOTE.length=0;renderQuoteDrawer();}
+        updateBadges();
+      }else{throw new Error('status '+res.status);}
+    }catch(err){
+      btn.textContent='Submit Order Request';btn.disabled=false;
+      alert('Something went wrong.\n\nPlease call or WhatsApp us:\n📞 0935 023 757');
+    }
+  };
 })();
 
 // ── HOURS CHECK
