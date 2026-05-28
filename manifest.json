@@ -1,0 +1,39 @@
+{
+  "name": "Lam Tuyen Linen",
+  "short_name": "Lam Tuyen",
+  "description": "Pure linen clothing. Ready-to-wear & bespoke custom-fitted. Han Market, Da Nang, Vietnam.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF6EE",
+  "theme_color": "#2C1F10",
+  "lang": "en",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Ready to Wear",
+      "url": "/#shop",
+      "description": "Browse ready-to-wear linen collection"
+    },
+    {
+      "name": "Order Bespoke",
+      "url": "/#bes",
+      "description": "Submit a custom order request"
+    }
+  ]
+}

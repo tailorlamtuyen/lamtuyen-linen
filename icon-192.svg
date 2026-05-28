@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <!-- Background -->
+  <rect width="192" height="192" rx="28" fill="#2C1F10"/>
+  <!-- Subtle linen weave texture lines -->
+  <rect x="0" y="0" width="192" height="192" rx="28" fill="url(#weave)" opacity="0.06"/>
+  <defs>
+    <pattern id="weave" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="4" x2="8" y2="4" stroke="#EDE4D0" stroke-width="1"/>
+      <line x1="4" y1="0" x2="4" y2="8" stroke="#EDE4D0" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <!-- Gold accent line top -->
+  <rect x="24" y="28" width="144" height="2" rx="1" fill="#B8935A" opacity="0.7"/>
+  <!-- LT monogram -->
+  <text x="96" y="120" font-family="Georgia,'Times New Roman',serif" font-size="80" font-weight="400" fill="#EDE4D0" text-anchor="middle" letter-spacing="6">LT</text>
+  <!-- Tagline -->
+  <text x="96" y="148" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="300" fill="#B8935A" text-anchor="middle" letter-spacing="4">LINEN</text>
+  <!-- Gold accent line bottom -->
+  <rect x="24" y="162" width="144" height="2" rx="1" fill="#B8935A" opacity="0.7"/>
+</svg>

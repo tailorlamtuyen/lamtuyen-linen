@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background — safe zone padding for maskable -->
+  <rect width="512" height="512" fill="#2C1F10"/>
+  <!-- Subtle linen weave texture -->
+  <rect width="512" height="512" fill="url(#weave512)" opacity="0.05"/>
+  <defs>
+    <pattern id="weave512" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="6" x2="12" y2="6" stroke="#EDE4D0" stroke-width="1"/>
+      <line x1="6" y1="0" x2="6" y2="12" stroke="#EDE4D0" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <!-- Gold accent line top -->
+  <rect x="80" y="90" width="352" height="3" rx="1.5" fill="#B8935A" opacity="0.65"/>
+  <!-- LT monogram -->
+  <text x="256" y="320" font-family="Georgia,'Times New Roman',serif" font-size="210" font-weight="400" fill="#EDE4D0" text-anchor="middle" letter-spacing="12">LT</text>
+  <!-- Tagline -->
+  <text x="256" y="390" font-family="Arial,Helvetica,sans-serif" font-size="26" font-weight="300" fill="#B8935A" text-anchor="middle" letter-spacing="12">LINEN</text>
+  <!-- Gold accent line bottom -->
+  <rect x="80" y="420" width="352" height="3" rx="1.5" fill="#B8935A" opacity="0.65"/>
+</svg>
