@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Admin · Lam Tuyen Linen</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#2C1F10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg1:#FAF6EE;--bg2:#F3EDE0;--bg3:#EDE4D0;
+  --bgd:#2C1F10;--bgd2:#1E1508;
+  --a1:#B8935A;--a2:#8C6A38;
+  --th:#2C1F10;--tb:#5A4530;--tm:#8A7058;--tdim:#C4AE90;
+  --bdr:rgba(184,147,90,0.18);
+  --c-new:#3B82F6;--c-quoted:#D97706;--c-confirmed:#059669;
+  --c-paid:#065F46;--c-inprod:#6D28D9;--c-shipped:#4338CA;
+  --c-delivered:#4B5563;--c-cancelled:#DC2626;
+}
+html,body{height:100%;font-family:'Jost',sans-serif;font-weight:300;
+  background:var(--bg1);color:var(--tb);overflow-x:hidden}
+
+/* ── LOGIN ── */
+#login-screen{display:flex;align-items:center;justify-content:center;
+  min-height:100vh;background:var(--bgd);padding:20px}
+.login-card{background:var(--bg1);border-radius:8px;padding:40px 32px;
+  width:100%;max-width:380px;text-align:center}
+.login-logo{font-size:.55rem;letter-spacing:5px;text-transform:uppercase;
+  color:var(--a1);margin-bottom:20px}
+.login-title{font-size:1.3rem;font-weight:400;color:var(--th);margin-bottom:8px}
+.login-sub{font-size:.82rem;color:var(--tdim);margin-bottom:28px;line-height:1.7}
+.login-input{width:100%;border:1px solid var(--bdr);border-radius:4px;
+  padding:12px 14px;font-family:inherit;font-size:.9rem;color:var(--th);
+  background:var(--bg2);outline:none;transition:border-color .2s;margin-bottom:14px}
+.login-input:focus{border-color:var(--a1)}
+.login-btn{width:100%;background:var(--bgd);color:#EDE4D0;border:none;border-radius:4px;
+  padding:13px;font-family:inherit;font-size:.72rem;letter-spacing:2px;
+  text-transform:uppercase;cursor:pointer;transition:background .2s}
+.login-btn:hover{background:var(--bgd2)}
+.login-btn:disabled{opacity:.5;cursor:not-allowed}
+.login-msg{margin-top:14px;font-size:.82rem;line-height:1.6;min-height:18px}
+.login-msg.ok{color:#059669}.login-msg.err{color:#DC2626}
+
+/* ── APP SHELL ── */
+#app{display:none;flex-direction:column;height:100vh;overflow:hidden}
+
+/* ── HEADER ── */
+.adm-hdr{display:flex;align-items:center;justify-content:space-between;
+  height:50px;padding:0 16px;background:var(--bgd);flex-shrink:0;position:relative}
+.adm-title{font-size:.55rem;letter-spacing:4px;text-transform:uppercase;color:var(--a1)}
+.adm-hdr-r{display:flex;align-items:center;gap:10px}
+.new-count{background:var(--c-new);color:#fff;border-radius:10px;padding:2px 8px;
+  font-size:.6rem;font-weight:500;display:none}
+.refresh-btn{background:none;border:none;color:var(--a1);cursor:pointer;
+  font-size:16px;line-height:1;padding:4px;transition:transform .3s}
+.refresh-btn.spin{animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.signout-btn{font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(237,228,208,.4);background:none;border:none;cursor:pointer;
+  font-family:inherit;transition:color .2s}
+.signout-btn:hover{color:var(--a1)}
+
+/* ── BODY ── */
+.adm-body{display:flex;flex:1;overflow:hidden}
+
+/* ── ORDERS PANE ── */
+.orders-pane{display:flex;flex-direction:column;flex:1;overflow:hidden;min-width:0}
+.filter-bar{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;
+  scrollbar-width:none;flex-shrink:0;background:var(--bg2);border-bottom:1px solid var(--bdr)}
+.filter-bar::-webkit-scrollbar{display:none}
+.chip{padding:5px 12px;border-radius:20px;border:1px solid var(--bdr);
+  background:transparent;color:var(--tm);font-family:inherit;font-size:.6rem;
+  letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;
+  white-space:nowrap;transition:all .15s}
+.chip.act,.chip:hover{background:var(--bgd);color:var(--a1);border-color:transparent}
+#orders-list{flex:1;overflow-y:auto;padding:10px}
+.order-card{background:#fff;border:1px solid var(--bdr);border-radius:6px;
+  padding:13px 15px;margin-bottom:8px;cursor:pointer;transition:all .15s}
+.order-card:hover{border-color:var(--a1);box-shadow:0 2px 8px rgba(184,147,90,.1)}
+.order-card.active{border-color:var(--a1);background:#FFFDF9}
+.oc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.oc-ref{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--tdim)}
+.oc-name{font-size:.92rem;font-weight:400;color:var(--th);margin-bottom:3px}
+.oc-meta{display:flex;gap:6px;font-size:.74rem;color:var(--tm);flex-wrap:wrap}
+.oc-date{font-size:.66rem;color:var(--tdim);margin-top:5px}
+.empty-state{text-align:center;padding:48px 20px;color:var(--tdim);font-size:.85rem}
+
+/* ── STATUS BADGES ── */
+.sb{display:inline-block;padding:2px 8px;border-radius:10px;
+  font-size:.56rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:500}
+.sb.new{background:#EFF6FF;color:var(--c-new)}
+.sb.quoted{background:#FFFBEB;color:var(--c-quoted)}
+.sb.confirmed{background:#ECFDF5;color:var(--c-confirmed)}
+.sb.paid{background:#D1FAE5;color:var(--c-paid)}
+.sb.in_production{background:#EDE9FE;color:var(--c-inprod)}
+.sb.shipped{background:#E0E7FF;color:var(--c-shipped)}
+.sb.delivered{background:#F3F4F6;color:var(--c-delivered)}
+.sb.cancelled{background:#FEF2F2;color:var(--c-cancelled)}
+
+/* ── DETAIL PANEL ── */
+#det-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100}
+#detail-panel{position:fixed;bottom:0;left:0;right:0;background:var(--bg1);z-index:101;
+  border-radius:16px 16px 0 0;max-height:93vh;overflow-y:auto;
+  transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
+#detail-panel.open{transform:translateY(0)}
+.dh{position:sticky;top:0;background:var(--bg1);padding:14px 16px 12px;
+  border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px;z-index:2}
+.dh-close{background:var(--bg3);border:none;border-radius:50%;width:30px;height:30px;
+  cursor:pointer;font-size:13px;color:var(--tm);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center}
+.dh-ref{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--tdim);flex:1}
+
+/* ── STATUS TIMELINE ── */
+.timeline{display:flex;align-items:center;padding:12px 16px;
+  background:var(--bg2);border-bottom:1px solid var(--bdr);overflow-x:auto;scrollbar-width:none}
+.timeline::-webkit-scrollbar{display:none}
+.tl-step{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:48px}
+.tl-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--bdr);
+  background:var(--bg2);z-index:1;flex-shrink:0}
+.tl-dot.done{border-color:var(--a1);background:var(--a1)}
+.tl-dot.active{border-color:var(--a1);background:#fff;box-shadow:0 0 0 3px rgba(184,147,90,.25)}
+.tl-lbl{font-size:.48rem;letter-spacing:1px;text-transform:uppercase;color:var(--tdim);
+  text-align:center;white-space:nowrap}
+.tl-lbl.act{color:var(--a1)}
+.tl-line{flex:1;height:2px;background:var(--bdr);margin:0 2px;margin-top:-26px}
+.tl-line.done{background:var(--a1)}
+
+/* ── DETAIL SECTIONS ── */
+.ds{padding:14px 16px;border-bottom:1px solid var(--bdr)}
+.ds-h{font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--a1);margin-bottom:10px}
+.ds-row{display:flex;justify-content:space-between;align-items:flex-start;
+  gap:10px;margin-bottom:7px;font-size:.82rem}
+.ds-row>*:first-child{color:var(--tdim);min-width:80px;flex-shrink:0}
+.ds-row a{color:var(--a1);text-decoration:none}
+
+/* ── MEASUREMENTS GRID ── */
+.meas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.mc{background:var(--bg2);border-radius:3px;padding:6px 8px}
+.mc-k{display:block;font-size:.52rem;letter-spacing:.5px;text-transform:uppercase;color:var(--tdim);margin-bottom:1px}
+.mc-v{font-size:.85rem;color:var(--th)}
+.posture-box{margin-top:8px;padding:8px 10px;background:var(--bg2);
+  border-left:2px solid var(--a1);border-radius:2px;font-size:.78rem;color:var(--tm)}
+
+/* ── PRICING CALC ── */
+.calc-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+.calc-lbl{font-size:.76rem;color:var(--tdim);flex:1}
+.calc-in{border:1px solid var(--bdr);border-radius:4px;padding:7px 10px;font-family:inherit;
+  font-size:.82rem;color:var(--th);background:#fff;width:110px;text-align:right}
+.calc-in:focus{outline:none;border-color:var(--a1)}
+.calc-sel{border:1px solid var(--bdr);border-radius:4px;padding:7px 10px;font-family:inherit;
+  font-size:.8rem;color:var(--th);background:#fff;flex:1;min-width:0}
+.calc-sel:focus{outline:none;border-color:var(--a1)}
+.calc-divider{border:none;border-top:1px solid var(--bdr);margin:10px 0}
+.calc-out{background:var(--bgd);border-radius:6px;padding:16px;margin-top:14px;color:#EDE4D0}
+.calc-out-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.calc-out-lbl{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--a1)}
+.calc-out-val{font-size:.92rem}
+.calc-total-val{font-size:1.5rem;font-weight:400}
+.calc-approx{font-size:.68rem;color:rgba(237,228,208,.5);margin-top:6px}
+.calc-hist{font-size:.72rem;color:var(--tdim);margin-top:8px;padding:7px 10px;
+  background:var(--bg2);border-radius:4px;border-left:2px solid var(--a1)}
+.send-quote-btn{width:100%;background:var(--a1);color:#fff;border:none;border-radius:5px;
+  padding:13px;font-family:inherit;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;
+  cursor:pointer;margin-top:12px;transition:background .2s}
+.send-quote-btn:hover{background:var(--a2)}
+.send-quote-btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* ── OWNER NOTES ── */
+.notes-ta{width:100%;border:1px solid var(--bdr);border-radius:4px;padding:9px 11px;
+  font-family:inherit;font-size:.82rem;color:var(--tb);background:#fff;
+  resize:vertical;min-height:72px;outline:none}
+.notes-ta:focus{border-color:var(--a1)}
+.btn-sm{margin-top:7px;background:var(--bg3);border:1px solid var(--bdr);border-radius:4px;
+  padding:6px 14px;font-family:inherit;font-size:.66rem;letter-spacing:1.5px;
+  text-transform:uppercase;cursor:pointer;color:var(--th);transition:all .15s}
+.btn-sm:hover{background:var(--bgd);color:var(--a1)}
+
+/* ── ACTIONS ── */
+.detail-actions{padding:14px 16px;display:flex;flex-direction:column;gap:7px}
+.act-btn{width:100%;padding:12px;border:none;border-radius:5px;font-family:inherit;
+  font-size:.7rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .15s}
+.act-btn.prim{background:var(--bgd);color:var(--a1)}
+.act-btn.prim:hover{background:var(--bgd2)}
+.act-btn.succ{background:#059669;color:#fff}
+.act-btn.succ:hover{background:#047857}
+.act-btn.dang{background:transparent;border:1px solid #EF4444;color:#EF4444}
+.act-btn.dang:hover{background:#EF4444;color:#fff}
+.act-btn.sec{background:var(--bg3);color:var(--tm);border:1px solid var(--bdr)}
+.act-btn.sec:hover{background:var(--bg2)}
+
+/* SHIPPING INPUT */
+.ship-box{background:var(--bg2);border-radius:6px;padding:14px;margin-top:10px}
+.ship-box label{font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--tdim);display:block;margin-bottom:5px}
+.ship-in{width:100%;border:1px solid var(--bdr);border-radius:4px;padding:9px 12px;
+  font-family:inherit;font-size:.88rem;color:var(--th);background:#fff;
+  outline:none;margin-bottom:10px}
+.ship-in:focus{border-color:var(--a1)}
+.ship-sel{width:100%;border:1px solid var(--bdr);border-radius:4px;padding:9px 12px;
+  font-family:inherit;font-size:.88rem;color:var(--th);background:#fff;
+  outline:none;margin-bottom:10px}
+
+/* ── SETTINGS PANE ── */
+.settings-pane{display:none;flex-direction:column;flex:1;overflow-y:auto;min-width:0}
+.ss{padding:16px;border-bottom:1px solid var(--bdr)}
+.ss-h{font-size:.58rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--a1);margin-bottom:14px}
+.set-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:11px}
+.set-lbl{font-size:.82rem;color:var(--tb);flex:1}
+.set-in{border:1px solid var(--bdr);border-radius:4px;padding:8px 10px;font-family:inherit;
+  font-size:.84rem;color:var(--th);background:#fff;width:130px;text-align:right}
+.set-in:focus{outline:none;border-color:var(--a1)}
+.garment-grid{display:flex;flex-direction:column;gap:6px}
+.g-row{background:var(--bg2);border-radius:4px;padding:10px 12px;
+  display:grid;grid-template-columns:1fr 90px 100px;gap:8px;align-items:center}
+.g-name{font-size:.8rem;color:var(--th);font-weight:400}
+.g-in{border:1px solid var(--bdr);border-radius:4px;padding:5px 7px;font-family:inherit;
+  font-size:.78rem;color:var(--th);background:#fff;width:100%;text-align:right}
+.g-in:focus{outline:none;border-color:var(--a1)}
+.g-label{font-size:.55rem;letter-spacing:1px;text-transform:uppercase;color:var(--tdim);text-align:center}
+.zone-grid{display:flex;flex-direction:column;gap:6px}
+.z-row{display:flex;align-items:center;gap:10px;background:var(--bg2);
+  border-radius:4px;padding:9px 12px}
+.z-name{font-size:.8rem;color:var(--th);flex:1}
+.z-in{border:1px solid var(--bdr);border-radius:4px;padding:5px 8px;font-family:inherit;
+  font-size:.8rem;color:var(--th);background:#fff;width:110px;text-align:right}
+.z-in:focus{outline:none;border-color:var(--a1)}
+.settings-save{width:100%;background:var(--bgd);color:var(--a1);border:none;border-radius:5px;
+  padding:12px;font-family:inherit;font-size:.7rem;letter-spacing:2px;
+  text-transform:uppercase;cursor:pointer;transition:background .2s;margin-top:14px}
+.settings-save:hover{background:var(--bgd2)}
+.auto-pricing-box{background:var(--bg2);border:1px solid var(--bdr);border-radius:5px;
+  padding:14px;margin:14px 0}
+.apb-title{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--a1);margin-bottom:8px}
+.apb-bar-bg{background:var(--bg3);border-radius:3px;height:5px;margin:6px 0}
+.apb-bar-fill{height:100%;border-radius:3px;background:var(--a1);transition:width .6s}
+.apb-lbl{font-size:.72rem;color:var(--tdim)}
+
+/* ── BOTTOM TABS (mobile) ── */
+.btab{display:flex;background:var(--bgd2);border-top:1px solid rgba(184,147,90,.15);flex-shrink:0}
+.btab-btn{flex:1;background:none;border:none;padding:8px 0 7px;font-family:inherit;
+  font-size:.52rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(237,228,208,.35);cursor:pointer;display:flex;flex-direction:column;
+  align-items:center;gap:2px;transition:color .2s}
+.btab-btn.act{color:var(--a1)}
+.btab-icon{font-size:18px}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(16px);
+  background:var(--bgd);color:#EDE4D0;padding:9px 20px;border-radius:20px;
+  font-size:.74rem;letter-spacing:.5px;opacity:0;transition:all .28s;z-index:300;
+  white-space:nowrap;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── DESKTOP 2-COLUMN ── */
+@media(min-width:960px){
+  #det-overlay{display:none!important}
+  #detail-panel{position:static;transform:none!important;max-height:none;
+    border-radius:0;border-left:1px solid var(--bdr);width:460px;min-width:460px;
+    overflow-y:auto;display:block}
+  #detail-panel:not(.open) #detail-content:empty::after{
+    content:'Select an order to view details';
+    display:flex;align-items:center;justify-content:center;
+    min-height:200px;color:var(--tdim);font-size:.82rem;
+  }
+  .orders-pane{flex:1}
+  .btab{display:none}
+  body,#app{overflow:hidden}
+  .settings-pane{position:absolute;left:0;right:460px;top:50px;bottom:0;overflow-y:auto}
+}
+@media(min-width:1200px){
+  #detail-panel{width:520px;min-width:520px}
+  .settings-pane{right:520px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">Lam Tuyen Linen</div>
+    <h1 class="login-title">Owner Login</h1>
+    <p class="login-sub">Enter your email — we'll send a magic link to sign you in securely.</p>
+    <input type="email" id="login-email" class="login-input" value="tailorlamtuyen@gmail.com" placeholder="your@email.com">
+    <button class="login-btn" id="login-btn" onclick="sendMagicLink()">Send Magic Link →</button>
+    <p class="login-msg" id="login-msg"></p>
+  </div>
+</div>
+
+<!-- ══════════════ APP ══════════════ -->
+<div id="app">
+
+  <!-- HEADER -->
+  <header class="adm-hdr">
+    <div class="adm-title">Lam Tuyen · Admin</div>
+    <div class="adm-hdr-r">
+      <span class="new-count" id="new-count">0</span>
+      <button class="refresh-btn" id="refresh-btn" onclick="refreshOrders()" title="Refresh">↻</button>
+      <button class="signout-btn" onclick="signOut()">Sign Out</button>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <div class="adm-body">
+
+    <!-- ORDERS PANE -->
+    <div class="orders-pane" id="orders-pane">
+      <div class="filter-bar">
+        <button class="chip act" data-s="" onclick="filterOrders(this,'')">All</button>
+        <button class="chip" data-s="new" onclick="filterOrders(this,'new')">New</button>
+        <button class="chip" data-s="quoted" onclick="filterOrders(this,'quoted')">Quoted</button>
+        <button class="chip" data-s="confirmed" onclick="filterOrders(this,'confirmed')">Confirmed</button>
+        <button class="chip" data-s="paid" onclick="filterOrders(this,'paid')">Paid</button>
+        <button class="chip" data-s="in_production" onclick="filterOrders(this,'in_production')">Making</button>
+        <button class="chip" data-s="shipped" onclick="filterOrders(this,'shipped')">Shipped</button>
+        <button class="chip" data-s="delivered" onclick="filterOrders(this,'delivered')">Done</button>
+      </div>
+      <div id="orders-list"><div class="empty-state">Loading orders…</div></div>
+    </div>
+
+    <!-- SETTINGS PANE (hidden by default, shown via tab) -->
+    <div class="settings-pane" id="settings-pane">
+      <div class="ss">
+        <div class="ss-h">Pricing Engine</div>
+        <div class="auto-pricing-box">
+          <div class="apb-title">Auto-Pricing Progress</div>
+          <div class="apb-lbl" id="auto-price-lbl">0 / 350 completed orders needed</div>
+          <div class="apb-bar-bg"><div class="apb-bar-fill" id="auto-price-bar" style="width:0%"></div></div>
+          <div class="apb-lbl" style="margin-top:6px;font-size:.68rem" id="auto-price-hint">Once 350 orders are completed, the pricing calculator will suggest prices automatically based on your history.</div>
+        </div>
+        <div class="set-row">
+          <span class="set-lbl">Fabric cost per meter (₫)</span>
+          <input type="number" id="s-fabric" class="set-in" placeholder="180000">
+        </div>
+        <div class="set-row">
+          <span class="set-lbl">Margin multiplier</span>
+          <input type="number" id="s-margin" class="set-in" step="0.1" placeholder="2.5">
+        </div>
+      </div>
+
+      <div class="ss">
+        <div class="ss-h">Garment Types — Base Meters & Labour (₫)</div>
+        <div class="garment-grid" id="garment-grid"></div>
+      </div>
+
+      <div class="ss">
+        <div class="ss-h">Shipping Zones (₫)</div>
+        <div class="zone-grid" id="zone-grid"></div>
+      </div>
+
+      <div class="ss">
+        <button class="settings-save" onclick="saveSettings()">Save Settings</button>
+      </div>
+    </div>
+
+    <!-- DETAIL PANEL -->
+    <div id="det-overlay" onclick="closeDetail()"></div>
+    <div id="detail-panel">
+      <div id="detail-content"></div>
+    </div>
+
+  </div><!-- /adm-body -->
+
+  <!-- BOTTOM TABS -->
+  <nav class="btab">
+    <button class="btab-btn act" id="btab-orders" onclick="showTab('orders')">
+      <span class="btab-icon">📋</span>Orders
+    </button>
+    <button class="btab-btn" id="btab-settings" onclick="showTab('settings')">
+      <span class="btab-icon">⚙️</span>Settings
+    </button>
+  </nav>
+
+</div><!-- /app -->
+
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+'use strict';
+const SURL = 'https://vyldmdavizedqhihnkwg.supabase.co';
+const SKEY = 'sb_publishable_2Wua7AAvKSTrMHLT35xjVQ_8JuYqS2b';
+const ALLOWED = 'tailorlamtuyen@gmail.com';
+
+const SB = window.supabase.createClient(SURL, SKEY);
+
+let orders = [];
+let settings = null;
+let activeFilter = '';
+let selectedRef = null;
+let calcDebounce = null;
+
+// ── DEFAULT SETTINGS ──
+const DEF = {
+  fabric_cost_per_meter: 180000,
+  margin_multiplier: 2.5,
+  shipping_zones: {
+    'Vietnam': 50000,
+    'Southeast Asia': 350000,
+    'Asia Pacific': 500000,
+    'Australia & NZ': 550000,
+    'Europe': 650000,
+    'Americas': 700000,
+    'Rest of World': 600000,
+  },
+  garment_types: {
+    'Shirt / Blouse':          {meters:2.2, labour:200000},
+    'Dress (simple)':          {meters:2.8, labour:280000},
+    'Dress (complex)':         {meters:3.2, labour:450000},
+    'Trousers / Pants':        {meters:2.0, labour:250000},
+    'Jacket / Blazer':         {meters:2.8, labour:500000},
+    'Suit (2-piece)':          {meters:4.5, labour:900000},
+    'Skirt':                   {meters:1.8, labour:180000},
+    'Jumpsuit':                {meters:3.0, labour:380000},
+    'Linen Set (top + bottom)':{meters:3.8, labour:450000},
+    'Custom / Other':          {meters:2.5, labour:300000},
+  }
+};
+
+// ── STATUS CONFIG ──
+const STATUS_STEPS = [
+  {key:'new',          label:'New'},
+  {key:'quoted',       label:'Quoted'},
+  {key:'confirmed',    label:'Confirmed'},
+  {key:'paid',         label:'Paid'},
+  {key:'in_production',label:'Making'},
+  {key:'shipped',      label:'Shipped'},
+  {key:'delivered',    label:'Done'},
+];
+
+function statusLabel(s){
+  const m={new:'New',quoted:'Quoted',confirmed:'Confirmed',paid:'Paid',
+    in_production:'Making',shipped:'Shipped',delivered:'Delivered',cancelled:'Cancelled'};
+  return m[s||'new']||s||'New';
+}
+
+// ── AUTH ──
+async function init(){
+  SB.auth.onAuthStateChange((event,session)=>{
+    if(session) onSignedIn(session);
+    else onSignedOut();
+  });
+  const {data:{session}} = await SB.auth.getSession();
+  if(session) onSignedIn(session);
+  else onSignedOut();
+}
+
+function onSignedOut(){
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+}
+
+async function onSignedIn(session){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='flex';
+  await loadSettings();
+  await loadOrders();
+}
+
+async function sendMagicLink(){
+  const email = document.getElementById('login-email').value.trim();
+  const btn = document.getElementById('login-btn');
+  const msg = document.getElementById('login-msg');
+  if(email !== ALLOWED){
+    msg.className='login-msg err';
+    msg.textContent='Access restricted to the shop owner only.';
+    return;
+  }
+  btn.disabled=true; btn.textContent='Sending…';
+  const {error} = await SB.auth.signInWithOtp({
+    email,
+    options:{emailRedirectTo: window.location.origin+'/admin'}
+  });
+  btn.disabled=false; btn.textContent='Send Magic Link →';
+  if(error){msg.className='login-msg err';msg.textContent='Error: '+error.message;}
+  else{msg.className='login-msg ok';msg.textContent='✓ Magic link sent! Check your email.';}
+}
+
+async function signOut(){
+  await SB.auth.signOut();
+}
+
+// ── TABS ──
+function showTab(tab){
+  const isOrders = tab==='orders';
+  document.getElementById('orders-pane').style.display=isOrders?'flex':'none';
+  document.getElementById('settings-pane').style.display=isOrders?'none':'flex';
+  document.getElementById('btab-orders').classList.toggle('act',isOrders);
+  document.getElementById('btab-settings').classList.toggle('act',!isOrders);
+  if(!isOrders) renderSettings();
+}
+
+// ── ORDERS ──
+async function loadOrders(){
+  const {data,error} = await SB.from('orders').select('*').order('created_at',{ascending:false});
+  if(error){toast('Could not load orders: '+error.message);return;}
+  orders = data||[];
+  renderOrders();
+  updateNewBadge();
+}
+
+async function refreshOrders(){
+  const btn=document.getElementById('refresh-btn');
+  btn.classList.add('spin');
+  await loadOrders();
+  btn.classList.remove('spin');
+  toast('Orders refreshed');
+}
+
+function renderOrders(){
+  const list=document.getElementById('orders-list');
+  const filtered=activeFilter?orders.filter(o=>(o.status||'new')===activeFilter):orders;
+  if(!filtered.length){list.innerHTML='<div class="empty-state">No orders found</div>';return;}
+  list.innerHTML=filtered.map(o=>`
+    <div class="order-card${o.order_ref===selectedRef?' active':''}" onclick="openDetail('${esc(o.order_ref)}')">
+      <div class="oc-top">
+        <span class="oc-ref">${esc(o.order_ref||'—')}</span>
+        <span class="sb ${o.status||'new'}">${statusLabel(o.status)}</span>
+      </div>
+      <div class="oc-name">${esc(o.name||'—')}</div>
+      <div class="oc-meta">
+        <span>${esc(o.garment||'—')}</span>
+        <span>·</span>
+        <span>${esc(o.country||'—')}</span>
+        ${o.quoted_price_vnd?`<span>·</span><span style="color:var(--a1)">${fmtVND(o.quoted_price_vnd)}</span>`:''}
+      </div>
+      <div class="oc-date">${fmtDate(o.created_at)}</div>
+    </div>`).join('');
+}
+
+function filterOrders(el,status){
+  activeFilter=status;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('act'));
+  el.classList.add('act');
+  renderOrders();
+}
+
+function updateNewBadge(){
+  const n=orders.filter(o=>!o.status||o.status==='new').length;
+  const el=document.getElementById('new-count');
+  el.textContent=n;
+  el.style.display=n?'inline-block':'none';
+}
+
+// ── ORDER DETAIL ──
+function openDetail(ref){
+  const o=orders.find(x=>x.order_ref===ref);
+  if(!o)return;
+  selectedRef=ref;
+  renderOrders(); // update active card
+  renderDetail(o);
+  if(window.innerWidth<960){
+    document.getElementById('detail-panel').classList.add('open');
+    document.getElementById('det-overlay').style.display='block';
+    document.body.style.overflow='hidden';
+  }
+}
+
+function closeDetail(){
+  document.getElementById('detail-panel').classList.remove('open');
+  document.getElementById('det-overlay').style.display='none';
+  document.body.style.overflow='';
+}
+
+function renderDetail(o){
+  const content=document.getElementById('detail-content');
+  const meas=[
+    ['Chest',o.chest],['Waist',o.waist],['High Hip',o.high_hip],['Full Hips',o.hips],
+    ['Shoulder',o.shoulder],['Shldr-Shldr',o.shoulder_to_shoulder],
+    ['Across Chest',o.across_chest],['Across Back',o.across_back],['Back Width',o.back_width],
+    ['Bust Point',o.bust_point],['Bust Height',o.bust_height],['Under Bust',o.under_bust],
+    ['Sleeve',o.sleeve],['Arm Length',o.arm_length],['Bicep',o.bicep],['Elbow',o.elbow],
+    ['Tricep',o.tricep],['Wrist',o.wrist],['Armhole',o.armhole],
+    ['Neck',o.neck],['Head',o.head],
+    ['Waist-Hip',o.waist_to_hip],['Rise',o.rise],['Inseam',o.inseam],
+    ['Outseam',o.outseam],['Thigh',o.thigh],['Knee',o.knee],['Calf',o.calf],
+    ['Ankle',o.ankle],['Waist-Knee',o.waist_to_knee],
+    ['Height',o.height],['Back Len',o.back_length],['Front Len',o.front_length],
+    ['Torso',o.torso],['Waist-Floor',o.waist_to_floor],['Gmt Length',o.length],
+  ].filter(([,v])=>v);
+
+  const measHtml=meas.length?`
+    <div class="ds">
+      <div class="ds-h">Measurements (cm)</div>
+      <div class="meas-grid">
+        ${meas.map(([k,v])=>`<div class="mc"><span class="mc-k">${k}</span><span class="mc-v">${v} cm</span></div>`).join('')}
+      </div>
+      ${o.posture_notes?`<div class="posture-box"><strong>Posture:</strong> ${esc(o.posture_notes)}</div>`:''}
+    </div>`:'';
+
+  content.innerHTML=`
+    <div class="dh">
+      <button class="dh-close" onclick="closeDetail()">✕</button>
+      <div class="dh-ref">${esc(o.order_ref||'—')}</div>
+      <span class="sb ${o.status||'new'}">${statusLabel(o.status)}</span>
+    </div>
+
+    ${renderTimeline(o.status)}
+
+    <div class="ds">
+      <div class="ds-h">Customer</div>
+      <div class="ds-row"><span>Name</span><strong>${esc(o.name||'—')}</strong></div>
+      <div class="ds-row"><span>Email</span><a href="mailto:${esc(o.email)}">${esc(o.email||'—')}</a></div>
+      <div class="ds-row"><span>WhatsApp</span><a href="https://wa.me/${(o.phone||'').replace(/\D/g,'')}" target="_blank">${esc(o.phone||'—')} 💬</a></div>
+      <div class="ds-row"><span>Country</span><span>${esc(o.country||'—')}</span></div>
+      ${o.address?`<div class="ds-row"><span>Address</span><span>${esc([o.address,o.city,o.postal].filter(Boolean).join(', '))}</span></div>`:''}
+    </div>
+
+    <div class="ds">
+      <div class="ds-h">Garment</div>
+      <div class="ds-row"><span>Type</span><strong>${esc(o.garment||'—')}</strong></div>
+      <div class="ds-row"><span>Colour</span><span>${esc(o.colour||'—')}</span></div>
+      ${o.notes?`<div class="ds-row"><span>Style Notes</span><span>${esc(o.notes)}</span></div>`:''}
+    </div>
+
+    ${measHtml}
+
+    <div class="ds" id="calc-section">
+      <div class="ds-h">Pricing Calculator</div>
+      <div class="calc-row">
+        <span class="calc-lbl">Garment type</span>
+        <select id="calc-garment" class="calc-sel" onchange="onGarmentChange()"></select>
+      </div>
+      <div class="calc-row">
+        <span class="calc-lbl">Fabric meters</span>
+        <input type="number" id="calc-meters" class="calc-in" step="0.1" oninput="calcPrice()">
+      </div>
+      <div class="calc-row">
+        <span class="calc-lbl">Fabric cost/m (₫)</span>
+        <input type="number" id="calc-fabric" class="calc-in" oninput="calcPrice()">
+      </div>
+      <div class="calc-row">
+        <span class="calc-lbl">Base labour (₫)</span>
+        <input type="number" id="calc-labour" class="calc-in" oninput="calcPrice()">
+      </div>
+      <div class="calc-row">
+        <span class="calc-lbl">Extra labour / complexity (₫)</span>
+        <input type="number" id="calc-extra" class="calc-in" value="0" oninput="calcPrice()">
+      </div>
+      <hr class="calc-divider">
+      <div class="calc-row">
+        <span class="calc-lbl">Shipping zone</span>
+        <select id="calc-zone" class="calc-sel" onchange="calcPrice()"></select>
+      </div>
+      <div class="calc-row">
+        <span class="calc-lbl">Margin multiplier</span>
+        <input type="number" id="calc-margin" class="calc-in" step="0.1" oninput="calcPrice()">
+      </div>
+      <div class="calc-out">
+        <div class="calc-out-row">
+          <span class="calc-out-lbl">Garment Price</span>
+          <span id="co-garment">—</span>
+        </div>
+        <div class="calc-out-row">
+          <span class="calc-out-lbl">Shipping</span>
+          <span id="co-ship">—</span>
+        </div>
+        <div class="calc-out-row" style="margin-top:8px;border-top:1px solid rgba(184,147,90,.2);padding-top:8px">
+          <span class="calc-out-lbl">Total</span>
+          <span class="calc-total-val" id="co-total">—</span>
+        </div>
+        <div class="calc-approx" id="co-approx"></div>
+      </div>
+      <div class="calc-hist" id="calc-hist" style="display:none"></div>
+      ${(o.status||'new')==='new'||(o.status)==='quoted'?
+        `<button class="send-quote-btn" id="send-quote-btn" onclick="sendQuote()" disabled>
+          ${o.status==='quoted'?'Resend Quote to Customer':'Send Quote to Customer'}
+        </button>`:''}
+    </div>
+
+    <div class="ds">
+      <div class="ds-h">Owner Notes (private)</div>
+      <textarea class="notes-ta" id="owner-notes-input" placeholder="Internal notes about this order…">${esc(o.owner_notes||'')}</textarea>
+      <button class="btn-sm" onclick="saveOwnerNotes()">Save Notes</button>
+    </div>
+
+    ${renderActions(o)}
+    `;
+
+  initPricingCalc(o);
+}
+
+function renderTimeline(status){
+  const idx=STATUS_STEPS.findIndex(s=>s.key===(status||'new'));
+  let html='<div class="timeline">';
+  STATUS_STEPS.forEach((step,i)=>{
+    if(i>0) html+=`<div class="tl-line${i<=idx?' done':''}"></div>`;
+    const cls=i<idx?'done':i===idx?'active':'';
+    html+=`<div class="tl-step">
+      <div class="tl-dot ${cls}"></div>
+      <div class="tl-lbl${i===idx?' act':''}">${step.label}</div>
+    </div>`;
+  });
+  return html+'</div>';
+}
+
+function renderActions(o){
+  const s=o.status||'new';
+  let btns='';
+  if(s==='new'){
+    btns+=`<button class="act-btn dang" onclick="cancelOrder()">Cancel Order</button>`;
+  } else if(s==='quoted'){
+    btns+=`<button class="act-btn succ" onclick="updateStatus('confirmed')">✓ Customer Confirmed</button>`;
+    btns+=`<button class="act-btn dang" onclick="cancelOrder()">Cancel Order</button>`;
+  } else if(s==='confirmed'){
+    btns+=`<button class="act-btn succ" onclick="updateStatus('paid')">✓ Payment Received</button>`;
+    btns+=`<button class="act-btn dang" onclick="cancelOrder()">Cancel Order</button>`;
+  } else if(s==='paid'){
+    btns+=`<button class="act-btn prim" onclick="updateStatus('in_production')">→ Start Production</button>`;
+  } else if(s==='in_production'){
+    btns+=`<button class="act-btn succ" onclick="showShipBox()">📦 Mark as Shipped</button>`;
+  } else if(s==='shipped'){
+    btns+=`<button class="act-btn sec" onclick="updateStatus('delivered')">✓ Mark Delivered</button>`;
+    const tn=orders.find(x=>x.order_ref===selectedRef)?.tracking_number;
+    if(tn) btns+=`<div style="padding:8px;font-size:.78rem;color:var(--tdim)">Tracking: ${esc(tn)}</div>`;
+  } else if(s==='delivered'){
+    btns+=`<div style="padding:8px;font-size:.8rem;color:var(--tm);text-align:center">✓ Order complete</div>`;
+  } else if(s==='cancelled'){
+    btns+=`<button class="act-btn sec" onclick="updateStatus('new')">↺ Reopen as New</button>`;
+  }
+
+  return `<div class="detail-actions">
+    ${btns}
+    <div id="ship-box" style="display:none" class="ship-box">
+      <label>Tracking Number</label>
+      <input type="text" id="ship-tracking" class="ship-in" placeholder="e.g. EE123456789VN">
+      <label>Carrier</label>
+      <select id="ship-carrier" class="ship-sel">
+        <option>Vietnam Post (EMS)</option>
+        <option>DHL Express</option>
+        <option>FedEx</option>
+        <option>Other</option>
+      </select>
+      <button class="act-btn succ" onclick="confirmShipped()" style="margin-top:4px">Confirm Shipped & Email Customer</button>
+    </div>
+  </div>`;
+}
+
+// ── PRICING CALCULATOR ──
+function initPricingCalc(o){
+  const cfg=settings||DEF;
+  const garmentSel=document.getElementById('calc-garment');
+  const zoneSel=document.getElementById('calc-zone');
+  if(!garmentSel||!zoneSel)return;
+
+  // Populate garment dropdown
+  garmentSel.innerHTML='';
+  Object.keys(cfg.garment_types).forEach(name=>{
+    const opt=document.createElement('option');
+    opt.value=name;opt.textContent=name;
+    garmentSel.appendChild(opt);
+  });
+
+  // Try to match order's garment to a type
+  const orderGarment=(o.garment||'').toLowerCase();
+  let matchedType=Object.keys(cfg.garment_types)[0];
+  Object.keys(cfg.garment_types).forEach(name=>{
+    if(orderGarment.includes(name.split(' ')[0].toLowerCase())) matchedType=name;
+  });
+  garmentSel.value=matchedType;
+
+  // Populate zone dropdown
+  zoneSel.innerHTML='';
+  Object.keys(cfg.shipping_zones).forEach(name=>{
+    const opt=document.createElement('option');
+    opt.value=name;opt.textContent=name;
+    zoneSel.appendChild(opt);
+  });
+  const zone=guessZone(o.country||'');
+  if(zone) zoneSel.value=zone;
+
+  // Set defaults
+  const gt=cfg.garment_types[matchedType]||{meters:2.5,labour:300000};
+  document.getElementById('calc-meters').value=gt.meters;
+  document.getElementById('calc-fabric').value=cfg.fabric_cost_per_meter;
+  document.getElementById('calc-labour').value=gt.labour;
+  document.getElementById('calc-extra').value=0;
+  document.getElementById('calc-margin').value=cfg.margin_multiplier;
+
+  calcPrice();
+  loadHistoricalAvg(matchedType);
+}
+
+function onGarmentChange(){
+  const cfg=settings||DEF;
+  const name=document.getElementById('calc-garment').value;
+  const gt=cfg.garment_types[name]||{meters:2.5,labour:300000};
+  document.getElementById('calc-meters').value=gt.meters;
+  document.getElementById('calc-labour').value=gt.labour;
+  calcPrice();
+  loadHistoricalAvg(name);
+}
+
+function calcPrice(){
+  const meters=parseFloat(document.getElementById('calc-meters')?.value)||0;
+  const fabricCost=parseFloat(document.getElementById('calc-fabric')?.value)||0;
+  const labour=parseFloat(document.getElementById('calc-labour')?.value)||0;
+  const extra=parseFloat(document.getElementById('calc-extra')?.value)||0;
+  const margin=parseFloat(document.getElementById('calc-margin')?.value)||2.5;
+  const cfg=settings||DEF;
+  const zoneName=document.getElementById('calc-zone')?.value||'';
+  const shipCost=cfg.shipping_zones[zoneName]||600000;
+
+  const prodCost=(meters*fabricCost+labour+extra)*margin;
+  const total=prodCost+shipCost;
+
+  const co_g=document.getElementById('co-garment');
+  const co_s=document.getElementById('co-ship');
+  const co_t=document.getElementById('co-total');
+  const co_a=document.getElementById('co-approx');
+  if(!co_t)return;
+
+  co_g.textContent=fmtVND(Math.round(prodCost));
+  co_s.textContent=fmtVND(shipCost);
+  co_t.textContent=fmtVND(Math.round(total));
+  const usd=Math.round(total/25000);
+  const eur=Math.round(total/27000);
+  const aud=Math.round(total/16500);
+  co_a.textContent=`≈ USD ${usd} · EUR ${eur} · AUD ${aud}`;
+
+  const btn=document.getElementById('send-quote-btn');
+  if(btn) btn.disabled=total<=0;
+
+  // Store in a data attribute for easy retrieval
+  if(co_t) co_t.dataset.vnd=Math.round(total);
+  const shipEl=document.getElementById('co-ship');
+  if(shipEl) shipEl.dataset.vnd=shipCost;
+}
+
+async function loadHistoricalAvg(garmentName){
+  const histEl=document.getElementById('calc-hist');
+  if(!histEl)return;
+  try{
+    const kw=garmentName.split(' ')[0];
+    const {data}=await SB.from('orders').select('quoted_price_vnd')
+      .ilike('garment',`%${kw}%`).in('status',['shipped','delivered'])
+      .not('quoted_price_vnd','is',null);
+    if(data&&data.length>=3){
+      const avg=data.reduce((s,o)=>s+Number(o.quoted_price_vnd),0)/data.length;
+      histEl.style.display='block';
+      histEl.textContent=`Historical avg for similar garments: ${fmtVND(Math.round(avg))} (${data.length} orders)`;
+    } else {
+      histEl.style.display='none';
+    }
+  }catch{histEl.style.display='none';}
+}
+
+function guessZone(country){
+  const c=(country||'').toLowerCase();
+  if(!c) return 'Rest of World';
+  if(c==='vietnam') return 'Vietnam';
+  if(['thailand','singapore','malaysia','indonesia','philippines','cambodia','laos','myanmar','brunei'].some(x=>c.includes(x))) return 'Southeast Asia';
+  if(['japan','south korea','korea','china','hong kong','taiwan','india','nepal','sri lanka'].some(x=>c.includes(x))) return 'Asia Pacific';
+  if(['australia','new zealand'].some(x=>c.includes(x))) return 'Australia & NZ';
+  if(['france','germany','united kingdom','uk','great britain','italy','spain','netherlands','sweden','denmark','norway','finland','switzerland','austria','belgium','portugal','poland','czech','ireland','greece','hungary','romania'].some(x=>c.includes(x))) return 'Europe';
+  if(['united states','usa','us','canada','mexico','brazil','argentina','chile'].some(x=>c.includes(x))) return 'Americas';
+  return 'Rest of World';
+}
+
+// ── SEND QUOTE ──
+async function sendQuote(){
+  const o=orders.find(x=>x.order_ref===selectedRef);
+  if(!o)return;
+  const totalEl=document.getElementById('co-total');
+  const shipEl=document.getElementById('co-ship');
+  if(!totalEl)return;
+  const totalVND=parseInt(totalEl.dataset.vnd)||0;
+  const shipVND=parseInt(shipEl?.dataset.vnd)||0;
+  const garmentPrice=totalVND-shipVND;
+  if(!totalVND){toast('Calculate price first');return;}
+
+  const btn=document.getElementById('send-quote-btn');
+  const orig=btn.textContent;
+  btn.disabled=true;btn.textContent='Sending…';
+
+  try{
+    // Call edge function
+    const res=await fetch(`${SURL}/functions/v1/send-quote-email`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':`Bearer ${SKEY}`},
+      body:JSON.stringify({
+        order_ref:o.order_ref, name:o.name, email:o.email,
+        garment:o.garment, colour:o.colour, country:o.country,
+        garment_price_vnd:garmentPrice, shipping_vnd:shipVND, total_vnd:totalVND,
+      })
+    });
+    if(!res.ok){const t=await res.text();throw new Error(t);}
+
+    // Update order in Supabase
+    const {error}=await SB.from('orders').update({
+      status:'quoted',
+      quoted_price_vnd:totalVND,
+      quoted_at:new Date().toISOString(),
+    }).eq('order_ref',o.order_ref);
+    if(error) throw error;
+
+    // Update local state
+    const idx=orders.findIndex(x=>x.order_ref===o.order_ref);
+    if(idx>=0){orders[idx].status='quoted';orders[idx].quoted_price_vnd=totalVND;}
+    toast('Quote sent to '+o.email);
+    renderOrders();
+    openDetail(o.order_ref);
+  }catch(err){
+    console.error('sendQuote error:',err);
+    toast('Failed to send quote — check console');
+  }finally{
+    btn.disabled=false;btn.textContent=orig;
+  }
+}
+
+// ── STATUS UPDATES ──
+async function updateStatus(newStatus){
+  const o=orders.find(x=>x.order_ref===selectedRef);
+  if(!o)return;
+  const updates={status:newStatus};
+  if(newStatus==='paid') updates.paid_at=new Date().toISOString();
+  if(newStatus==='in_production') updates.production_started_at=new Date().toISOString();
+  if(newStatus==='delivered') updates.delivered_at=new Date().toISOString();
+
+  const {error}=await SB.from('orders').update(updates).eq('order_ref',o.order_ref);
+  if(error){toast('Update failed: '+error.message);return;}
+
+  const idx=orders.findIndex(x=>x.order_ref===o.order_ref);
+  if(idx>=0) Object.assign(orders[idx],updates);
+  toast('Status → '+statusLabel(newStatus));
+  renderOrders();
+  openDetail(o.order_ref);
+}
+
+async function cancelOrder(){
+  if(!confirm('Cancel this order? The customer will not be notified automatically.')) return;
+  await updateStatus('cancelled');
+}
+
+function showShipBox(){
+  const box=document.getElementById('ship-box');
+  if(box) box.style.display=box.style.display==='none'?'block':'none';
+}
+
+async function confirmShipped(){
+  const tracking=document.getElementById('ship-tracking')?.value.trim();
+  const carrier=document.getElementById('ship-carrier')?.value||'Vietnam Post (EMS)';
+  if(!tracking){toast('Please enter a tracking number');return;}
+
+  const o=orders.find(x=>x.order_ref===selectedRef);
+  if(!o)return;
+
+  const btn=document.querySelector('#ship-box .act-btn');
+  if(btn){btn.disabled=true;btn.textContent='Sending…';}
+
+  try{
+    const res=await fetch(`${SURL}/functions/v1/send-shipped-email`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':`Bearer ${SKEY}`},
+      body:JSON.stringify({
+        order_ref:o.order_ref, name:o.name, email:o.email,
+        garment:o.garment, tracking_number:tracking, carrier,
+      })
+    });
+    if(!res.ok){const t=await res.text();throw new Error(t);}
+
+    const {error}=await SB.from('orders').update({
+      status:'shipped',
+      tracking_number:tracking,
+      shipped_at:new Date().toISOString(),
+    }).eq('order_ref',o.order_ref);
+    if(error) throw error;
+
+    const idx=orders.findIndex(x=>x.order_ref===o.order_ref);
+    if(idx>=0){orders[idx].status='shipped';orders[idx].tracking_number=tracking;}
+    toast('Shipped! Customer notified by email');
+    updateNewBadge();
+    renderOrders();
+    openDetail(o.order_ref);
+  }catch(err){
+    console.error('confirmShipped error:',err);
+    toast('Failed — check console');
+    if(btn){btn.disabled=false;btn.textContent='Confirm Shipped & Email Customer';}
+  }
+}
+
+// ── OWNER NOTES ──
+async function saveOwnerNotes(){
+  const notes=document.getElementById('owner-notes-input')?.value||'';
+  const {error}=await SB.from('orders').update({owner_notes:notes}).eq('order_ref',selectedRef);
+  if(error){toast('Failed to save notes');return;}
+  const idx=orders.findIndex(x=>x.order_ref===selectedRef);
+  if(idx>=0) orders[idx].owner_notes=notes;
+  toast('Notes saved');
+}
+
+// ── SETTINGS ──
+async function loadSettings(){
+  try{
+    const {data,error}=await SB.from('pricing_settings').select('value').eq('id','config').single();
+    if(error||!data) settings=JSON.parse(JSON.stringify(DEF));
+    else settings={...DEF,...data.value};
+  }catch{settings=JSON.parse(JSON.stringify(DEF));}
+}
+
+function renderSettings(){
+  const cfg=settings||DEF;
+  document.getElementById('s-fabric').value=cfg.fabric_cost_per_meter;
+  document.getElementById('s-margin').value=cfg.margin_multiplier;
+
+  // Garment types
+  const gg=document.getElementById('garment-grid');
+  gg.innerHTML=Object.entries(cfg.garment_types).map(([name,v])=>`
+    <div class="g-row">
+      <div class="g-name">${esc(name)}</div>
+      <div>
+        <div class="g-label">Meters</div>
+        <input type="number" class="g-in" data-garment="${esc(name)}" data-field="meters" value="${v.meters}" step="0.1">
+      </div>
+      <div>
+        <div class="g-label">Labour ₫</div>
+        <input type="number" class="g-in" data-garment="${esc(name)}" data-field="labour" value="${v.labour}" step="10000">
+      </div>
+    </div>`).join('');
+
+  // Shipping zones
+  const zg=document.getElementById('zone-grid');
+  zg.innerHTML=Object.entries(cfg.shipping_zones).map(([name,cost])=>`
+    <div class="z-row">
+      <span class="z-name">${esc(name)}</span>
+      <input type="number" class="z-in" data-zone="${esc(name)}" value="${cost}" step="10000">
+    </div>`).join('');
+
+  // Auto-pricing progress
+  updateAutoPricingBar();
+}
+
+async function updateAutoPricingBar(){
+  try{
+    const {count}=await SB.from('orders')
+      .select('*',{count:'exact',head:true})
+      .in('status',['shipped','delivered'])
+      .not('quoted_price_vnd','is',null);
+    const n=count||0;
+    const pct=Math.min(100,Math.round(n/350*100));
+    document.getElementById('auto-price-lbl').textContent=`${n} / 350 completed orders`;
+    document.getElementById('auto-price-bar').style.width=pct+'%';
+    if(n>=350) document.getElementById('auto-price-hint').textContent=
+      '✓ Auto-pricing is active! The calculator now suggests prices based on your history.';
+    else document.getElementById('auto-price-hint').textContent=
+      `${350-n} more completed orders needed to activate auto-pricing.`;
+  }catch{}
+}
+
+async function saveSettings(){
+  const cfg=settings||JSON.parse(JSON.stringify(DEF));
+  cfg.fabric_cost_per_meter=parseFloat(document.getElementById('s-fabric').value)||DEF.fabric_cost_per_meter;
+  cfg.margin_multiplier=parseFloat(document.getElementById('s-margin').value)||DEF.margin_multiplier;
+
+  document.querySelectorAll('.g-in').forEach(el=>{
+    const name=el.dataset.garment;const field=el.dataset.field;
+    if(!cfg.garment_types[name]) cfg.garment_types[name]={meters:2.5,labour:300000};
+    cfg.garment_types[name][field]=parseFloat(el.value)||cfg.garment_types[name][field];
+  });
+  document.querySelectorAll('.z-in').forEach(el=>{
+    const name=el.dataset.zone;
+    cfg.shipping_zones[name]=parseFloat(el.value)||cfg.shipping_zones[name];
+  });
+
+  const {error}=await SB.from('pricing_settings')
+    .upsert({id:'config',value:cfg,updated_at:new Date().toISOString()});
+  if(error){toast('Failed to save settings: '+error.message);return;}
+  settings=cfg;
+  toast('Settings saved');
+}
+
+// ── UTILS ──
+function esc(s){
+  return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtVND(n){
+  return new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(n||0);
+}
+function fmtDate(d){
+  if(!d) return '—';
+  return new Date(d).toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+let toastTimer;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),3000);
+}
+
+// ── START ──
+init();
+</script>
+</body>
+</html>
