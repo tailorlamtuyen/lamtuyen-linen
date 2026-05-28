@@ -10,7 +10,35 @@
 <link rel="canonical" href="https://lamtuyenlinen.com">
 <meta name="geo.region" content="VN-DN">
 <script type="application/ld+json">
-[{"@context":"https://schema.org","@type":"ClothingStore","name":"Lam Tuyen Linen","description":"Premium pure linen clothing. Ready-to-wear and bespoke custom-fitted. Worldwide shipping.","url":"https://lamtuyenlinen.com","telephone":"+84935023757","address":{"@type":"PostalAddress","streetAddress":"Han Market, 119 Trần Phú","addressLocality":"Hải Châu","addressRegion":"Da Nang","addressCountry":"VN"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"24"},"sameAs":["https://www.instagram.com/tailor.lamtuyen/","https://www.tiktok.com/@tailor.lamtuyen"]},{"@context":"https://schema.org","@type":"LocalBusiness","name":"Tailor Shop Lam Tuyen Han Market","telephone":"+84935023757","address":{"@type":"PostalAddress","streetAddress":"Han Market, 119 Trần Phú","addressLocality":"Hải Châu","addressRegion":"Da Nang","addressCountry":"VN"},"openingHours":"Mo-Su 08:00-19:30","aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"24"}}]
+[
+  {
+    "@context":"https://schema.org",
+    "@type":"ClothingStore",
+    "name":"Lam Tuyen Linen",
+    "description":"Premium pure linen clothing. Ready-to-wear and bespoke custom-fitted. Worldwide shipping.",
+    "url":"https://lamtuyenlinen.com",
+    "telephone":"+84935023757",
+    "address":{"@type":"PostalAddress","streetAddress":"Han Market, 119 Trần Phú","addressLocality":"Hải Châu","addressRegion":"Da Nang","addressCountry":"VN"},
+    "aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"24"},
+    "sameAs":["https://www.instagram.com/tailor.lamtuyen/","https://www.tiktok.com/@tailor.lamtuyen"],
+    "hasOfferCatalog":{"@type":"OfferCatalog","name":"Lam Tuyen Linen Collection","itemListElement":[
+      {"@type":"Offer","itemOffered":{"@type":"Product","name":"Ready-to-Wear Linen","description":"Ready-to-wear linen garments in standard sizes"}},
+      {"@type":"Offer","itemOffered":{"@type":"Product","name":"Bespoke Custom Linen","description":"Custom-tailored linen garments made to your measurements"}}
+    ]},
+    "shippingDetails":{"@type":"OfferShippingDetails","shippingDestination":{"@type":"DefinedRegion","name":"Worldwide"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":1,"maxValue":14,"unitCode":"DAY"},"transitTime":{"@type":"QuantitativeValue","minValue":2,"maxValue":21,"unitCode":"DAY"}}},
+    "hasMerchantReturnPolicy":{"@type":"MerchantReturnPolicy","applicableCountry":"Worldwide","returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow","merchantReturnDays":14,"returnMethod":"https://schema.org/ReturnByMail","returnFees":"https://schema.org/ReturnShippingFees","itemCondition":"https://schema.org/NewCondition"}
+  },
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"Tailor Shop Lam Tuyen Han Market",
+    "telephone":"+84935023757",
+    "address":{"@type":"PostalAddress","streetAddress":"Han Market, 119 Trần Phú","addressLocality":"Hải Châu","addressRegion":"Da Nang","addressCountry":"VN"},
+    "openingHours":"Mo-Su 08:00-19:30",
+    "aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"24"},
+    "priceRange":"₫620,000 – ₫1,800,000+"
+  }
+]
 </script>
 <!-- PWA -->
 <link rel="manifest" href="/manifest.json">
@@ -308,7 +336,7 @@ h2 em{font-style:italic;color:var(--a1)}
 
 /* FOOTER */
 footer{background:var(--bgd2);padding:42px 5vw 28px}
-.ftop{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.ftop{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 0.9fr;gap:32px;margin-bottom:40px}
 @media(max-width:860px){.ftop{grid-template-columns:1fr 1fr;gap:28px}}
 @media(max-width:480px){.ftop{grid-template-columns:1fr}}
 .fwm{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:var(--asoft);margin-bottom:9px}
@@ -562,6 +590,15 @@ img,video,iframe,svg{max-width:100%}
 .strip-bar{overflow:hidden}
 .at-inner{overflow:hidden}
 
+/* ── DISCLAIMER BOXES */
+.disclaim-box{background:#FBF6EE;border-left:3px solid var(--a1);border-radius:0 3px 3px 0;padding:12px 16px;margin:16px 0;font-size:.78rem;color:var(--tm);line-height:1.7}
+.disclaim-box strong{color:var(--th);display:block;margin-bottom:3px;font-size:.75rem;letter-spacing:.5px}
+.disclaim-box.warn{border-left-color:#9B3A3A;background:#FDF5F5}
+.disclaim-box.warn strong{color:#9B3A3A}
+.disclaim-inline{font-size:.7rem;color:var(--tdim);line-height:1.6;font-style:italic;margin:5px 0 10px}
+.price-note{font-size:.52rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--tdim);margin-left:auto;line-height:1;align-self:center;white-space:nowrap}
+@media(max-width:480px){.price-note{display:none}}
+
 /* ── LEGAL CHECKBOXES (forms) */
 .legal-checks{margin:18px 0 14px}
 .legal-check-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
@@ -762,6 +799,7 @@ img,video,iframe,svg{max-width:100%}
   <button class="currency-btn" data-cur="EUR" onclick="switchCurrency('EUR')">EUR €</button>
   <button class="currency-btn" data-cur="KRW" onclick="switchCurrency('KRW')">KRW ₩</button>
   <button class="currency-btn" data-cur="JPY" onclick="switchCurrency('JPY')">JPY ¥</button>
+  <span class="price-note">Non-VND prices are approximate · Final quote in ₫ VND</span>
 </div>
 
 <!-- ══ SHOP — SPLIT BY TYPE ══ -->
@@ -981,7 +1019,7 @@ img,video,iframe,svg{max-width:100%}
           </div>
         </div>
         <input type="hidden" id="f-colour" name="colour" class="colour-hidden">
-        <p style="font-size:.7rem;color:var(--tdim);margin-top:6px">Colours shown are approximate linen fabric tones. Actual fabric may vary slightly.</p>
+        <p class="disclaim-inline">Colours shown are approximate digital representations of linen fabric. Actual fabric colour may vary slightly due to screen settings and natural dye variation. If exact colour is critical, contact us before ordering.</p>
       </div>
 
       <!-- MEASUREMENTS -->
@@ -1031,6 +1069,16 @@ img,video,iframe,svg{max-width:100%}
         <div class="fg"><label>Desired Garment Length</label><input type="number" id="m-length" name="length" placeholder="e.g. 105"></div>
       </div>
 
+      <!-- MEASUREMENT DISCLAIMER -->
+      <div class="disclaim-box" style="margin-top:20px">
+        <strong>⚠️ Measurement Accuracy</strong>
+        Lam Tuyen Linen is not responsible for fit issues resulting from inaccurate measurements provided by the customer. Please follow our <a href="measurement-guide.html" target="_blank" style="color:var(--a1)">measurement guide</a> carefully and have measurements taken by a professional tailor where possible. We recommend re-measuring before submitting.
+      </div>
+      <div class="legal-check-row" style="margin-bottom:16px">
+        <input type="checkbox" id="f-meas-confirm" style="width:18px;height:18px;min-width:18px;margin-top:2px;cursor:pointer;accent-color:var(--a1)">
+        <label for="f-meas-confirm" style="font-size:.78rem;color:var(--tm);line-height:1.6;cursor:pointer">I confirm that the measurements I have provided are accurate and I understand that Lam Tuyen Linen cannot be responsible for fit issues resulting from inaccurate measurements</label>
+      </div>
+
       <!-- SHIPPING ADDRESS -->
       <div class="fsec">Shipping Address</div>
       <div class="fg"><label>Full Shipping Address *</label><input type="text" id="f-address" name="address" placeholder="Street address, apartment/unit number"></div>
@@ -1061,6 +1109,12 @@ img,video,iframe,svg{max-width:100%}
 
       <!-- NOTES -->
       <div class="fg" style="margin-top:6px"><label>Style Notes / Special Requests</label><textarea name="notes" placeholder="Sleeve preference, neckline, pockets, heel height if floor-length, any details..."></textarea></div>
+
+      <!-- CUSTOM ORDER DISCLAIMER -->
+      <div class="disclaim-box warn">
+        <strong>🚫 Non-Refundable Once Production Begins</strong>
+        Custom orders are non-refundable once production has begun. Production begins only after you confirm the quote and payment is received. You may cancel at no cost before payment is made.
+      </div>
 
       <div class="legal-checks">
         <div class="legal-check-row">
@@ -1119,6 +1173,9 @@ img,video,iframe,svg{max-width:100%}
       <div class="ship-card rv d1"><span class="ship-icon">✈️</span><div class="ship-title">International Shipping</div><p class="ship-body">Japan, Korea, USA, Australia, France, UK and worldwide. Customer covers shipping cost.</p><div class="ship-detail">Japan · Korea · USA · Europe · Worldwide</div></div>
       <div class="ship-card rv d2"><span class="ship-icon">📦</span><div class="ship-title">Custom Orders</div><p class="ship-body">Bespoke pieces ship within 7–14 days of payment. Shipping cost confirmed during quote.</p><div class="ship-detail">Production 7–14 days · Then shipped worldwide</div></div>
     </div>
+    <p class="rv" style="font-size:.72rem;color:var(--tdim);margin-top:28px;max-width:640px;line-height:1.8;border-top:1px solid var(--bdr);padding-top:18px">
+      <strong style="color:var(--tm);font-weight:500">Shipping liability:</strong> Lam Tuyen Linen is not responsible for delays, damage, or loss caused by international shipping carriers once the parcel has been dispatched. Tracking information will be provided for all orders. Import duties and customs fees are the customer's responsibility.
+    </p>
   </div>
 </section>
 
@@ -1217,10 +1274,14 @@ img,video,iframe,svg{max-width:100%}
       <a href="https://www.tiktok.com/@tailor.lamtuyen" target="_blank">TikTok</a>
       <a href="https://www.google.com/maps/dir/?api=1&destination=Han+Market+119+Tran+Phu+Hai+Chau+Da+Nang+Vietnam" target="_blank">Google Maps</a>
     </div>
+    <div class="fc"><h5>Legal</h5>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms &amp; Conditions</a>
+    </div>
   </div>
   <div class="fbot">
-    <div class="fcpy">© 2026 Lam Tuyen Linen · Han Market, 119 Trần Phú, Đà Nẵng · All rights reserved</div>
-    <div class="fcpy">Pure Linen · Custom Tailoring · Worldwide Shipping</div>
+    <div class="fcpy">© 2026 Lam Tuyen Linen · Han Market, 119 Trần Phú, Đà Nẵng · All rights reserved. Unauthorised reproduction prohibited.</div>
+    <div class="fcpy" style="margin-top:4px;font-size:.6rem;opacity:.7">All designs, patterns, and garments are the intellectual property of Lam Tuyen Tailor Shop. Reproduction or copying without written permission is prohibited.</div>
     <div class="fcpy" style="margin-top:6px">
       <a href="/privacy-policy.html" style="color:var(--tdim);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--a1)'" onmouseout="this.style.color='var(--tdim)'">Privacy Policy</a>
       &nbsp;·&nbsp;
@@ -1391,10 +1452,30 @@ img,video,iframe,svg{max-width:100%}
           <div class="fg"><label>Inseam</label><input type="number" id="chk-inseam" placeholder="e.g. 76"></div>
           <div class="fg"><label>Desired Garment Length</label><input type="number" id="chk-length" placeholder="e.g. 105"></div>
         </div>
+        <div class="disclaim-box" style="margin-top:12px">
+          <strong>⚠️ Measurement Accuracy</strong>
+          Lam Tuyen Linen is not responsible for fit issues resulting from inaccurate measurements. Please follow our <a href="measurement-guide.html" target="_blank" style="color:var(--a1)">measurement guide</a> and re-measure carefully before submitting.
+        </div>
+        <div class="legal-check-row" style="margin-bottom:4px">
+          <input type="checkbox" id="chk-meas-confirm" style="width:18px;height:18px;min-width:18px;margin-top:2px;cursor:pointer;accent-color:var(--a1)">
+          <label for="chk-meas-confirm" style="font-size:.78rem;color:var(--tm);line-height:1.6;cursor:pointer">I confirm my measurements are accurate and understand Lam Tuyen Linen is not responsible for fit issues from inaccurate measurements</label>
+        </div>
       </div>
 
       <div class="chk-sec">Notes &amp; Style Preferences</div>
       <div class="fg"><textarea id="chk-notes" style="min-height:72px" placeholder="Style preferences, special requests, questions for the tailor..."></textarea></div>
+
+      <!-- CUSTOM ORDER + SHIPPING DISCLAIMERS -->
+      <div id="chk-custom-disclaim" style="display:none">
+        <div class="disclaim-box warn">
+          <strong>🚫 Non-Refundable Once Production Begins</strong>
+          Custom orders are non-refundable once production has begun. Production begins only after you confirm the quote and payment is received.
+        </div>
+      </div>
+      <div class="disclaim-box" style="margin-top:4px">
+        <strong>📦 Shipping Liability</strong>
+        Lam Tuyen Linen is not responsible for delays, damage, or loss caused by international shipping carriers once the parcel has been dispatched. Tracking information will be provided for all orders.
+      </div>
 
       <div class="legal-checks">
         <div class="legal-check-row">
@@ -1535,6 +1616,7 @@ async function submitF(){
   const address=document.getElementById('f-address').value.trim();
   if(!name||!email||!phoneNum||!garment){alert('Please fill in your name, email, phone, and garment type.');return;}
   if(!address||!country){alert('Please fill in your shipping address and country.');return;}
+  if(!document.getElementById('f-meas-confirm').checked){alert('Please confirm your measurements are accurate before submitting.');return;}
   if(!document.getElementById('f-terms').checked){alert('Please agree to the Terms & Conditions to continue.');return;}
   if(!document.getElementById('f-privacy').checked){alert('Please confirm you have read the Privacy Policy to continue.');return;}
   const btn=document.getElementById('submitBtn');
@@ -1799,6 +1881,7 @@ async function submitF(){
       colDiv.appendChild(dot);
     });
     info.appendChild(colDiv);
+    var colNote=document.createElement('p');colNote.className='disclaim-inline';colNote.textContent='Colours are approximate digital representations. Actual fabric may vary slightly due to screen settings and natural dye variation.';info.appendChild(colNote);
 
     // Size buttons
     var szDiv=document.createElement('div');
@@ -1877,6 +1960,7 @@ async function submitF(){
       colDiv.appendChild(dot);
     });
     info.appendChild(colDiv);
+    var colNote2=document.createElement('p');colNote2.className='disclaim-inline';colNote2.textContent='Colours are approximate digital representations. Actual fabric may vary slightly due to screen settings and natural dye variation.';info.appendChild(colNote2);
 
     // Notes textarea
     var notesEl=document.createElement('textarea');
@@ -2023,6 +2107,10 @@ async function submitF(){
       }
     }
     if(measEl)measEl.style.display=(mode==='quote')?'block':'none';
+    var custDisclaim=document.getElementById('chk-custom-disclaim');
+    if(custDisclaim)custDisclaim.style.display=(mode==='quote')?'block':'none';
+    // Reset legal checkboxes on open
+    ['chk-terms','chk-privacy','chk-meas-confirm'].forEach(function(id){var el=document.getElementById(id);if(el)el.checked=false;});
     // Open
     document.getElementById('chk-ovl').classList.add('open');
     document.getElementById('chk-modal').classList.add('open');
@@ -2110,6 +2198,7 @@ async function submitF(){
     var notes=document.getElementById('chk-notes').value.trim();
     if(!name||!email||!phoneNum){alert('Please fill in your name, email and phone number.');return;}
     if(!address||!country){alert('Please fill in your shipping address and country.');return;}
+    if(_chkMode==='quote'&&!document.getElementById('chk-meas-confirm').checked){alert('Please confirm your measurements are accurate before submitting.');return;}
     if(!document.getElementById('chk-terms').checked){alert('Please agree to the Terms & Conditions to continue.');return;}
     if(!document.getElementById('chk-privacy').checked){alert('Please confirm you have read the Privacy Policy to continue.');return;}
     var items=_chkMode==='cart'?CART:QUOTE;
