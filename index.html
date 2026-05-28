@@ -7,7 +7,7 @@
 <meta name="description" content="Lam Tuyen — Da Nang's finest pure linen fashion. Ready-to-wear & bespoke custom-fitted linen clothing. Worldwide shipping. 5.0★ Google. Han Market tailor since 2010.">
 <meta name="keywords" content="linen clothing Da Nang, pure linen fashion Vietnam, custom linen tailoring, Han Market tailor Da Nang, linen dress Vietnam, Lam Tuyen tailor, premium linen worldwide shipping">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://lamtuyenlinen.com">
+<link rel="canonical" href="https://lamtuyen-linen.vercel.app">
 <meta name="geo.region" content="VN-DN">
 <script type="application/ld+json">
 [
@@ -16,7 +16,7 @@
     "@type":"ClothingStore",
     "name":"Lam Tuyen Linen",
     "description":"Premium pure linen clothing. Ready-to-wear and bespoke custom-fitted. Worldwide shipping.",
-    "url":"https://lamtuyenlinen.com",
+    "url":"https://lamtuyen-linen.vercel.app",
     "telephone":"+84935023757",
     "address":{"@type":"PostalAddress","streetAddress":"Han Market, 119 Trần Phú","addressLocality":"Hải Châu","addressRegion":"Da Nang","addressCountry":"VN"},
     "aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"24"},
@@ -2010,7 +2010,7 @@ async function submitF(){
     if(q.length<3){hideList();return;}
     timer=setTimeout(function(){
       fetch('https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q='+encodeURIComponent(q),
-        {headers:{'Accept-Language':'en','User-Agent':'LamTuyenLinen/1.0 contact@lamtuyenlinen.com'}})
+        {headers:{'Accept-Language':'en','User-Agent':'LamTuyenLinen/1.0 contact@lamtuyen-linen.vercel.app'}})
       .then(function(r){return r.json();}).then(renderList).catch(hideList);
     },400);
   });
@@ -2490,7 +2490,7 @@ async function submitF(){
       if(q.length<3){hide();return;}
       timer=setTimeout(function(){
         fetch('https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q='+encodeURIComponent(q),
-          {headers:{'Accept-Language':'en','User-Agent':'LamTuyenLinen/1.0 contact@lamtuyenlinen.com'}})
+          {headers:{'Accept-Language':'en','User-Agent':'LamTuyenLinen/1.0 contact@lamtuyen-linen.vercel.app'}})
         .then(function(r){return r.json();}).then(render).catch(hide);
       },400);
     });
@@ -2808,7 +2808,7 @@ window.shareOrder=function(){
     navigator.share({
       title:'Lam Tuyen Linen — Pure Linen from Da Nang',
       text:'I just ordered pure linen clothing from Lam Tuyen in Da Nang — handcrafted, custom-fitted, shipped worldwide. Check them out!',
-      url:'https://lamtuyenlinen.com'
+      url:'https://lamtuyen-linen.vercel.app'
     }).catch(function(){});
   }
 };

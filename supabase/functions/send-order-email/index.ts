@@ -1,7 +1,7 @@
 // supabase/functions/send-order-email/index.ts
 // Deploy: supabase functions deploy send-order-email --no-verify-jwt
 // Secrets: supabase secrets set RESEND_API_KEY=re_xxxx
-//          supabase secrets set RESEND_FROM="Lam Tuyen Linen <orders@lamtuyenlinen.com>"
+//          supabase secrets set RESEND_FROM="Lam Tuyen Linen <orders@lamtuyen-linen.vercel.app>"
 //          (RESEND_FROM requires domain verified in Resend — falls back to onboarding@resend.dev)
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY') ?? '';

@@ -110,7 +110,7 @@ Deno.serve(async (req: Request) => {
 
   <div style="padding:12px 32px;background:#F3EDE0;text-align:center">
     <p style="margin:0;font-size:11px;color:#8A7058;letter-spacing:1px">
-      Lam Tuyen Linen · Han Market · Da Nang, Vietnam · lamtuyenlinen.com
+      Lam Tuyen Linen · Han Market · Da Nang, Vietnam · lamtuyen-linen.vercel.app
     </p>
   </div>
 </div>
