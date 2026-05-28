@@ -561,6 +561,66 @@ footer{background:var(--bgd2);padding:42px 5vw 28px}
 img,video,iframe,svg{max-width:100%}
 .strip-bar{overflow:hidden}
 .at-inner{overflow:hidden}
+
+/* ── LEGAL CHECKBOXES (forms) */
+.legal-checks{margin:18px 0 14px}
+.legal-check-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.legal-check-row input[type=checkbox]{width:18px;height:18px;min-width:18px;margin-top:2px;cursor:pointer;accent-color:var(--a1)}
+.legal-check-row label{font-size:.78rem;color:var(--tm);line-height:1.6;cursor:pointer}
+.legal-check-row label a{color:var(--a1);text-decoration:none}
+.legal-check-row label a:hover{text-decoration:underline}
+
+/* ── COOKIE CONSENT BANNER */
+#cookie-banner{
+  position:fixed;bottom:0;left:0;right:0;z-index:99999;
+  background:var(--bgd2);
+  border-top:1px solid rgba(184,147,90,0.3);
+  padding:20px 5vw;
+  display:flex;flex-wrap:wrap;align-items:center;gap:16px;
+  transform:translateY(0);transition:transform .35s ease;
+  box-shadow:0 -4px 24px rgba(0,0,0,.35);
+}
+#cookie-banner.hidden{transform:translateY(110%)}
+.cb-text{flex:1 1 300px;font-size:.8rem;line-height:1.7;color:rgba(237,228,208,.75)}
+.cb-text a{color:var(--a1);text-decoration:none}
+.cb-text a:hover{text-decoration:underline}
+.cb-text strong{color:#EDE4D0}
+.cb-btns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cb-btn{font-family:'Jost',sans-serif;font-size:.62rem;font-weight:400;letter-spacing:2px;text-transform:uppercase;padding:9px 18px;border:none;cursor:pointer;transition:all .2s;border-radius:2px;min-height:38px}
+.cb-btn-accept{background:var(--a1);color:#fff}
+.cb-btn-accept:hover{background:var(--a2)}
+.cb-btn-essential{background:none;border:1px solid rgba(184,147,90,.4);color:rgba(237,228,208,.7)}
+.cb-btn-essential:hover{border-color:var(--a1);color:#EDE4D0}
+.cb-btn-manage{background:none;border:none;color:rgba(237,228,208,.4);font-size:.58rem;padding:4px 8px;text-decoration:underline}
+.cb-btn-manage:hover{color:rgba(237,228,208,.7)}
+
+/* Cookie manage modal */
+#cookie-modal{
+  position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;
+  background:rgba(28,15,5,.75);backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+#cookie-modal.open{opacity:1;pointer-events:all}
+.cm-box{
+  background:var(--bg1);border:1px solid var(--bdr);border-radius:6px;
+  max-width:480px;width:90vw;padding:32px 28px;max-height:80vh;overflow-y:auto;
+}
+.cm-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--th);margin-bottom:6px}
+.cm-sub{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--tdim);margin-bottom:20px}
+.cm-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid var(--bdr)}
+.cm-row:last-of-type{border-bottom:none}
+.cm-lbl{flex:1}
+.cm-lbl h4{font-size:.8rem;font-weight:500;color:var(--th);margin-bottom:4px;letter-spacing:.5px}
+.cm-lbl p{font-size:.75rem;color:var(--tm);line-height:1.6}
+.cm-toggle{position:relative;flex-shrink:0}
+.cm-toggle input{width:0;height:0;opacity:0;position:absolute}
+.cm-toggle label{display:block;width:42px;height:24px;background:#ccc;border-radius:12px;cursor:pointer;transition:background .2s;position:relative}
+.cm-toggle input:checked+label{background:var(--a1)}
+.cm-toggle label::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .2s}
+.cm-toggle input:checked+label::after{transform:translateX(18px)}
+.cm-toggle.disabled label{opacity:.5;cursor:not-allowed}
+.cm-save{width:100%;margin-top:20px;background:var(--bgd);color:#EDE4D0;font-family:'Jost',sans-serif;font-size:.62rem;font-weight:400;letter-spacing:2px;text-transform:uppercase;padding:12px;border:none;cursor:pointer;transition:background .2s}
+.cm-save:hover{background:var(--a2)}
 </style>
 </head>
 <body id="top">
@@ -1002,6 +1062,17 @@ img,video,iframe,svg{max-width:100%}
       <!-- NOTES -->
       <div class="fg" style="margin-top:6px"><label>Style Notes / Special Requests</label><textarea name="notes" placeholder="Sleeve preference, neckline, pockets, heel height if floor-length, any details..."></textarea></div>
 
+      <div class="legal-checks">
+        <div class="legal-check-row">
+          <input type="checkbox" id="f-terms" name="terms_accepted">
+          <label for="f-terms">I agree to the <a href="/terms.html" target="_blank">Terms &amp; Conditions</a> — including that custom orders are non-refundable once production begins</label>
+        </div>
+        <div class="legal-check-row">
+          <input type="checkbox" id="f-privacy" name="privacy_accepted">
+          <label for="f-privacy">I have read and understood the <a href="/privacy-policy.html" target="_blank">Privacy Policy</a> and consent to my data being processed to fulfil my order</label>
+        </div>
+      </div>
+
       <button class="subtn" id="submitBtn" onclick="submitF()">Submit Order Request</button>
       <p class="fnote">We contact you within 24 hours with your price.<br>No payment until you approve the quote.</p>
 
@@ -1150,6 +1221,11 @@ img,video,iframe,svg{max-width:100%}
   <div class="fbot">
     <div class="fcpy">© 2026 Lam Tuyen Linen · Han Market, 119 Trần Phú, Đà Nẵng · All rights reserved</div>
     <div class="fcpy">Pure Linen · Custom Tailoring · Worldwide Shipping</div>
+    <div class="fcpy" style="margin-top:6px">
+      <a href="/privacy-policy.html" style="color:var(--tdim);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--a1)'" onmouseout="this.style.color='var(--tdim)'">Privacy Policy</a>
+      &nbsp;·&nbsp;
+      <a href="/terms.html" style="color:var(--tdim);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--a1)'" onmouseout="this.style.color='var(--tdim)'">Terms &amp; Conditions</a>
+    </div>
   </div>
 </footer>
 
@@ -1320,6 +1396,17 @@ img,video,iframe,svg{max-width:100%}
       <div class="chk-sec">Notes &amp; Style Preferences</div>
       <div class="fg"><textarea id="chk-notes" style="min-height:72px" placeholder="Style preferences, special requests, questions for the tailor..."></textarea></div>
 
+      <div class="legal-checks">
+        <div class="legal-check-row">
+          <input type="checkbox" id="chk-terms">
+          <label for="chk-terms">I agree to the <a href="/terms.html" target="_blank">Terms &amp; Conditions</a> — including that custom orders are non-refundable once production begins</label>
+        </div>
+        <div class="legal-check-row">
+          <input type="checkbox" id="chk-privacy">
+          <label for="chk-privacy">I have read and understood the <a href="/privacy-policy.html" target="_blank">Privacy Policy</a> and consent to my data being processed to fulfil my order</label>
+        </div>
+      </div>
+
       <button class="chk-subtn" id="chk-submit-btn" onclick="submitCheckout()">Submit Order Request</button>
       <p class="chk-fnote">We contact you within 24 hours with your price.<br>No payment until you approve the quote.</p>
     </div><!-- /chk-form-wrap -->
@@ -1338,6 +1425,47 @@ img,video,iframe,svg{max-width:100%}
     </div>
   </div><!-- /chk-body -->
 </aside>
+
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookie-banner" class="hidden" role="dialog" aria-label="Cookie consent" aria-live="polite">
+  <div class="cb-text">
+    <strong>🍪 We use cookies</strong> — essential ones to make the site work, and optional analytics to understand how visitors use it. We never sell your data. See our <a href="/privacy-policy.html" target="_blank">Privacy Policy</a>.
+  </div>
+  <div class="cb-btns">
+    <button class="cb-btn cb-btn-accept" onclick="cookieConsent('all')">Accept All</button>
+    <button class="cb-btn cb-btn-essential" onclick="cookieConsent('essential')">Essential Only</button>
+    <button class="cb-btn cb-btn-manage" onclick="openCookieModal()">Manage Preferences</button>
+  </div>
+</div>
+
+<!-- COOKIE MANAGE MODAL -->
+<div id="cookie-modal" role="dialog" aria-modal="true" aria-label="Cookie preferences" onclick="if(event.target===this)closeCookieModal()">
+  <div class="cm-box">
+    <div class="cm-title">Cookie Preferences</div>
+    <div class="cm-sub">Choose what you allow</div>
+    <div class="cm-row">
+      <div class="cm-lbl">
+        <h4>Essential Cookies</h4>
+        <p>Required for the site to function — shopping cart, form state, cookie consent preferences. Cannot be disabled.</p>
+      </div>
+      <div class="cm-toggle disabled">
+        <input type="checkbox" id="cm-essential" checked disabled>
+        <label for="cm-essential"></label>
+      </div>
+    </div>
+    <div class="cm-row">
+      <div class="cm-lbl">
+        <h4>Analytics</h4>
+        <p>Anonymous data on how visitors use the site (page views, session length). No personal identifiers. Helps us improve the experience.</p>
+      </div>
+      <div class="cm-toggle">
+        <input type="checkbox" id="cm-analytics">
+        <label for="cm-analytics"></label>
+      </div>
+    </div>
+    <button class="cm-save" onclick="saveCookiePrefs()">Save Preferences</button>
+  </div>
+</div>
 
 <!-- WHATSAPP FLOAT BUTTON -->
 <a href="https://wa.me/84935023757" class="wa-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
@@ -1407,6 +1535,8 @@ async function submitF(){
   const address=document.getElementById('f-address').value.trim();
   if(!name||!email||!phoneNum||!garment){alert('Please fill in your name, email, phone, and garment type.');return;}
   if(!address||!country){alert('Please fill in your shipping address and country.');return;}
+  if(!document.getElementById('f-terms').checked){alert('Please agree to the Terms & Conditions to continue.');return;}
+  if(!document.getElementById('f-privacy').checked){alert('Please confirm you have read the Privacy Policy to continue.');return;}
   const btn=document.getElementById('submitBtn');
   const orig=btn.textContent;
   btn.textContent='Sending...';btn.disabled=true;
@@ -1980,6 +2110,8 @@ async function submitF(){
     var notes=document.getElementById('chk-notes').value.trim();
     if(!name||!email||!phoneNum){alert('Please fill in your name, email and phone number.');return;}
     if(!address||!country){alert('Please fill in your shipping address and country.');return;}
+    if(!document.getElementById('chk-terms').checked){alert('Please agree to the Terms & Conditions to continue.');return;}
+    if(!document.getElementById('chk-privacy').checked){alert('Please confirm you have read the Privacy Policy to continue.');return;}
     var items=_chkMode==='cart'?CART:QUOTE;
     if(!items.length){alert('No items in your '+(_chkMode==='cart'?'cart':'quote basket')+'.');return;}
     var btn=document.getElementById('chk-submit-btn');
@@ -2148,6 +2280,90 @@ if('serviceWorker' in navigator){
       });
   });
 }
+
+// ── COOKIE CONSENT
+(function(){
+  var CONSENT_KEY='lt-cookie-consent';
+
+  function getConsent(){
+    try{return JSON.parse(localStorage.getItem(CONSENT_KEY));}
+    catch(e){return null;}
+  }
+
+  function setConsent(prefs){
+    try{localStorage.setItem(CONSENT_KEY,JSON.stringify(prefs));}
+    catch(e){}
+  }
+
+  function hideBanner(){
+    var b=document.getElementById('cookie-banner');
+    if(b)b.classList.add('hidden');
+  }
+
+  function showBanner(){
+    var b=document.getElementById('cookie-banner');
+    if(b){b.classList.remove('hidden');}
+  }
+
+  // Apply consent — enable/disable analytics based on prefs
+  function applyConsent(prefs){
+    if(prefs&&prefs.analytics){
+      // Analytics enabled — nothing to load currently, future hook point
+      window._analyticsEnabled=true;
+    }else{
+      window._analyticsEnabled=false;
+    }
+  }
+
+  // Global functions called by banner buttons
+  window.cookieConsent=function(choice){
+    var prefs;
+    if(choice==='all'){
+      prefs={essential:true,analytics:true,decided:true};
+    }else{
+      prefs={essential:true,analytics:false,decided:true};
+    }
+    setConsent(prefs);
+    hideBanner();
+    applyConsent(prefs);
+  };
+
+  window.openCookieModal=function(){
+    var modal=document.getElementById('cookie-modal');
+    var analyticsEl=document.getElementById('cm-analytics');
+    if(!modal)return;
+    // Pre-fill current prefs
+    var prefs=getConsent()||{analytics:false};
+    if(analyticsEl)analyticsEl.checked=!!prefs.analytics;
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
+  };
+
+  window.closeCookieModal=function(){
+    var modal=document.getElementById('cookie-modal');
+    if(modal)modal.classList.remove('open');
+    document.body.style.overflow='';
+  };
+
+  window.saveCookiePrefs=function(){
+    var analyticsEl=document.getElementById('cm-analytics');
+    var prefs={essential:true,analytics:analyticsEl?analyticsEl.checked:false,decided:true};
+    setConsent(prefs);
+    closeCookieModal();
+    hideBanner();
+    applyConsent(prefs);
+  };
+
+  // On load: check existing consent
+  var existing=getConsent();
+  if(existing&&existing.decided){
+    applyConsent(existing);
+    // Don't show banner — user already decided
+  }else{
+    // Show banner after a short delay so it doesn't flash during page load
+    setTimeout(showBanner,1200);
+  }
+})();
 </script>
 </body>
 </html>
