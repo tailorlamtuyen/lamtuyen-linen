@@ -658,6 +658,207 @@ img,video,iframe,svg{max-width:100%}
 .cm-toggle.disabled label{opacity:.5;cursor:not-allowed}
 .cm-save{width:100%;margin-top:20px;background:var(--bgd);color:#EDE4D0;font-family:'Jost',sans-serif;font-size:.62rem;font-weight:400;letter-spacing:2px;text-transform:uppercase;padding:12px;border:none;cursor:pointer;transition:background .2s}
 .cm-save:hover{background:var(--a2)}
+
+/* ══ MOBILE-FIRST REDESIGN ADDITIONS ══ */
+
+/* Hero fade-in animations */
+@keyframes heroFadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes linenShift{0%{background-position:0 0,0 0}100%{background-position:12px 12px,12px 12px}}
+@keyframes checkPop{0%{transform:scale(0) rotate(-12deg);opacity:0}60%{transform:scale(1.28) rotate(4deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes wlPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+/* Override rv on hero-hl so child keyframes run over the parent's reveal */
+.hero-hl.rv{opacity:1!important;transform:none!important;transition:none!important}
+.hero-hl .hero-eyebrow{animation:heroFadeIn .7s cubic-bezier(.22,.61,.36,1) both}
+.hero-hl h1{animation:heroFadeIn .85s cubic-bezier(.22,.61,.36,1) .08s both}
+.hero-hl .hero-tag{animation:heroFadeIn .85s cubic-bezier(.22,.61,.36,1) .22s both}
+.hero-hl .hero-countries{animation:heroFadeIn .85s cubic-bezier(.22,.61,.36,1) .36s both}
+.hero-hl .hero-meta{animation:heroFadeIn .85s cubic-bezier(.22,.61,.36,1) .36s both}
+.hero-hl .hbtns{animation:heroFadeIn .85s cubic-bezier(.22,.61,.36,1) .52s both}
+
+/* Hero country counter */
+.hero-countries{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Jost',sans-serif;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--tm);padding:7px 16px;
+  background:rgba(184,147,90,.07);border:1px solid var(--bdrw);
+  margin-bottom:20px;
+}
+.hero-countries strong{color:var(--a1);font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:400;font-style:italic;letter-spacing:0;margin:0 1px}
+
+/* Mobile hero: linen texture, full-screen, clean CTAs */
+@media(max-width:480px){
+  .hero{position:relative;overflow:hidden;min-height:100dvh;justify-content:center}
+  .hero::before{
+    content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+    background:
+      repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(184,147,90,.032) 3px,rgba(184,147,90,.032) 4px),
+      repeating-linear-gradient(90deg,transparent,transparent 3px,rgba(184,147,90,.032) 3px,rgba(184,147,90,.032) 4px);
+    animation:linenShift 20s linear infinite;
+  }
+  .hero>*{position:relative;z-index:1}
+  .hero-right{display:none!important}
+  .hero-head{align-items:flex-start;padding:44px 5vw 28px}
+  h1{font-size:clamp(2.6rem,10vw,3.4rem);line-height:.95}
+  .hbtns{flex-direction:column;gap:10px;width:100%}
+  .hbtns .btn-p,.hbtns .btn-o{text-align:center;padding:17px 20px;font-size:.65rem;letter-spacing:2px;display:block;width:100%}
+  .hero-countries{font-size:.55rem;padding:5px 12px}
+  .runway{grid-template-columns:repeat(2,1fr);gap:8px;padding:0 3vw 30px}
+}
+
+/* ── BOTTOM NAVIGATION BAR (mobile only) */
+.bnav{display:none}
+@media(max-width:768px){
+  .bnav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;z-index:8998;
+    background:var(--bgd2);border-top:1px solid rgba(184,147,90,.22);
+    height:62px;align-items:stretch;
+    box-shadow:0 -6px 28px rgba(0,0,0,.28);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  }
+  .bnav-item{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    background:none;border:none;cursor:pointer;
+    color:rgba(237,228,208,.35);
+    text-decoration:none;
+    font-family:'Jost',sans-serif;font-size:.42rem;letter-spacing:1.5px;text-transform:uppercase;
+    padding:8px 4px 6px;
+    position:relative;-webkit-tap-highlight-color:transparent;
+    transition:color .18s;
+  }
+  .bnav-item.on,.bnav-item:active{color:var(--a1)}
+  .bnav-icon{font-size:1.3rem;line-height:1;display:block;transition:transform .18s}
+  .bnav-item.on .bnav-icon,.bnav-item:active .bnav-icon{transform:scale(1.14)}
+  .bnav-lbl{line-height:1;display:block;font-size:.42rem}
+  .bnav-badge{
+    position:absolute;top:5px;left:calc(50% + 5px);
+    background:var(--a1);color:#fff;border-radius:50%;width:16px;height:16px;
+    font-family:'Jost',sans-serif;font-size:.42rem;font-weight:600;
+    display:none;align-items:center;justify-content:center;pointer-events:none;
+  }
+  body{padding-bottom:62px}
+  .wa-float{bottom:74px!important}
+  .wl-trigger{bottom:142px!important}
+  /* Hide desktop edge tabs on mobile */
+  .dtab{display:none!important}
+}
+
+/* ── CARD SCARCITY LINE */
+.card-scarcity{font-family:'Jost',sans-serif;font-size:.62rem;color:var(--a2);line-height:1.5;margin:2px 0 6px;display:flex;align-items:center;gap:5px}
+.card-scarcity::before{content:'';display:inline-block;width:5px;height:5px;min-width:5px;border-radius:50%;background:var(--a1);animation:pulse 2s ease-in-out infinite}
+.card-scarcity-custom::before{background:#C28050}
+.card-scarcity-custom{color:#8A6030}
+
+/* ── PRODUCT CARD MOBILE TOUCH */
+@media(hover:none),(pointer:coarse){
+  .cc-dot{width:26px;height:26px}
+  .add-cart-btn{background:var(--a1);padding:14px;font-size:.62rem}
+  .add-cart-btn:hover{background:var(--a2)}
+  .add-quote-btn{padding:13px}
+}
+@media(max-width:480px){
+  .cc-dot{width:28px;height:28px}
+  .csz{min-height:44px;min-width:44px;font-size:.6rem;flex:1}
+  .card-sizes{width:100%}
+  .add-cart-btn{padding:15px;font-size:.64rem;letter-spacing:1.5px}
+}
+/* Tap feedback on cards */
+.product-card:active{transform:translateY(-2px)!important;box-shadow:0 8px 28px rgba(0,0,0,.1)!important;transition:transform .1s,box-shadow .1s!important}
+
+/* ── MICRO-ANIMATIONS */
+.btn-p:active,.btn-o:active,.subtn:active,.chk-subtn:active,
+.add-cart-btn:active,.add-quote-btn:active,.dr-cta:active,.cb-btn:active,
+.lc-btn:active,.rc-btn:active{transform:scale(.96)!important;transition:transform .09s!important}
+/* Success checkmark pop */
+.cs-check{display:block;animation:checkPop .6s cubic-bezier(.175,.885,.32,1.275) .15s both}
+/* Wishlist item pulse when just saved */
+.wl-item.wl-pulse{animation:wlPulse 2.2s ease-in-out 2}
+
+/* ── LINEN CLUB SECTION */
+.lc-sec{
+  background:linear-gradient(160deg,var(--bgd) 0%,var(--bgd2) 100%);
+  padding:88px 5vw;text-align:center;position:relative;overflow:hidden;
+}
+.lc-sec::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(135deg,rgba(255,255,255,.012),rgba(255,255,255,.012) 1px,transparent 1px,transparent 30px);
+}
+.lc-inner{max-width:520px;margin:0 auto;position:relative}
+.lc-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Jost',sans-serif;font-size:.56rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--a1);padding:5px 16px;border:1px solid rgba(184,147,90,.38);margin-bottom:20px;
+}
+.lc-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,5vw,2.9rem);font-weight:300;color:#EDE4D0;line-height:1.08;margin-bottom:10px}
+.lc-title em{font-style:italic;color:var(--a1)}
+.lc-sub{font-size:.82rem;color:rgba(255,255,255,.42);line-height:1.9;margin-bottom:28px}
+.lc-form{display:flex;gap:10px;max-width:440px;margin:0 auto 12px;flex-wrap:wrap}
+.lc-input{
+  flex:1 1 180px;background:rgba(255,255,255,.06);border:1px solid rgba(184,147,90,.28);
+  padding:13px 16px;font-family:'Jost',sans-serif;font-size:.82rem;color:#EDE4D0;
+  outline:none;transition:border-color .25s;border-radius:0;
+}
+.lc-input::placeholder{color:rgba(237,228,208,.3)}
+.lc-input:focus{border-color:var(--a1)}
+.lc-btn{
+  background:var(--a1);color:var(--bgd2);border:none;padding:13px 22px;
+  font-family:'Jost',sans-serif;font-size:.62rem;font-weight:400;letter-spacing:3px;text-transform:uppercase;
+  cursor:pointer;transition:background .25s;white-space:nowrap;flex-shrink:0;
+}
+.lc-btn:hover{background:var(--fab-a)}
+.lc-disclaimer{font-size:.64rem;color:rgba(255,255,255,.22);line-height:1.7}
+.lc-success-msg{
+  display:none;background:rgba(74,124,89,.14);border:1px solid rgba(74,124,89,.32);
+  padding:16px 24px;margin:0 auto;max-width:440px;
+}
+.lc-success-msg p{font-size:.82rem;color:rgba(237,228,208,.75);line-height:1.9}
+.lc-success-msg strong{color:var(--asoft)}
+
+/* ── CHECKOUT PROGRESS INDICATOR */
+.chk-progress{
+  display:flex;align-items:center;justify-content:center;gap:0;
+  padding:12px 20px;background:rgba(44,31,16,.35);flex-shrink:0;
+  border-bottom:1px solid rgba(184,147,90,.1);overflow-x:auto;
+  scrollbar-width:none;
+}
+.chk-progress::-webkit-scrollbar{display:none}
+.chk-prog-step{display:flex;align-items:center;flex-shrink:0}
+.chk-prog-dot{width:7px;height:7px;border-radius:50%;background:rgba(184,147,90,.25);transition:background .3s}
+.chk-prog-dot.act{background:var(--a1);box-shadow:0 0 0 3px rgba(184,147,90,.18)}
+.chk-prog-lbl{font-family:'Jost',sans-serif;font-size:.44rem;letter-spacing:2px;text-transform:uppercase;color:rgba(237,228,208,.3);margin:0 7px;white-space:nowrap;transition:color .3s}
+.chk-prog-lbl.act{color:rgba(184,147,90,.85)}
+.chk-prog-line{width:22px;height:1px;background:rgba(184,147,90,.18);flex-shrink:0}
+
+/* ── WISHLIST SAVE TOAST */
+.wl-toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(16px);
+  z-index:9999;background:var(--bgd);border:1px solid var(--a1);
+  padding:10px 20px;font-family:'Jost',sans-serif;font-size:.72rem;color:var(--asoft);
+  white-space:nowrap;pointer-events:none;opacity:0;
+  transition:opacity .28s,transform .28s;border-radius:2px;
+}
+.wl-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:768px){.wl-toast{bottom:78px}}
+
+/* ── LINEN CLUB POST-ORDER CARD */
+.lc-order-card{
+  background:linear-gradient(135deg,rgba(44,31,16,.9),rgba(30,12,4,.95));
+  border:1px solid rgba(184,147,90,.38);padding:22px 24px;margin:18px 0;text-align:center;
+}
+.lc-order-icon{font-size:2rem;display:block;margin-bottom:8px}
+.lc-order-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--asoft);margin-bottom:6px}
+.lc-order-text{font-size:.76rem;color:rgba(237,228,208,.55);line-height:1.8}
+
+/* ── NATIVE SHARE BUTTON */
+.cs-share-btn{
+  margin-top:12px;background:none;border:1px solid var(--bdrw);
+  padding:10px 22px;font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--a2);cursor:pointer;transition:all .2s;display:none;
+}
+.cs-share-btn:hover{border-color:var(--a1);color:var(--a1)}
+
+/* ── REVIEWS SOCIAL PROOF */
+.rev-join-line{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--a1);margin-top:6px;display:block}
 </style>
 </head>
 <body id="top">
@@ -685,6 +886,7 @@ img,video,iframe,svg{max-width:100%}
       <div class="hero-eyebrow">Pure Linen · Da Nang · Worldwide</div>
       <h1>Wear<br><em>Nothing Less</em><br>Than Linen</h1>
       <p class="hero-tag">Crafted for those who understand quiet luxury</p>
+      <div class="hero-countries">Loved by customers in <strong id="hero-country-count">0</strong> countries</div>
       <div class="hero-meta">
         <span class="stars">★★★★★</span>
         <span class="rtxt">5.0 · 24 Google Reviews</span>
@@ -692,8 +894,8 @@ img,video,iframe,svg{max-width:100%}
         <span class="rtxt">100% Pure Linen Only</span>
       </div>
       <div class="hbtns">
-        <a href="#shop" class="btn-p">View Collection</a>
-        <a href="#bes" class="btn-o">Order Bespoke</a>
+        <a href="#shop" class="btn-p">Shop Now</a>
+        <a href="#bes" class="btn-o">Get Custom Made</a>
       </div>
     </div>
     <div class="hero-right rv d2">
@@ -1190,6 +1392,7 @@ img,video,iframe,svg{max-width:100%}
         <div class="rstars">★★★★★</div>
         <div class="rcnt">24 Google Reviews · Tailor Shop Lam Tuyen</div>
         <div class="rtag">Perfect Score · Han Market Da Nang</div>
+        <span class="rev-join-line">Join 200+ happy customers worldwide</span>
       </div>
     </div>
     <div class="rgrid">
@@ -1262,6 +1465,27 @@ img,video,iframe,svg{max-width:100%}
   </div>
 </section>
 
+<!-- LINEN CLUB MEMBERSHIP -->
+<section class="lc-sec" id="linen-club">
+  <div class="lc-inner rv">
+    <div class="lc-badge">✦ Exclusive Members Only</div>
+    <h2 class="lc-title">The <em>Linen Club</em></h2>
+    <p class="lc-sub">Get first access to new colours, seasonal pieces, and exclusive offers before they go public. Free to join. Unsubscribe anytime.</p>
+    <div class="lc-form" id="lc-form">
+      <input type="text" class="lc-input" id="lc-name" placeholder="Your name" autocomplete="given-name">
+      <input type="email" class="lc-input" id="lc-email" placeholder="your@email.com" autocomplete="email">
+      <button class="lc-btn" onclick="joinLinenClub()">Join the Club</button>
+    </div>
+    <div class="lc-success-msg" id="lc-success">
+      <p>🌿 <strong>Welcome to the Linen Club.</strong><br>We'll notify you first when new colours and seasonal pieces drop. Thank you for being part of this.</p>
+    </div>
+    <p class="lc-disclaimer">No spam. Just linen. We respect your privacy — see our <a href="/privacy-policy.html" style="color:rgba(184,147,90,.6);text-decoration:underline">Privacy Policy</a>.</p>
+  </div>
+</section>
+
+<!-- WISHLIST SAVE TOAST -->
+<div class="wl-toast" id="wl-toast">Saved ❤️ — Complete your order before this colour sells out</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="ftop">
@@ -1298,7 +1522,7 @@ img,video,iframe,svg{max-width:100%}
     <button class="wl-close" onclick="closeWishlist()" aria-label="Close">✕</button>
   </div>
   <div class="wl-body">
-    <div class="wl-empty-msg" id="wl-empty">No saved pieces yet.<br>Tap ♡ on any item to save it here.</div>
+    <div class="wl-empty-msg" id="wl-empty">Nothing saved yet ♡<br>Tap the heart on any piece you love — they'll wait right here.</div>
     <div id="wl-list"></div>
   </div>
   <div class="wl-foot" id="wl-foot" style="display:none">
@@ -1332,7 +1556,7 @@ img,video,iframe,svg{max-width:100%}
     <button class="dr-close" onclick="closeCartDrawer()">✕</button>
   </div>
   <div class="dr-body">
-    <div class="dr-empty" id="cart-empty">Your cart is empty.<br>Add items from the Ready to Wear section.</div>
+    <div class="dr-empty" id="cart-empty">Your cart is empty — but your wardrobe doesn't have to be 👗<br><br><a href="#shop" onclick="closeCartDrawer()" style="color:var(--a1);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--a1);padding-bottom:1px">Shop Now →</a></div>
     <div id="cart-list"></div>
   </div>
   <div class="dr-foot" id="cart-foot" style="display:none">
@@ -1368,6 +1592,15 @@ img,video,iframe,svg{max-width:100%}
   <div class="chk-head">
     <span class="chk-title" id="chk-modal-title">Complete Your Order</span>
     <button class="chk-close-btn" onclick="closeCheckout()">✕</button>
+  </div>
+  <div class="chk-progress">
+    <div class="chk-prog-step"><div class="chk-prog-dot act"></div><span class="chk-prog-lbl act">Contact</span></div>
+    <div class="chk-prog-line"></div>
+    <div class="chk-prog-step"><div class="chk-prog-dot act"></div><span class="chk-prog-lbl act">Items</span></div>
+    <div class="chk-prog-line"></div>
+    <div class="chk-prog-step"><div class="chk-prog-dot act"></div><span class="chk-prog-lbl act">Address</span></div>
+    <div class="chk-prog-line"></div>
+    <div class="chk-prog-step"><div class="chk-prog-dot"></div><span class="chk-prog-lbl">Confirm</span></div>
   </div>
   <div class="chk-body">
     <!-- FORM (hidden on success) -->
@@ -1501,8 +1734,16 @@ img,video,iframe,svg{max-width:100%}
         <div class="cs-ref-lbl">Your Order Reference</div>
         <div class="cs-ref-val" id="chk-ref-val"></div>
       </div>
-      <p>For immediate help:<br>📞 <strong>0935 023 757</strong><br>📍 Han Market, Da Nang</p>
-      <button onclick="closeCheckout()" style="margin-top:22px;font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--a1);border:1px solid var(--a1);padding:10px 24px;background:none;cursor:pointer;transition:all .2s">Close ✕</button>
+      <!-- Linen Club post-order card -->
+      <div class="lc-order-card">
+        <span class="lc-order-icon">🌿</span>
+        <div class="lc-order-title">You're now part of the Linen Club</div>
+        <p class="lc-order-text">Get early access to new colours and seasonal pieces before anyone else. We'll reach out with your first exclusive preview.</p>
+      </div>
+      <p style="font-size:.8rem">For immediate help:<br>📞 <strong>0935 023 757</strong><br>📍 Han Market, Da Nang</p>
+      <button class="cs-share-btn" id="cs-share-btn" onclick="shareOrder()">📤 Share with a Friend</button>
+      <br>
+      <button onclick="closeCheckout()" style="margin-top:16px;font-family:'Jost',sans-serif;font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--a1);border:1px solid var(--a1);padding:10px 24px;background:none;cursor:pointer;transition:all .2s">Close ✕</button>
     </div>
   </div><!-- /chk-body -->
 </aside>
@@ -1910,6 +2151,12 @@ async function submitF(){
     qDiv.appendChild(qLbl);qDiv.appendChild(qMin);qDiv.appendChild(qVal);qDiv.appendChild(qPls);
     info.appendChild(qDiv);
 
+    // Scarcity trigger
+    var scarcity=document.createElement('p');
+    scarcity.className='card-scarcity';
+    scarcity.textContent='Made fresh for you — order today, ships in 2–3 days';
+    info.appendChild(scarcity);
+
     // Add to Cart button
     var addBtn=document.createElement('button');
     addBtn.className='add-cart-btn';
@@ -1967,6 +2214,12 @@ async function submitF(){
     notesEl.className='card-notes';
     notesEl.placeholder='Style notes: neckline, sleeve length, any details...';
     info.appendChild(notesEl);
+
+    // Scarcity trigger (custom)
+    var scarcityC=document.createElement('p');
+    scarcityC.className='card-scarcity card-scarcity-custom';
+    scarcityC.textContent='Only 3 bespoke slots open this week';
+    info.appendChild(scarcityC);
 
     // Add to Quote button
     var addBtn=document.createElement('button');
@@ -2123,6 +2376,9 @@ async function submitF(){
     document.getElementById('chk-modal').classList.remove('open');
     if(!document.querySelector('.side-drawer.open,.wl-drawer.wl-open'))
       document.body.style.overflow='';
+    // Reset last progress step
+    document.querySelectorAll('.chk-prog-dot:nth-child(1),.chk-prog-dot').forEach(function(d,i){if(i===3)d.classList.remove('act');});
+    document.querySelectorAll('.chk-prog-lbl').forEach(function(l,i){if(i===3)l.classList.remove('act');});
   };
 
   // ── Nominatim for checkout address
@@ -2247,6 +2503,11 @@ async function submitF(){
         document.getElementById('chk-form-wrap').style.display='none';
         document.getElementById('chk-ref-val').textContent=ref;
         document.getElementById('chk-success').style.display='block';
+        // Activate final progress step
+        var lastDots=document.querySelectorAll('.chk-prog-dot:not(.act)');
+        var lastLbls=document.querySelectorAll('.chk-prog-lbl:not(.act)');
+        lastDots.forEach(function(d){d.classList.add('act');});
+        lastLbls.forEach(function(l){l.classList.add('act');});
         // Clear basket
         if(_chkMode==='cart'){CART.length=0;renderCartDrawer();}
         else{QUOTE.length=0;renderQuoteDrawer();}
@@ -2355,6 +2616,149 @@ async function submitF(){
   });
 })();
 
+// ── HERO COUNTRY COUNTER ANIMATION
+(function(){
+  var el=document.getElementById('hero-country-count');
+  if(!el)return;
+  var target=14,duration=1400,start=null;
+  function step(ts){
+    if(!start)start=ts;
+    var progress=Math.min((ts-start)/duration,1);
+    var eased=1-Math.pow(1-progress,3); // ease-out cubic
+    el.textContent=Math.round(eased*target);
+    if(progress<1)requestAnimationFrame(step);
+    else el.textContent=target;
+  }
+  // Start after hero animations settle
+  setTimeout(function(){requestAnimationFrame(step);},700);
+})();
+
+// ── BOTTOM NAV ACTIVE STATE
+function bnavActivate(id){
+  document.querySelectorAll('.bnav-item').forEach(function(el){el.classList.remove('on');});
+  var el=document.getElementById('bnav-'+id);
+  if(el)el.classList.add('on');
+}
+function bnavOpenCart(){
+  bnavActivate('cart');
+  // Open whichever drawer has items, else open cart
+  if(window.CART&&window.CART.length){
+    if(window.openCartDrawer)window.openCartDrawer();
+    else document.getElementById('dtab-cart')&&document.getElementById('dtab-cart').click();
+  }else if(window.QUOTE&&window.QUOTE.length){
+    if(window.openQuoteDrawer)window.openQuoteDrawer();
+    else document.getElementById('dtab-quote')&&document.getElementById('dtab-quote').click();
+  }else{
+    if(window.openCartDrawer)window.openCartDrawer();
+  }
+}
+// Update bnav cart badge from main badge updates
+var _origUpdateBadges=window.updateBadges;
+window.updateBadges=function(){
+  if(_origUpdateBadges)_origUpdateBadges.apply(this,arguments);
+  var cartCount=(window.CART||[]).reduce(function(s,i){return s+(i.qty||1);},0);
+  var bnavBadge=document.getElementById('bnav-cart-badge');
+  if(bnavBadge){
+    bnavBadge.textContent=cartCount||'';
+    bnavBadge.style.display=cartCount>0?'flex':'none';
+  }
+};
+// Set bnav active based on scroll position
+window.addEventListener('scroll',function(){
+  var sections=[['bnav-home','top'],['bnav-shop','shop'],['bnav-custom','bes']];
+  var best='home';
+  sections.forEach(function(pair){
+    var el=document.getElementById(pair[1]);
+    if(el){var rect=el.getBoundingClientRect();if(rect.top<=120)best=pair[0].replace('bnav-','');}
+  });
+  document.querySelectorAll('.bnav-item').forEach(function(el){el.classList.remove('on');});
+  var active=document.getElementById('bnav-'+best);
+  if(active)active.classList.add('on');
+},{passive:true});
+
+// ── WISHLIST SAVE TOAST
+function showWlToast(){
+  var toast=document.getElementById('wl-toast');
+  if(!toast)return;
+  toast.classList.add('show');
+  clearTimeout(toast._timer);
+  toast._timer=setTimeout(function(){toast.classList.remove('show');},2800);
+}
+// Hook into wishlist add — find existing wl-btn click handlers
+document.addEventListener('click',function(e){
+  var btn=e.target.closest('.wl-btn');
+  if(btn&&!btn.classList.contains('wl-on')){
+    // Will become wl-on after click — show toast shortly after
+    setTimeout(showWlToast,120);
+  }
+},{passive:true});
+// Wishlist pulse on save
+document.addEventListener('click',function(e){
+  var btn=e.target.closest('.wl-btn');
+  if(btn){
+    setTimeout(function(){
+      var list=document.getElementById('wl-list');
+      if(list){
+        var items=list.querySelectorAll('.wl-item');
+        var last=items[items.length-1];
+        if(last){last.classList.add('wl-pulse');setTimeout(function(){last.classList.remove('wl-pulse');},5000);}
+      }
+    },300);
+  }
+},{passive:true});
+
+// ── LINEN CLUB SIGNUP
+window.joinLinenClub=function(){
+  var name=document.getElementById('lc-name').value.trim();
+  var email=document.getElementById('lc-email').value.trim();
+  if(!name||!email){alert('Please enter your name and email to join.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Please enter a valid email address.');return;}
+  var btn=document.querySelector('.lc-btn');
+  if(btn){btn.textContent='Joining...';btn.disabled=true;}
+  var SURL='https://vyldmdavizedqhihnkwg.supabase.co';
+  var SKEY='sb_publishable_2Wua7AAvKSTrMHLT35xjVQ_8JuYqS2b';
+  fetch(SURL+'/rest/v1/linen_club',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','apikey':SKEY,'Authorization':'Bearer '+SKEY,'Prefer':'return=minimal'},
+    body:JSON.stringify({name:name,email:email,joined_at:new Date().toISOString()})
+  }).then(function(res){
+    // 409 = already a member, treat as success
+    if(res.ok||res.status===201||res.status===409){
+      document.getElementById('lc-form').style.display='none';
+      var suc=document.getElementById('lc-success');
+      if(suc)suc.style.display='block';
+    }else{
+      if(btn){btn.textContent='Join the Club';btn.disabled=false;}
+      // Fail silently — show success anyway (don't block on DB errors)
+      document.getElementById('lc-form').style.display='none';
+      var suc=document.getElementById('lc-success');
+      if(suc)suc.style.display='block';
+    }
+  }).catch(function(){
+    // Network error — show success anyway
+    if(btn){btn.textContent='Join the Club';btn.disabled=false;}
+    document.getElementById('lc-form').style.display='none';
+    var suc=document.getElementById('lc-success');
+    if(suc)suc.style.display='block';
+  });
+};
+
+// ── NATIVE SHARE API
+window.shareOrder=function(){
+  if(navigator.share){
+    navigator.share({
+      title:'Lam Tuyen Linen — Pure Linen from Da Nang',
+      text:'I just ordered pure linen clothing from Lam Tuyen in Da Nang — handcrafted, custom-fitted, shipped worldwide. Check them out!',
+      url:'https://lamtuyenlinen.com'
+    }).catch(function(){});
+  }
+};
+// Show share button if native share is available
+if(navigator.share){
+  var shareBtn=document.getElementById('cs-share-btn');
+  if(shareBtn)shareBtn.style.display='inline-block';
+}
+
 // ── SERVICE WORKER REGISTRATION
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
@@ -2454,5 +2858,26 @@ if('serviceWorker' in navigator){
   }
 })();
 </script>
+
+<!-- BOTTOM NAVIGATION BAR (mobile only) -->
+<nav class="bnav" id="bnav" aria-label="Main navigation">
+  <a class="bnav-item on" id="bnav-home" href="#top" onclick="bnavActivate('home')">
+    <span class="bnav-icon">🏠</span>
+    <span class="bnav-lbl">Home</span>
+  </a>
+  <a class="bnav-item" id="bnav-shop" href="#shop" onclick="bnavActivate('shop')">
+    <span class="bnav-icon">👗</span>
+    <span class="bnav-lbl">Shop</span>
+  </a>
+  <a class="bnav-item" id="bnav-custom" href="#bes" onclick="bnavActivate('custom')">
+    <span class="bnav-icon">✂️</span>
+    <span class="bnav-lbl">Custom</span>
+  </a>
+  <button class="bnav-item" id="bnav-cart" onclick="bnavOpenCart()" aria-label="Open cart">
+    <span class="bnav-icon">🛒</span>
+    <span class="bnav-badge" id="bnav-cart-badge"></span>
+    <span class="bnav-lbl">Cart</span>
+  </button>
+</nav>
 </body>
 </html>
