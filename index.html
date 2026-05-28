@@ -1226,49 +1226,108 @@ img,video,iframe,svg{max-width:100%}
 
       <!-- MEASUREMENTS -->
       <div class="fsec">Your Measurements (cm)</div>
+      <p style="font-size:.8rem;color:var(--tdim);margin-bottom:16px;line-height:1.7">Fill only what applies to your garment. The more detail you provide, the better your fit.</p>
       <div class="mnote">
         <strong>Need help measuring?</strong> Use our step-by-step illustrated guide — it will bring you straight back here with all measurements filled in automatically.<br>
         <a href="measurement-guide.html" target="_blank">→ Open Measurement Guide (opens in new tab, fills this form automatically)</a>
       </div>
+
+      <!-- UPPER BODY -->
+      <div class="fsec" style="margin-top:24px;font-size:.52rem">Upper Body</div>
       <div class="frow">
         <div class="fg"><label>Chest / Bust</label><input type="number" id="m-chest" name="chest" placeholder="e.g. 88"></div>
         <div class="fg"><label>Natural Waist</label><input type="number" id="m-waist" name="waist" placeholder="e.g. 72"></div>
       </div>
       <div class="frow">
-        <div class="fg"><label>Hips</label><input type="number" id="m-hips" name="hips" placeholder="e.g. 96"></div>
-        <div class="fg"><label>Shoulder Width</label><input type="number" id="m-shoulder" name="shoulder" placeholder="e.g. 40"></div>
+        <div class="fg"><label>High Hip</label><input type="number" id="m-high_hip" name="high_hip" placeholder="e.g. 88"></div>
+        <div class="fg"><label>Full Hips</label><input type="number" id="m-hips" name="hips" placeholder="e.g. 96"></div>
       </div>
+      <div class="frow">
+        <div class="fg"><label>Shoulder Width</label><input type="number" id="m-shoulder" name="shoulder" placeholder="e.g. 40"></div>
+        <div class="fg"><label>Shoulder to Shoulder</label><input type="number" id="m-shoulder_to_shoulder" name="shoulder_to_shoulder" placeholder="e.g. 38"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Across Chest (front)</label><input type="number" id="m-across_chest" name="across_chest" placeholder="e.g. 34"></div>
+        <div class="fg"><label>Across Back</label><input type="number" id="m-across_back" name="across_back" placeholder="e.g. 36"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Back Width</label><input type="number" id="m-back_width" name="back_width" placeholder="e.g. 36"></div>
+        <div class="fg"><label>Bust Point to Bust Point</label><input type="number" id="m-bust_point" name="bust_point" placeholder="e.g. 18"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Bust Height (apex)</label><input type="number" id="m-bust_height" name="bust_height" placeholder="e.g. 25"></div>
+        <div class="fg"><label>Under Bust</label><input type="number" id="m-under_bust" name="under_bust" placeholder="e.g. 76"></div>
+      </div>
+
+      <!-- ARMS -->
+      <div class="fsec" style="margin-top:24px;font-size:.52rem">Arms</div>
       <div class="frow">
         <div class="fg"><label>Sleeve Length</label><input type="number" id="m-sleeve" name="sleeve" placeholder="e.g. 62"></div>
-        <div class="fg"><label>Back Width</label><input type="number" id="m-back_width" name="back_width" placeholder="e.g. 36"></div>
+        <div class="fg"><label>Arm Length (underarm)</label><input type="number" id="m-arm_length" name="arm_length" placeholder="e.g. 46"></div>
       </div>
       <div class="frow">
-        <div class="fg"><label>Bicep</label><input type="number" id="m-bicep" name="bicep" placeholder="e.g. 32"></div>
+        <div class="fg"><label>Bicep (upper arm)</label><input type="number" id="m-bicep" name="bicep" placeholder="e.g. 32"></div>
+        <div class="fg"><label>Elbow</label><input type="number" id="m-elbow" name="elbow" placeholder="e.g. 28"></div>
+      </div>
+      <div class="frow">
         <div class="fg"><label>Tricep / Mid-Arm</label><input type="number" id="m-tricep" name="tricep" placeholder="e.g. 30"></div>
-      </div>
-      <div class="frow">
         <div class="fg"><label>Wrist</label><input type="number" id="m-wrist" name="wrist" placeholder="e.g. 16"></div>
-        <div class="fg"><label>Neck</label><input type="number" id="m-neck" name="neck" placeholder="e.g. 36"></div>
       </div>
       <div class="frow">
-        <div class="fg"><label>Torso / Back Length</label><input type="number" id="m-torso" name="torso" placeholder="e.g. 42"></div>
+        <div class="fg"><label>Armhole / Arm Scye</label><input type="number" id="m-armhole" name="armhole" placeholder="e.g. 42"></div>
+        <div class="fg"></div>
+      </div>
+
+      <!-- NECK & HEAD -->
+      <div class="fsec" style="margin-top:24px;font-size:.52rem">Neck &amp; Head</div>
+      <div class="frow">
+        <div class="fg"><label>Neck (base circumference)</label><input type="number" id="m-neck" name="neck" placeholder="e.g. 36"></div>
+        <div class="fg"><label>Head Circumference</label><input type="number" id="m-head" name="head" placeholder="e.g. 57"></div>
+      </div>
+
+      <!-- LOWER BODY -->
+      <div class="fsec" style="margin-top:24px;font-size:.52rem">Lower Body</div>
+      <div class="frow">
+        <div class="fg"><label>Waist to Hip</label><input type="number" id="m-waist_to_hip" name="waist_to_hip" placeholder="e.g. 20"></div>
+        <div class="fg"><label>Crotch Depth / Rise</label><input type="number" id="m-rise" name="rise" placeholder="e.g. 28"></div>
+      </div>
+      <div class="frow">
         <div class="fg"><label>Inseam</label><input type="number" id="m-inseam" name="inseam" placeholder="e.g. 76"></div>
-      </div>
-      <div class="frow">
-        <div class="fg"><label>Thigh</label><input type="number" id="m-thigh" name="thigh" placeholder="e.g. 58"></div>
-        <div class="fg"><label>Calf</label><input type="number" id="m-calf" name="calf" placeholder="e.g. 36"></div>
-      </div>
-      <div class="frow">
-        <div class="fg"><label>Knee</label><input type="number" id="m-knee" name="knee" placeholder="e.g. 38"></div>
-        <div class="fg"><label>Ankle</label><input type="number" id="m-ankle" name="ankle" placeholder="e.g. 22"></div>
-      </div>
-      <div class="frow">
-        <div class="fg"><label>Crotch / Rise</label><input type="number" id="m-rise" name="rise" placeholder="e.g. 68"></div>
         <div class="fg"><label>Outseam / Leg Length</label><input type="number" id="m-outseam" name="outseam" placeholder="e.g. 100"></div>
       </div>
       <div class="frow">
+        <div class="fg"><label>Thigh (full)</label><input type="number" id="m-thigh" name="thigh" placeholder="e.g. 58"></div>
+        <div class="fg"><label>Knee</label><input type="number" id="m-knee" name="knee" placeholder="e.g. 38"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Calf</label><input type="number" id="m-calf" name="calf" placeholder="e.g. 36"></div>
+        <div class="fg"><label>Ankle</label><input type="number" id="m-ankle" name="ankle" placeholder="e.g. 22"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Waist to Knee</label><input type="number" id="m-waist_to_knee" name="waist_to_knee" placeholder="e.g. 58"></div>
+        <div class="fg"></div>
+      </div>
+
+      <!-- FULL LENGTH -->
+      <div class="fsec" style="margin-top:24px;font-size:.52rem">Full Length</div>
+      <div class="frow">
         <div class="fg"><label>Height (total)</label><input type="number" id="m-height" name="height" placeholder="e.g. 165"></div>
+        <div class="fg"><label>Back Length (nape to waist)</label><input type="number" id="m-back_length" name="back_length" placeholder="e.g. 40"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Front Length (shoulder to waist)</label><input type="number" id="m-front_length" name="front_length" placeholder="e.g. 42"></div>
+        <div class="fg"><label>Torso (shoulder to hip)</label><input type="number" id="m-torso" name="torso" placeholder="e.g. 62"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Waist to Floor</label><input type="number" id="m-waist_to_floor" name="waist_to_floor" placeholder="e.g. 100"></div>
         <div class="fg"><label>Desired Garment Length</label><input type="number" id="m-length" name="length" placeholder="e.g. 105"></div>
+      </div>
+
+      <!-- POSTURE NOTES -->
+      <div class="fsec" style="margin-top:24px;font-size:.52rem">Posture &amp; Special Notes</div>
+      <div class="fg">
+        <label>Posture Notes <span style="font-weight:300;color:var(--tdim)">(optional)</span></label>
+        <textarea id="m-posture_notes" name="posture_notes" placeholder="e.g. slightly rounded shoulders, one shoulder higher, forward neck posture, prefer extra room in hips, etc." style="resize:vertical;min-height:70px;font-family:inherit;font-size:.88rem;line-height:1.6"></textarea>
       </div>
 
       <!-- MEASUREMENT DISCLAIMER -->
@@ -1828,7 +1887,7 @@ function selectColour(name,el){
 (function(){
   const params=new URLSearchParams(window.location.search);
   if(!params.has('from_guide')) return;
-  const fields=['chest','waist','hips','shoulder','sleeve','back_width','bicep','tricep','wrist','neck','torso','inseam','thigh','calf','knee','ankle','rise','outseam','height','length'];
+  const fields=['chest','waist','high_hip','hips','shoulder','shoulder_to_shoulder','across_chest','across_back','back_width','bust_point','bust_height','under_bust','sleeve','arm_length','bicep','elbow','tricep','wrist','armhole','neck','head','waist_to_hip','rise','inseam','outseam','thigh','knee','calf','ankle','waist_to_knee','height','back_length','front_length','torso','waist_to_floor','length','posture_notes'];
   let filled=0;
   fields.forEach(f=>{
     const v=params.get(f);
