@@ -337,11 +337,18 @@ async function submitWaitlist(){
   if(!email||!email.includes('@')){msg.textContent='Please enter a valid email.';msg.className='form-msg err';return;}
   btn.disabled=true;btn.textContent='Saving...';msg.textContent='';
   try{
-    const {error}=await SB.from('waitlist').upsert({
+    const {error}=await SB.from('waitlist').insert({
       name,email,phone:phone||null,country:country||null,
       height,chest,waist,hips,garment_interest:garments||null
-    },{onConflict:'email'});
-    if(error) throw error;
+    });
+    if(error){
+      if(error.code==='23505'||error.message.includes('duplicate')||error.message.includes('unique')){
+        document.getElementById('wl-form-wrap').style.display='none';
+        document.getElementById('wl-success').classList.add('show');
+        return;
+      }
+      throw error;
+    }
     document.getElementById('wl-form-wrap').style.display='none';
     document.getElementById('wl-success').classList.add('show');
   }catch(e){
