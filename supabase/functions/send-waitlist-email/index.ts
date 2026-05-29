@@ -1,6 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const RESEND_KEY = Deno.env.get("RESEND_API_KEY") ?? "";
+const BREVO_KEY = Deno.env.get("BREVO_API_KEY") ?? "";
 const FROM = Deno.env.get("RESEND_FROM") ?? "Lam Tuyen Linen <onboarding@resend.dev>";
 const SURL = Deno.env.get("SUPABASE_URL") ?? "";
 const SROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
@@ -25,12 +25,18 @@ function esc(s: unknown): string {
 }
 
 async function sendEmail(to: string, subject: string, html: string) {
-  const res = await fetch("https://api.resend.com/emails", {
+  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
-    headers: { "Authorization": `Bearer ${RESEND_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from: FROM, to: [to], reply_to: SHOP_EMAIL, subject, html }),
+    headers: { "api-key": BREVO_KEY, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      sender: { name: "Lam Tuyen Linen", email: SHOP_EMAIL },
+      to: [{ email: to }],
+      replyTo: { email: SHOP_EMAIL },
+      subject,
+      htmlContent: html,
+    }),
   });
-  if (!res.ok) throw new Error(`Email failed ${res.status}: ${await res.text()}`);
+  if (!res.ok) throw new Error("Email failed " + res.status + ": " + await res.text());
 }
 
 Deno.serve(async (req) => {

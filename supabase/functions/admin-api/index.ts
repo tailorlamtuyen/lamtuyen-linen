@@ -189,13 +189,15 @@ async function sendPriceQuote(body: Record<string, unknown>) {
 </div></body></html>`;
 
   // Send email
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: { "api-key": BREVO_KEY, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: FROM, to: [String(email)], reply_to: SHOP_EMAIL,
+      sender: { name: "Lam Tuyen Linen", email: SHOP_EMAIL },
+      to: [{ email: String(email) }],
+      replyTo: { email: SHOP_EMAIL },
       subject: `Your Price Quote — ${order_ref} — ${fmtVND(fp)} — Lam Tuyen Linen`,
-      html,
+      htmlContent: html,
     }),
   });
   const resBody = await res.text();
