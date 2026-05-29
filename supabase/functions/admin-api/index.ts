@@ -214,6 +214,7 @@ async function sendPriceQuote(body: Record<string, unknown>) {
 
   await adminDb.from('pricing_data').insert({
     order_ref, garment, country,
+    measurements: (body as any).measurements || null,
     fabric_meters: Number(fabric_meters),
     fabric_cost_per_meter: Math.round(Number(fabric_cost) / Number(fabric_meters)),
     labour_cost: Number(labour_cost),

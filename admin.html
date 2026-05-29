@@ -299,6 +299,48 @@ a{color:var(--a1);text-decoration:none}
   #app{overflow:hidden}
   .adm-body{overflow:hidden}
 }
+
+/* ── MOBILE + IPAD IMPROVEMENTS */
+@media(max-width:600px){
+  .set-row{flex-direction:column;align-items:flex-start;gap:4px}
+  .set-in{width:100%;text-align:left}
+  .set-textarea{font-size:.8rem}
+  .g-row{grid-template-columns:1fr 75px 90px;padding:7px 8px;gap:5px}
+  .g-name{font-size:.74rem}
+  .g-in{padding:4px 5px;font-size:.75rem}
+  .z-row{flex-wrap:wrap}
+  .z-in{width:100%;margin-top:3px}
+  .calc-wrap{padding:12px}
+  .calc-row{flex-wrap:wrap;gap:4px}
+  .calc-in{width:110px;font-size:.8rem}
+  .calc-out-row{font-size:.78rem}
+  .calc-total-val{font-size:1.1rem}
+  .final-price-in{font-size:.95rem}
+  .sf-btn{min-width:100px;font-size:.6rem;padding:10px 6px}
+  .om-tab{padding:8px 9px;font-size:.56rem;letter-spacing:1px}
+  .stat-val{font-size:1.5rem}
+  .sec-title{font-size:1.2rem}
+  .tb-title{font-size:.85rem;letter-spacing:2px}
+  .tb-clock{display:none}
+  .topbar{padding:0 10px}
+  .section{padding:14px 12px 10px}
+  .om-body{padding:14px}
+  .ds-row{font-size:.8rem}
+  .ds-k{min-width:85px;font-size:.72rem}
+}
+@media(min-width:601px) and (max-width:1023px){
+  .stats-grid{grid-template-columns:repeat(4,1fr)}
+  .rev-stats{grid-template-columns:repeat(2,1fr)}
+  .om-inner{max-width:600px;border-radius:10px;max-height:88vh}
+  .g-row{grid-template-columns:1fr 90px 110px}
+  .calc-in{width:130px}
+  .section{padding:18px 20px 10px}
+  .sf-btn{min-width:130px}
+}
+@media(min-width:768px) and (max-width:1023px){
+  .adm-body{overflow:auto}
+  .main-content{padding-bottom:70px}
+}
 </style>
 </head>
 <body>
@@ -1081,7 +1123,8 @@ function renderPricingTab(){
   const COMPLEX_G=['Ao Dai','Bespoke Linen Suit'];
   const MEDIUM_G=['Dress','Set','Blouse','Wrap'];
   const lc=cfg.labour_costs||{simple:200000,medium:300000,complex:450000};
-  let labourBase=Number(lc.simple)||200000;
+  const lbg=cfg.labour_by_garment||{};
+  let labourBase=Number(lbg[g])||Number(lc.simple)||200000;
   let complexLabel='Simple (shirt / trousers)';
   const g=o.garment||'';
   if(COMPLEX_G.some(x=>g.includes(x.split(' ')[0]))){labourBase=Number(lc.complex)||450000;complexLabel='Complex (suit / ao dai)';}
@@ -1122,6 +1165,7 @@ function renderPricingTab(){
     '<button class="send-price-btn" onclick="sendPriceQuote()" id="send-price-btn">'+t('sendPrice')+'</button>';
 
   calcLive();
+  if(o.final_price){const _f=document.getElementById(\'cp-final\');if(_f&&!_f.value)_f.value=o.final_price;}
   loadHistoricalPrice(o.garment);
 }
 
@@ -1194,6 +1238,7 @@ async function sendPriceQuote(){
       fabric_cost:Math.round(fc*m), labour_cost:l, shipping_cost:s,
       total_cost:Math.round(fc*m+l+s), final_price:fp,
       profit_margin:mg, fabric_meters:m,
+      measurements:(()=>{const r={};['chest','waist','hips','height','length','shoulder','sleeve','thigh','waist_to_floor','back_length','front_length'].forEach(k=>{if(selectedOrder&&selectedOrder[k])r[k]=selectedOrder[k];});return r;})()
     });
     toast(t('priceSent'),'success');
     // Update local state
@@ -1510,7 +1555,7 @@ function renderSettings(){
       div.className='g-row';
       div.innerHTML=`<div class="g-name">${esc(name)}</div>
         <input type="number" class="g-in" data-g="${esc(name)}" data-f="meters" value="${meters}" step="0.1">
-        <input type="number" class="g-in" data-g="${esc(name)}" data-f="labour" value="${Math.round(Number(meters)*85000)}" step="10000">`;
+        <input type="number" class="g-in" data-g="${esc(name)}" data-f="labour" value="${Number((settings.labour_by_garment||{})[name])||Math.round(Number(meters)*85000)}" step="10000">`;
       gg.appendChild(div);
     });
   }
@@ -1577,6 +1622,7 @@ async function saveSettings(){
       adminAPI('update_setting',{key:'fabric_meters',value:fm}),
       adminAPI('update_setting',{key:'shipping_zones',value:sz}),
       adminAPI('update_setting',{key:'bank_transfer',value:bank}),
+      adminAPI('update_setting',{key:'labour_by_garment',value:(()=>{const r={};document.querySelectorAll('.g-in[data-f=\"labour\"]').forEach(i=>{if(i.dataset.g)r[i.dataset.g]=parseFloat(i.value)||200000;});return r;})()}),
     ]);
     settings.profit_margin=margin;
     settings.fabric_costs={default:fabricDef};
