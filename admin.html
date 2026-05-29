@@ -542,6 +542,7 @@ const LOCKOUT_MS = 10 * 60 * 1000;
 const PIE_COLORS = ['#B8935A','#2C1F10','#8C6A38','#5A4530','#C4AE90','#8A7058','#E8D8BC','#4A3728'];
 
 const SB = window.supabase.createClient(SURL, SKEY);
+const VAPID_PUBLIC_KEY = 'BIiVu6sc_gp1-Zt_lx9PIIzSgPw0VWcyBBtk5nSLDG34SPuhpUMghhfjN3-kJAznnuUFadYS0gdibSgiUkom-vM';
 
 // ── I18N ─────────────────────────────────────────────────────────
 const I18N = {
@@ -652,6 +653,56 @@ let refreshTimer = null;
 let custData = [];
 let filteredCust = [];
 
+
+// ── PUSH NOTIFICATIONS
+function urlBase64ToUint8Array(b64){
+  const pad='='.repeat((4-b64.length%4)%4);
+  const b=(b64+pad).replace(/-/g,'+').replace(/_/g,'/');
+  const raw=atob(b);
+  return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)));
+}
+async function subscribePush(){
+  if(!('serviceWorker' in navigator)||!('PushManager' in window)) return;
+  if(!VAPID_PUBLIC_KEY||VAPID_PUBLIC_KEY.includes('REPLACE')) return;
+  try{
+    const reg=await navigator.serviceWorker.ready;
+    let sub=await reg.pushManager.getSubscription();
+    if(!sub){
+      sub=await reg.pushManager.subscribe({
+        userVisibleOnly:true,
+        applicationServerKey:urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+      });
+    }
+    const {data:{session}}=await SB.auth.getSession();
+    if(!session) return;
+    await fetch(SURL+'/rest/v1/push_subscriptions',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey':SKEY,
+        'Authorization':'Bearer '+session.access_token,
+        'Prefer':'resolution=merge-duplicates'
+      },
+      body:JSON.stringify({
+        email:ALLOWED_EMAIL,
+        endpoint:sub.endpoint,
+        subscription:JSON.stringify(sub),
+        updated_at:new Date().toISOString()
+      })
+    });
+  }catch(e){console.warn('Push sub error:',e.message);}
+}
+async function updateAppBadge(n){
+  if('setAppBadge' in navigator) try{await navigator.setAppBadge(n);}catch(_){}
+}
+async function clearAppBadge(){
+  if('clearAppBadge' in navigator) try{await navigator.clearAppBadge();}catch(_){}
+  if('serviceWorker' in navigator){
+    const reg=await navigator.serviceWorker.getRegistration();
+    if(reg){const ns=await reg.getNotifications({tag:'lt-order'});ns.forEach(n=>n.close());}
+  }
+}
+
 // ── INIT ─────────────────────────────────────────────────────────
 (async function init(){
   applyLang();
@@ -675,6 +726,7 @@ async function onSignedIn(){
   setupRealtime();
   requestNotifPermission();
   startAutoRefresh();
+  subscribePush();
 }
 
 function onSignedOut(){
@@ -815,7 +867,7 @@ function showSection(s){
     const bt=document.getElementById('bt-'+id);
     if(bt) bt.classList.toggle('act',id===s);
   });
-  if(s==='home') updateNewBadge();
+  if(s==='home'){updateNewBadge();clearAppBadge();}
 }
 
 // ── STATS ────────────────────────────────────────────────────────
@@ -1554,6 +1606,7 @@ function handleNewOrder(o){
   // Increment badge
   const n=orders.filter(x=>(x.status||'new')==='new').length;
   updateNewBadge(n);
+  updateAppBadge(n);
 }
 
 // ── NOTIFICATIONS ─────────────────────────────────────────────────
