@@ -352,6 +352,13 @@ async function submitWaitlist(){
       }
       throw error;
     }
+    try{
+      await fetch('https://vyldmdavizedqhihnkwg.supabase.co/functions/v1/send-waitlist-email',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':'sb_publishable_2Wua7AAvKSTrMHLT35xjVQ_8JuYqS2b'},
+        body:JSON.stringify({name,email,phone:phone||null,country:country||null,garment_interest:garments||null})
+      });
+    }catch(emailErr){console.warn('Email send failed:',emailErr);}
     document.getElementById('wl-form-wrap').style.display='none';
     document.getElementById('wl-success').classList.add('show');
   }catch(e){
