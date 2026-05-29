@@ -323,6 +323,15 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--bg1);color:v
 <script>
 'use strict';
 const SB = window.supabase.createClient('https://vyldmdavizedqhihnkwg.supabase.co','sb_publishable_2Wua7AAvKSTrMHLT35xjVQ_8JuYqS2b');
+
+// Check if store has launched and redirect to full store
+(async function(){
+  try{
+    const r=await SB.from('settings').select('value').eq('key','store_mode').single();
+    if(r.data&&r.data.value==='live') window.location.replace('/store');
+  }catch(_){}
+})();
+
 async function submitWaitlist(){
   if(document.getElementById('wl-hp')&&document.getElementById('wl-hp').value){document.getElementById('wl-form-wrap').style.display='none';document.getElementById('wl-success').classList.add('show');return;}
   const name=document.getElementById('wl-name').value.trim();
