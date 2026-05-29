@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+import shutil
+shutil.copy('index.html', 'store.html')
+print('Backed up index.html to store.html')
+
+html = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -254,4 +258,8 @@ async function submitWaitlist(){
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement.closest('#wl-form-wrap'))submitWaitlist();});
 </script>
 </body>
-</html>
+</html>"""
+
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+print('Coming soon page created. Original saved as store.html')
