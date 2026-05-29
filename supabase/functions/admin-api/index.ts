@@ -180,7 +180,7 @@ async function sendPriceQuote(body: Record<string, unknown>) {
 
     <p style="color:#2C1F10;font-size:13px;margin:0;font-style:italic">
       <strong>Lam Tuyen</strong><br>
-      <span style="color:#8A7058;font-size:12px">Master Tailor · Han Market, 119 Trần Phú, Da Nang · Since 2010</span>
+      <span style="color:#8A7058;font-size:12px">Master Tailor · Stall #9, Han Market, 119 Trần Phú, Hải Châu I, Đà Nẵng · Since 2010</span>
     </p>
   </div>
   <div style="padding:12px 32px;background:#F3EDE0;text-align:center">

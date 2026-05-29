@@ -104,7 +104,7 @@ Deno.serve(async (req: Request) => {
     <p style="color:#5A4530;font-size:13px;line-height:1.7;margin:0 0 4px">
       Thank you for your trust. We hope your ${esc(garment)} brings you great joy.<br><br>
       <span style="font-style:italic"><strong>Lam Tuyen</strong><br>
-      <span style="color:#8A7058;font-size:12px">Master Tailor · Han Market, 119 Trần Phú, Da Nang · Since 2010</span></span>
+      <span style="color:#8A7058;font-size:12px">Master Tailor · Stall #9, Han Market, 119 Trần Phú, Hải Châu I, Đà Nẵng · Since 2010</span></span>
     </p>
   </div>
 

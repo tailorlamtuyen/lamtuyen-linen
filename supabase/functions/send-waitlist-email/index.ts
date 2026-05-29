@@ -88,7 +88,7 @@ Deno.serve(async (req) => {
       <a href="https://tiktok.com/@tailor.lamtuyen" style="display:inline-block;margin:0 8px 8px 0;color:#B8935A;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:10px 18px;border:1px solid rgba(184,147,90,.35);border-radius:2px">🎵 TikTok</a>
       <a href="https://wa.me/84935023757" style="display:inline-block;margin:0 8px 8px 0;color:#B8935A;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:10px 18px;border:1px solid rgba(184,147,90,.35);border-radius:2px">💬 WhatsApp</a>
     </div>
-    <p style="color:#2C1F10;font-size:14px;margin:0;line-height:1.8">With deep gratitude,<br><strong>Lam Tuyen</strong><br><span style="color:#8A7058;font-size:12px">Master Tailor · Han Market, 119 Trần Phú, Da Nang · Est. 2010</span></p>
+    <p style="color:#2C1F10;font-size:14px;margin:0;line-height:1.8">With deep gratitude,<br><strong>Lam Tuyen</strong><br><span style="color:#8A7058;font-size:12px">Master Tailor · Master Tailor · Stall #9, Han Market, 119 Trần Phú, Hải Châu I, Đà Nẵng · Est. 2010</span></p>
   </div>
   <div style="background:#F3EDE0;padding:14px 32px;border-radius:0 0 4px 4px;text-align:center">
     <p style="margin:0;font-size:10px;color:#A89070;letter-spacing:1px">This code is personal to ${esc(firstName)} · ${esc(ticketCode)} · ${DISCOUNT}% founding member discount</p>

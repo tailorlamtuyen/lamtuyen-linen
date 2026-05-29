@@ -70,7 +70,7 @@ function buildCustomerEmail(p: {
   <p style="color:#C4AE90;font-size:11px;margin:0">If you did not submit this request, you can safely ignore this email.</p>`;
 
   const pageFooter = `<div style="padding:14px 32px;background:#F3EDE0;text-align:center">
-    <p style="margin:0;font-size:11px;color:#8A7058;letter-spacing:1px">Lam Tuyen Linen · Han Market, 119 Trần Phú, Da Nang, Vietnam</p>
+    <p style="margin:0;font-size:11px;color:#8A7058;letter-spacing:1px">Lam Tuyen Linen · Stall #9, Han Market, 119 Trần Phú, Hải Châu I, Đà Nẵng, Vietnam</p>
   </div>`;
 
   const refBadge = `<div style="background:#F3EDE0;border-left:3px solid #B8935A;padding:12px 18px;margin-bottom:24px;text-align:center">
