@@ -287,7 +287,8 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--bg1);color:v
         </div>
       </div>
 
-      <button class="submit-btn" id="wl-btn" onclick="submitWaitlist()">Notify Me When We Open</button>
+      <input type="text" id="wl-hp" name="website" autocomplete="off" style="display:none;position:absolute;left:-9999px" tabindex="-1" aria-hidden="true">
+<button class="submit-btn" id="wl-btn" onclick="submitWaitlist()">Notify Me When We Open</button>
       <div class="form-msg" id="wl-msg"></div>
     </div>
 
@@ -323,6 +324,7 @@ body{font-family:'Jost',sans-serif;font-weight:300;background:var(--bg1);color:v
 'use strict';
 const SB = window.supabase.createClient('https://vyldmdavizedqhihnkwg.supabase.co','sb_publishable_2Wua7AAvKSTrMHLT35xjVQ_8JuYqS2b');
 async function submitWaitlist(){
+  if(document.getElementById('wl-hp')&&document.getElementById('wl-hp').value){document.getElementById('wl-form-wrap').style.display='none';document.getElementById('wl-success').classList.add('show');return;}
   const name=document.getElementById('wl-name').value.trim();
   const email=document.getElementById('wl-email').value.trim();
   const rawCode=document.getElementById('wl-dialcode').value.replace('_ca','').replace('_us','');
